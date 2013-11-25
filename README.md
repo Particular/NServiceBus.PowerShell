@@ -1,4 +1,4 @@
-NServiceBus.Powershell
-======================
+## Building
 
-Powershell extentions for NServiceBus
+To build NServiceBus just open `NServiceBus.Powershell.sln` in Visual Studio.
+
