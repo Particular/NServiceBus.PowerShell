@@ -49,6 +49,8 @@
                 }
 
                 registryKey.SetValue("License", selectedLicenseText, RegistryValueKind.String);
+                var installedLicense = GetNServiceBusLicenses.GetLicenseStoredInRegistry(view, registryKey);
+                WriteObject(installedLicense);
             }
         }
 
