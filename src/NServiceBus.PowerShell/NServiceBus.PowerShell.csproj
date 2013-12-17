@@ -60,6 +60,7 @@
     <Compile Include="Dtc\DtcSetup.cs" />
     <Compile Include="GetNServiceBusLocalMachineSettings.cs" />
     <Compile Include="GetNServiceBusLicenses.cs" />
+    <Compile Include="HeaderInfo.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="Msmq\MsmqSetup.cs" />
     <Compile Include="PerformanceCounters\PerformanceCounterSetup.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="InstallMsmq.cs" />
     <Compile Include="InstallRavenDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoveMSMQWorker.cs" />
     <Compile Include="ValidatePerformanceCounters.cs" />
     <Compile Include="VsConstants.cs" />
   </ItemGroup>
