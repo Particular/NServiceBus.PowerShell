@@ -3,7 +3,6 @@
     using System;
     using System.IO;
     using System.Management.Automation;
-    using System.Reflection;
     using System.Security;
     using Microsoft.Win32;
 
@@ -13,7 +12,7 @@
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "License file path", ValueFromPipeline = true)]
         public string Path { get; set; }
 
-        [Parameter(Mandatory = false, HelpMessage = @"Installs license in HKEY_CURRENT_USER\SOFTWARE\NServiceBus, by default if not specified the license is installed in HKEY_LOCAL_MACHINE\SOFTWARE\NServiceBus")]
+        [Parameter(Mandatory = false, HelpMessage = @"Installs license in HKEY_CURRENT_USER\SOFTWARE\ParticularSoftware\NServiceBus, by default if not specified the license is installed in HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\NServiceBus")]
         public bool UseHKCU { get; set; }
 
         protected override void ProcessRecord()
@@ -41,7 +40,7 @@
                 rootKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, view);
             }
 
-            using (var registryKey = rootKey.CreateSubKey(String.Format(@"SOFTWARE\NServiceBus\{0}", GetNServiceBusVersion().ToString(2))))
+            using (var registryKey = rootKey.CreateSubKey(@"SOFTWARE\ParticularSoftware\NServiceBus"))
             {
                 if (registryKey == null)
                 {
@@ -59,13 +58,6 @@
             {
                 return textReader.ReadToEnd();
             }
-        }
-
-        static Version GetNServiceBusVersion()
-        {
-            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
-
-            return new Version(assemblyVersion.Major, assemblyVersion.Minor);
         }
     }
 }
