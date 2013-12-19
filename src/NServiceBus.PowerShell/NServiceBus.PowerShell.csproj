@@ -72,7 +72,6 @@
     <Compile Include="AddMessageForwardingInCaseOfFaultConfig.cs" />
     <Compile Include="CmdletBase.cs" />
     <Compile Include="GetMessage.cs" />
-    <Compile Include="GetNServiceBusVersion.cs" />
     <Compile Include="InstallLicense.cs" />
     <Compile Include="InstallPerformanceCounters.cs" />
     <Compile Include="InstallDtc.cs" />
