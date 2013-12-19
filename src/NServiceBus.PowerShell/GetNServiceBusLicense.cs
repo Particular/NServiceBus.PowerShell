@@ -8,8 +8,8 @@
     using System.Xml.XPath;
     using Microsoft.Win32;
 
-    [Cmdlet(VerbsCommon.Get, "NServiceBusLicenses")]
-    public class GetNServiceBusLicenses : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "NServiceBusLicense")]
+    public class GetNServiceBusLicense : PSCmdlet
     {
         protected override void ProcessRecord() {
             var licensesStoredInRegistry = new List<LicenseStoredInRegistry>();
