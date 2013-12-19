@@ -9,6 +9,8 @@
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusLicense")]
     public class InstallLicense : PSCmdlet
     {
+        internal const string LicenseRegistryKeyName = @"SOFTWARE\ParticularSoftware\NServiceBus";
+
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "License file path", ValueFromPipeline = true)]
         public string Path { get; set; }
 
@@ -40,7 +42,7 @@
                 rootKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, view);
             }
 
-            using (var registryKey = rootKey.CreateSubKey(@"SOFTWARE\ParticularSoftware\NServiceBus"))
+            using (var registryKey = rootKey.CreateSubKey(LicenseRegistryKeyName))
             {
                 if (registryKey == null)
                 {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Management.Automation;
     using System.Xml;
     using System.Xml.Linq;
@@ -30,25 +31,13 @@
 
         static IEnumerable<LicenseStoredInRegistry> GetLicensesFromRegistry(RegistryHive hive, RegistryView view) {
             var baseKey = RegistryKey.OpenBaseKey(hive, view);
-            const string nservicebusKeyName = @"SOFTWARE\NServiceBus";
-            var nservicebusKey = baseKey.OpenSubKey(nservicebusKeyName);
-            if (nservicebusKey == null) {
+            var nservicebusLicenseKey = baseKey.OpenSubKey(InstallLicense.LicenseRegistryKeyName);
+            if (nservicebusLicenseKey == null) {
                 yield break;
             }
-            var nservicebusLicenseKeyNames = nservicebusKey.GetSubKeyNames();
-            foreach (var nservicebusLicenseKeyName in nservicebusLicenseKeyNames) {
-                var nservicebusLicenseKey = nservicebusKey.OpenSubKey(nservicebusLicenseKeyName);
-                if (nservicebusLicenseKey == null) {
-                    continue;
-                }
-                var license = (string) nservicebusLicenseKey.GetValue("License");
-                if (license == null) {
-                    continue;
-                }
-                var licenseStoredInRegistry = GetLicenseStoredInRegistry(view, nservicebusLicenseKey);
-                if (licenseStoredInRegistry != null) {
-                    yield return licenseStoredInRegistry;
-                }
+            var licenseStoredInRegistry = GetLicenseStoredInRegistry(view, nservicebusLicenseKey);
+            if (licenseStoredInRegistry != null) {
+                yield return licenseStoredInRegistry;
             }
         }
 
@@ -64,6 +53,7 @@
         }
     }
 
+    // it would be nice if we had access to NServiceBus.Licensing.LicenseDeserializer here...
     public class LicenseStoredInRegistry
     {
         public LicenseStoredInRegistry(RegistryView view, RegistryKey registryKey, XElement licenseElement) {
@@ -81,16 +71,17 @@
             get { return licenseElement.Attribute("LicenseType").Value; }
         }
 
-        public string Version {
-            get { return licenseElement.Attribute("LicenseVersion").Value; }
-        }
-
         public string MaxMessageThroughputPerSecond {
             get { return GetLicenseAttribute("MaxMessageThroughputPerSecond"); }
         }
 
-        public string UpgradeProtectionExpiration {
-            get { return GetLicenseAttribute("UpgradeProtectionExpiration"); }
+        public DateTime? UpgradeProtectionExpiration {
+            get {
+                var expiryDate = GetLicenseAttribute("UpgradeProtectionExpiration");
+                return expiryDate != null
+                    ? (DateTime?) DateTime.ParseExact(expiryDate, "yyyy-MM-dd", null, DateTimeStyles.AssumeUniversal).ToUniversalTime()
+                    : null;
+            }
         }
 
         public string WorkerThreads {
