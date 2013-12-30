@@ -42,7 +42,7 @@
                 ThrowUnableToChangeStatus(controller.ServiceName, status, exception);
             }
 
-            var timeout = TimeSpan.FromSeconds(3);
+            var timeout = TimeSpan.FromSeconds(10);
             controller.WaitForStatus(status, timeout);
             if (controller.Status == status)
                 Console.Out.WriteLine((controller.ServiceName + " status changed successfully."));
