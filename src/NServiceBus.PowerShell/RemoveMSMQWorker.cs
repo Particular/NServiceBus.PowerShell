@@ -20,6 +20,9 @@
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "The Distributor address.", ValueFromPipeline = true)]
         public string DistributorAddress { get; set; }
 
+        [Parameter(Mandatory = true, Position = 2, HelpMessage = "The Distributor address.", ValueFromPipeline = true)]
+        public bool TransactionalDistributorQueue { get; set; }
+
         protected override void ProcessRecord()
         {
             var queueAddress = GetFullPath(DistributorAddress) + ".distributor.control";
@@ -48,7 +51,7 @@
                     message.Extension = stream.ToArray();
                 }
 
-                if (queue.Transactional)
+                if (TransactionalDistributorQueue)
                 {
                     // Create a transaction.
                     using (var transaction = new MessageQueueTransaction())
