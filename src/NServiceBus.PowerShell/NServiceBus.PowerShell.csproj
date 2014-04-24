@@ -59,6 +59,7 @@
     <Compile Include="AddMasterNodeConfig.cs" />
     <Compile Include="Dtc\DtcSetup.cs" />
     <Compile Include="GetNServiceBusLocalMachineSettings.cs" />
+    <Compile Include="GetNServiceBusLicense.cs" />
     <Compile Include="HeaderInfo.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="Msmq\MsmqSetup.cs" />
