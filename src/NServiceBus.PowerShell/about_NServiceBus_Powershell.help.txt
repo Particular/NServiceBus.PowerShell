@@ -1,8 +1,8 @@
 TOPIC
-  about_NServiceBus
+  about_NServiceBus_Powershell
 
 SHORT DESCRIPTION
-  Provides information about NServiceBus commands.
+  Provides information aboutcommands in the NServiceBus.Powershell module
 
 LONG DESCRIPTION
   This topic describes the NServiceBus commands. NServiceBus is a developer friendly 
@@ -16,8 +16,7 @@ LONG DESCRIPTION
   												       
   Get-NServiceBusMSMQMessage                           Displays all messages in a queue.
   												       
-  Get-NServiceBusVersion                               Displays the NServiceBus installed version.
-  												       
+   												       
   Install-NServiceBusDTC                               Install DTC on the machine.
    												       
   Install-NServiceBusRavenDB                           Install RavenDB on the machine.

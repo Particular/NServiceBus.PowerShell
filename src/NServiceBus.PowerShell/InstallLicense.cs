@@ -22,7 +22,6 @@
             if (EnvironmentHelper.Is64BitOperatingSystem)
             {
                 TryToWriteToRegistry(selectedLicenseText, RegistryView.Registry32);
-                
                 TryToWriteToRegistry(selectedLicenseText, RegistryView.Registry64);
             }
             else
