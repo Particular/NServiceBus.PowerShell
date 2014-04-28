@@ -4,8 +4,12 @@ namespace NServiceBus.PowerShell.Helpers
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
+    using System.Runtime.Versioning;
+    using System.Security.Cryptography.X509Certificates;
     using System.Text;
     using Microsoft.Win32;
 
@@ -104,6 +108,12 @@ namespace NServiceBus.PowerShell.Helpers
 
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
         static extern int RegCreateKeyEx(IntPtr hKey, string lpSubKey, int reserved, String lpClass, int dwOptions, int samDesired, IntPtr lpSecurityAttributes, out IntPtr phkResult, out int lpdwDisposition);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
+        static extern int RegDeleteKey(IntPtr hKey, String lpSubKey);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
+        static extern int RegDeleteValue(IntPtr hKey, String lpValueName);
 
         public static RegistryHelper LocalMachine(RegistryView regView)
         {
@@ -361,6 +371,23 @@ namespace NServiceBus.PowerShell.Helpers
             }
         }
 
+        public bool ValueExists(string subKeyName, string valueName)
+        {
+            if (!KeyExists(subKeyName))
+            {
+                return false;
+            }
+            var valueNames = GetValueNames(subKeyName);
+            foreach (var x in valueNames)
+            {
+                if (string.Equals(x, valueName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool KeyExists(string subKeyName)
         {
             var regKeyHandle = IntPtr.Zero;
@@ -456,6 +483,79 @@ namespace NServiceBus.PowerShell.Helpers
             }
         }
 
+        public bool DeleteKeyTree(string subKeyName)
+        {
+            if (!KeyExists(subKeyName))
+            {
+                return true;
+            }
+
+            var keysToRemoveList = new List<string>
+            {
+                subKeyName
+            };
+
+            RecurseKeys(subKeyName, ref keysToRemoveList);
+
+            //Reverse the order of the list so children are removed prior to parents
+            var keysToRemove = keysToRemoveList.ToArray();
+
+            Array.Reverse(keysToRemove);
+            foreach (var key in keysToRemove)
+            {
+                if (RegDeleteKey(RootKey, key) != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        void RecurseKeys(string key, ref List<string> keysList)
+        {
+            foreach (var subKeyName in GetSubKeyNames(key))
+            {
+                var fullPath = string.Format(@"{0}\{1}", key, subKeyName);
+                keysList.Add(fullPath);
+                RecurseKeys(fullPath, ref keysList);
+            }
+        }
+
+        public bool DeleteValue(string subKeyName, string valueName)
+        {
+            if (!KeyExists(subKeyName))
+            {
+                return true;
+            }
+           
+            var regKeyHandle = IntPtr.Zero;
+            if (!ValueExists(subKeyName, valueName))
+            {
+                return true;
+            }
+            try
+            {
+                int disposition;
+                var status = RegCreateKeyEx(RootKey, subKeyName, 0, null, 0, KEY_READ | KEY_WRITE | WOWOption, IntPtr.Zero, out regKeyHandle, out disposition);
+                if (status != 0 || RegDeleteValue(regKeyHandle, valueName) != 0)
+                {
+                    throw new Win32Exception();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                if (regKeyHandle != IntPtr.Zero)
+                {
+                    RegCloseKey(regKeyHandle);
+                }
+            }
+        }
+         
         public RegistryValueKind GetRegistryValueKind(string subKeyName, string valueName)
         {
             var regKeyHandle = IntPtr.Zero;

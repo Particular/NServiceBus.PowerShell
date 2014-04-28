@@ -1,7 +1,7 @@
 ﻿namespace NServiceBus.PowerShell.Helpers
 {
     /// <summary>
-    /// Registry Views for .net 2 
+    /// Registry Views for .Net 2 
     /// See RegistryHelper.cs
     /// </summary>
     internal enum RegistryView

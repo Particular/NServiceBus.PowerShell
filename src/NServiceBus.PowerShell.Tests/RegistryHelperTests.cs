@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Runtime.InteropServices;
     using System.Text;
     using Helpers;
     using Microsoft.Win32;
@@ -10,7 +11,14 @@
     [TestFixture]
     public class RegistryHelperTests
     {
-        const string testkey = @"Software\ParticularSoftware-Test\TestRegFunctions";
+        const string testkey = @"Software\ParticularSoftware-Test";
+
+        [SetUp]
+        public void Setup()
+        {
+            RegistryHelper.CurrentUser(RegistryView.Default).DeleteKeyTree(testkey);
+        }
+
         [Test, Explicit]
         public void KeyExistsTest()
         {
@@ -23,10 +31,6 @@
         public void TestSubKeyFunctions()
         {
             var hkcu = RegistryHelper.CurrentUser(RegistryView.Default);
-            if (hkcu.KeyExists(testkey))
-            {
-                //TODO - Add a deletekey method to RegistryHelper and call it here
-            }
             hkcu.CreateSubkey(testkey);
             Assert.IsTrue(hkcu.KeyExists(testkey), "Failed to create or verify test reg key");
         }
@@ -41,6 +45,7 @@
             var val = (string) hkcu.ReadValue(testkey, valueName, null, true);
             Assert.IsTrue(string.Equals(val, ticks),  "The written string does match what was read" );
             Assert.IsTrue(hkcu.GetRegistryValueKind(testkey, valueName) == RegistryValueKind.String, "Failed to assert that written data was a string");
+            
         }
 
         [Test, Explicit]
@@ -53,7 +58,7 @@
             var val = (byte[]) hkcu.ReadValue(testkey, valueName, null, true);
             Assert.IsTrue(BytesMatch(ticks, val), "The written byte array does match what was read");
             Assert.IsTrue(hkcu.GetRegistryValueKind(testkey, valueName) == RegistryValueKind.Binary, "Failed to assert that written data was binary");
-
+            
         }
 
         [Test, Explicit]
@@ -66,6 +71,25 @@
             var val = (Int32) hkcu.ReadValue(testkey, valueName, null, true);
             Assert.IsTrue(num == val, "The written dword does match what was read");
             Assert.IsTrue(hkcu.GetRegistryValueKind(testkey, valueName) == RegistryValueKind.DWord, "Failed to assert that written data was a dword");
+        }
+
+        [Test, Explicit]
+        public void TestDeleteValue()
+        {
+            const string valueName = "delete-me";
+            var hkcu = RegistryHelper.CurrentUser(RegistryView.Default);
+            hkcu.WriteValue(testkey, valueName, "test", RegistryValueKind.String);
+            Assert.IsTrue(hkcu.ValueExists(testkey, valueName), "Failed to assert that value exists ");
+            hkcu.DeleteValue(testkey, valueName);
+            Assert.IsFalse(hkcu.ValueExists(testkey, valueName), "Failed to assert that value was deleted");
+            const string nonexistantValue = "I_Should_Not_Be_Present";
+            Assert.IsTrue(hkcu.DeleteValue(testkey,nonexistantValue), "Deletion of a non-existent value should return true");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            RegistryHelper.CurrentUser(RegistryView.Default).DeleteKeyTree(testkey);
         }
 
         static bool BytesMatch(byte[] x, byte[] y)
