@@ -20,7 +20,7 @@ namespace NServiceBus.PowerShell.Helpers
                    [Out, MarshalAs(UnmanagedType.Bool)]
                    out bool isWow64);
 
-        [DllImport("kernal32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         static extern IntPtr GetModuleHandle(String moduleName);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, BestFitMapping = false, SetLastError = true, ExactSpelling = true)]
