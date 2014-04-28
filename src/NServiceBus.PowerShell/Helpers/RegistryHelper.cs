@@ -392,11 +392,11 @@ namespace NServiceBus.PowerShell.Helpers
             return !(status != 0 | regKeyHandle == IntPtr.Zero);
         }
 
-        public void WriteValue(string subKeyName, string valueName, object value, RegistryValueKind valueKind)
+        public bool WriteValue(string subKeyName, string valueName, object value, RegistryValueKind valueKind)
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value can't be null");
+                throw new ArgumentNullException("value", "value can't be null");
             }
             if (valueName != null && valueName.Length > MaxValueLength)
             {
@@ -404,7 +404,6 @@ namespace NServiceBus.PowerShell.Helpers
             }
 
             var regKeyHandle = IntPtr.Zero;
-            int ret;
             try
             {
 
@@ -422,26 +421,22 @@ namespace NServiceBus.PowerShell.Helpers
                     case RegistryValueKind.String:
                     {
                         var data = value.ToString();
-                        ret = RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length*2 + 2));
-                        break;
+                        return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length * 2 + 2)) == 0;
                     }
                     case RegistryValueKind.Binary:
+                    {
                         var dataBytes = (byte[]) value;
-                        ret = RegSetValueEx(regKeyHandle, valueName, 0, RegistryValueKind.Binary, dataBytes, dataBytes.Length);
-                        break;
-
+                        return RegSetValueEx(regKeyHandle, valueName, 0, RegistryValueKind.Binary, dataBytes, dataBytes.Length) == 0;
+                    }
                     case RegistryValueKind.DWord:
                     {
                         var data = Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture);
-                        ret = RegSetValueEx(regKeyHandle, valueName, 0, RegistryValueKind.DWord, ref data, 4);
-                        break;
+                        return RegSetValueEx(regKeyHandle, valueName, 0, RegistryValueKind.DWord, ref data, 4) == 0;
                     }
-
                     case RegistryValueKind.QWord:
                     {
                         var data = Convert.ToInt64(value, System.Globalization.CultureInfo.InvariantCulture);
-                        ret = RegSetValueEx(regKeyHandle, valueName, 0, RegistryValueKind.QWord, ref data, 8);
-                        break;
+                        return RegSetValueEx(regKeyHandle, valueName, 0, RegistryValueKind.QWord, ref data, 8) == 0;
                     }
                     default:
                         throw new NotImplementedException(string.Format("RegistryKind {0} not supported", valueKind));

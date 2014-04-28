@@ -279,7 +279,12 @@
         static void WriteRegistry(int availablePort, RegistryView view)
         {
             var baseKey = RegistryHelper.LocalMachine(view);
-            baseKey.WriteValue(@"SOFTWARE\ParticularSoftware\ServiceBus", "RavenPort", availablePort, RegistryValueKind.DWord);
+            const string keyName = @"SOFTWARE\ParticularSoftware\ServiceBus";
+            const string valName = "RavenPort";
+            if (!baseKey.WriteValue(keyName, valName, availablePort, RegistryValueKind.DWord))
+            {
+                throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", valName, availablePort, keyName));
+            }
         }
 
         static object ReadRegistry(RegistryView view)

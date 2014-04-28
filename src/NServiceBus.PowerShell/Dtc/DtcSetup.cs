@@ -57,7 +57,10 @@
                 if (doChanges)
                 {
                     Console.WriteLine("DTC not configured correctly. Going to fix. This will require a restart of the DTC service.");
-                    hklm.WriteValue(keyName, val, 1, RegistryValueKind.DWord);
+                    if (!hklm.WriteValue(keyName, val, 1, RegistryValueKind.DWord))
+                    {
+                        throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", val, 1, keyName));
+                    }
                     Console.WriteLine("DTC configuration fixed.");
                 }
                 requireRestart = true;
