@@ -64,7 +64,11 @@
             const string subkey = @"SOFTWARE\Microsoft\MSMQ\Setup";
             var regView = EnvironmentHelper.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default;
             var hklm = RegistryHelper.LocalMachine(regView);
-           
+            if (!hklm.KeyExists(subkey))
+            {
+                return false;
+            }
+
             return  HasOnlyNeededComponents(hklm.GetValueNames(subkey));
         }
 
