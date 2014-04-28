@@ -3,6 +3,7 @@
     using System;
     using System.Management.Automation;
     using System.Security;
+    using Helpers;
     using Microsoft.Win32;
 
     [Cmdlet(VerbsCommon.Set, "NServiceBusLocalMachineSettings", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
@@ -21,10 +22,9 @@
                 return;
             }
 
-            if (Environment.Is64BitOperatingSystem)
+            if (EnvironmentHelper.Is64BitOperatingSystem)
             {
                 WriteRegistry(RegistryView.Registry32);
-
                 WriteRegistry(RegistryView.Registry64);
             }
             else
@@ -35,26 +35,23 @@
 
         void WriteRegistry(RegistryView view)
         {
-            using (var registryKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).CreateSubKey(@"SOFTWARE\ParticularSoftware\ServiceBus"))
-            {
-                if (registryKey == null)
+            var hklm = RegistryHelper.LocalMachine(view);
+            const string key = @"SOFTWARE\ParticularSoftware\ServiceBus";
+            
+         /*                if (registryKey == null)
                 {
                     ThrowTerminatingError(
-                        new ErrorRecord(
-                            new SecurityException(
-                                @"Could not create/open 'HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus' for writing."),
-                            "NotAuthorized", ErrorCategory.SecurityError, null));
+                    ;
+                    ;               new ErrorRecord(new SecurityException(@"Could not create/open 'HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus' for writing."),"NotAuthorized", ErrorCategory.SecurityError, null));
                 }
-
-                if (!String.IsNullOrWhiteSpace(ErrorQueue))
-                {
-                    registryKey.SetValue("ErrorQueue", ErrorQueue, RegistryValueKind.String);
-                }
-
-                if (!String.IsNullOrWhiteSpace(AuditQueue))
-                {
-                    registryKey.SetValue("AuditQueue", AuditQueue, RegistryValueKind.String);
-                }
+        */
+            if (!StringExtensions.IsNullOrWhiteSpace(ErrorQueue))
+            {
+                hklm.WriteValue(key,"ErrorQueue", ErrorQueue, RegistryValueKind.String);
+            }
+            if (!StringExtensions.IsNullOrWhiteSpace(AuditQueue))
+            {
+                hklm.WriteValue(key,"AuditQueue", AuditQueue, RegistryValueKind.String);
             }
         }
     }

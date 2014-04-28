@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Management.Automation;
     using System.Messaging;
     using System.Xml;
@@ -25,15 +24,16 @@
 
             queue.MessageReadPropertyFilter = messageReadPropertyFilter;
 
-            var output = queue.GetAllMessages().Select(m => new
+            foreach (var message in queue.GetAllMessages())
+            {
+                var o = new
                 {
-                    m.Id,
-                    Headers = ParseHeaders(m),
-                    m.ArrivedTime
-                });   
-
-
-            WriteObject(output, true);
+                    message.Id,
+                    Headers = ParseHeaders(message),
+                    message.ArrivedTime
+                };
+                WriteObject(o, true);
+            }
         }
 
         IEnumerable<HeaderInfo> ParseHeaders(Message message)

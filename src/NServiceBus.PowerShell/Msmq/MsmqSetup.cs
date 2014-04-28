@@ -7,7 +7,7 @@
     using System.Runtime.InteropServices;
     using System.ServiceProcess;
     using System.Text;
-    using Microsoft.Win32;
+    using PowerShell.Helpers;
 
     /// <summary>
     /// Utility class for starting and installing MSMQ.
@@ -60,13 +60,12 @@
         /// Determines if the msmq installation on the current machine is ok
         /// </summary>
         public static bool IsInstallationGood()
-        {
-            using (var rootKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
-                                 Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default))
-            using (var msmqSetup = rootKey.OpenSubKey(@"SOFTWARE\Microsoft\MSMQ\Setup"))
-            {
-                return msmqSetup != null && HasOnlyNeededComponents(msmqSetup.GetValueNames());
-            }
+        { 
+            const string subkey = @"SOFTWARE\Microsoft\MSMQ\Setup";
+            var regView = EnvironmentHelper.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default;
+            var hklm = RegistryHelper.LocalMachine(regView);
+           
+            return  HasOnlyNeededComponents(hklm.GetValueNames(subkey));
         }
 
         static bool InstallMsmqIfNecessary()
@@ -88,7 +87,7 @@
 
                 Console.WriteLine(
                     "Installation isn't good. Make sure you remove the following components: {0} and also {1}",
-                    String.Join(", ", UndesirableMsmqComponentsXp), String.Join(", ", UndesirableMsmqComponentsV4));
+                    String.Join(", ", UndesirableMsmqComponentsXp.ToArray()), String.Join(", ", UndesirableMsmqComponentsV4.ToArray()));
 
                 return false;
             }
@@ -149,7 +148,7 @@
             var ptr = new IntPtr();
             var fileSystemRedirectionDisabled = false;
 
-            if (Environment.Is64BitOperatingSystem)
+            if (EnvironmentHelper.Is64BitOperatingSystem)
             {
                 fileSystemRedirectionDisabled = Wow64DisableWow64FsRedirection(ref ptr);
             }

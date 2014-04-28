@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Security.Principal;
     using System.ServiceProcess;
+    using PowerShell;
 
     /// <summary>
     /// Utility class for changing a windows service's status.

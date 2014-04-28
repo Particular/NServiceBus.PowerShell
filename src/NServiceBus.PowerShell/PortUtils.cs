@@ -1,6 +1,6 @@
 ﻿namespace NServiceBus.PowerShell
 {
-    using System.Linq;
+    using System.Collections.Generic;
     using System.Net.NetworkInformation;
 
     public class PortUtils
@@ -11,15 +11,20 @@
                 .GetIPGlobalProperties()
                 .GetActiveTcpListeners();
 
+            var activePorts = new List<int>();
+            foreach (var activeTcpListener in activeTcpListeners)
+            {
+                activePorts.Add(activeTcpListener.Port);
+            }
+
+
             for (var port = startPort; port < startPort + 1024; port++)
             {
-                var portCopy = port;
-                if (activeTcpListeners.All(endPoint => endPoint.Port != portCopy))
+                if (!activePorts.Contains(port))
                 {
                     return port;
                 }
             }
-
             return startPort;
         }
 
@@ -29,8 +34,14 @@
                 .GetIPGlobalProperties()
                 .GetActiveTcpListeners();
 
-
-            return !activeTcpListeners.Any(ip => ip.Port == port);
-        } 
+            foreach (var listener in activeTcpListeners)
+            {
+                if (listener.Port == port)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

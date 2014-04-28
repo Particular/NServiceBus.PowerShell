@@ -1,9 +1,9 @@
 ﻿namespace NServiceBus.PowerShell
 {
-    using System;
     using System.IO;
     using System.Management.Automation;
     using System.Security;
+    using Helpers;
     using Microsoft.Win32;
 
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusLicense")]
@@ -19,7 +19,7 @@
         {
             var selectedLicenseText = ReadAllTextWithoutLocking(Path);
 
-            if (Environment.Is64BitOperatingSystem)
+            if (EnvironmentHelper.Is64BitOperatingSystem)
             {
                 TryToWriteToRegistry(selectedLicenseText, RegistryView.Registry32);
                 
@@ -33,22 +33,13 @@
 
         void TryToWriteToRegistry(string selectedLicenseText, RegistryView view)
         {
-            var rootKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view);
-
-            if (UseHKCU)
+            var rootKey = (UseHKCU) ? RegistryHelper.CurrentUser(view) :  RegistryHelper.LocalMachine(view);
+            const string subkey = @"SOFTWARE\ParticularSoftware\NServiceBus";
+            if (!rootKey.CreateSubkey(subkey))
             {
-                rootKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, view);
+                ThrowTerminatingError(new ErrorRecord(new SecurityException("License file could not be installed."), "NotAuthorized", ErrorCategory.SecurityError, null));
             }
-
-            using (var registryKey = rootKey.CreateSubKey(@"SOFTWARE\ParticularSoftware\NServiceBus"))
-            {
-                if (registryKey == null)
-                {
-                    ThrowTerminatingError(new ErrorRecord(new SecurityException("License file could not be installed."), "NotAuthorized", ErrorCategory.SecurityError, null));
-                }
-
-                registryKey.SetValue("License", selectedLicenseText, RegistryValueKind.String);
-            }
+            rootKey.WriteValue(subkey,"License", selectedLicenseText, RegistryValueKind.String);
         }
 
         static string ReadAllTextWithoutLocking(string path)

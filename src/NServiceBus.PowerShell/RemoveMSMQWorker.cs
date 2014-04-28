@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Management.Automation;
     using System.Messaging;
     using System.Net;
@@ -34,20 +33,15 @@
                     Recoverable = true,
                 };
 
-                var headers = new Dictionary<string, string>
-                {
-                    {"NServiceBus.ControlMessage", true.ToString()},
-                    {"NServiceBus.Distributor.UnregisterWorker", WorkerAddress}
+                var headers = new [] {
+                    new HeaderInfo {Key = "NServiceBus.ControlMessage", Value = true.ToString()},
+                    new HeaderInfo {Key = "NServiceBus.Distributor.UnregisterWorker", Value = WorkerAddress}
                 };
 
                 var headerSerializer = new XmlSerializer(typeof(List<HeaderInfo>));
                 using (var stream = new MemoryStream())
                 {
-                    headerSerializer.Serialize(stream, headers.Select(pair => new HeaderInfo
-                    {
-                        Key = pair.Key,
-                        Value = pair.Value
-                    }).ToList());
+                    headerSerializer.Serialize(stream, headers);
                     message.Extension = stream.ToArray();
                 }
 
@@ -69,6 +63,8 @@
                 }
             }
         }
+
+       
 
         static string GetFullPath(string address)
         {

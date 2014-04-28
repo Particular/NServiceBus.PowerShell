@@ -11,8 +11,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NServiceBus.PowerShell.Tests</RootNamespace>
     <AssemblyName>NServiceBus.PowerShell.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,22 +35,17 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\lib\System.Management.Automation.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddNServiceBusAuditConfigTest.cs" />
     <Compile Include="PerformanceCounterSetupTests.cs" />
     <Compile Include="MsmqSetupTests.cs" />
     <Compile Include="RavenDBSetupTests.cs" />

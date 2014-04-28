@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ServiceProcess;
     using Microsoft.Win32;
+    using PowerShell.Helpers;
 
     public class DtcSetup
     {
@@ -41,45 +42,32 @@
         {
             Console.WriteLine("Checking if DTC is configured correctly.");
 
-            bool requireRestart;
-            using (var rootKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
-                                 Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default))
-            using (var key = rootKey.OpenSubKey(@"SOFTWARE\Microsoft\MSDTC\Security", doChanges))
+            var regview = EnvironmentHelper.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default;
+            var hklm = RegistryHelper.LocalMachine(regview);
+
+            const string keyName = @"SOFTWARE\Microsoft\MSDTC\Security";
+            var requireRestart = false;
+            foreach (var val in RegValues)
             {
-                if (key == null)
+                if ((int)hklm.ReadValue(keyName, val, 0, true) != 0)
                 {
-                    throw new InvalidOperationException("MSDTC could not be found in the registry. Cannot continue.");
+                    continue;
                 }
 
-                requireRestart = false;
-                foreach (var val in RegValues)
+                if (doChanges)
                 {
-                    if ((int) key.GetValue(val) != 0)
-                    {
-                        continue;
-                    }
-
-                    if (doChanges)
-                    {
-                        Console.WriteLine("DTC not configured correctly. Going to fix. This will require a restart of the DTC service.");
-
-                        key.SetValue(val, 1, RegistryValueKind.DWord);
-
-                        Console.WriteLine("DTC configuration fixed.");
-                    }
-
-
-                    requireRestart = true;
+                    Console.WriteLine("DTC not configured correctly. Going to fix. This will require a restart of the DTC service.");
+                    hklm.WriteValue(keyName, val, 1, RegistryValueKind.DWord);
+                    Console.WriteLine("DTC configuration fixed.");
                 }
+                requireRestart = true;
             }
-
             return requireRestart;
         }
 
-        static readonly ServiceController Controller = new ServiceController {ServiceName = "MSDTC", MachineName = "."};
 
-        static readonly List<string> RegValues =
-            new List<string>(new[]
-            {"NetworkDtcAccess", "NetworkDtcAccessOutbound", "NetworkDtcAccessTransactions", "XaTransactions"});
+
+        static readonly ServiceController Controller = new ServiceController {ServiceName = "MSDTC", MachineName = "."};
+        static readonly List<string> RegValues = new List<string>(new[] {"NetworkDtcAccess", "NetworkDtcAccessOutbound", "NetworkDtcAccessTransactions", "XaTransactions"});
     }
 }

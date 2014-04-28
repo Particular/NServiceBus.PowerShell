@@ -4,13 +4,13 @@
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Net;
     using System.ServiceProcess;
     using System.Xml;
     using Microsoft.Win32;
     using Persistence.Raven.Installation;
     using PowerShell;
+    using PowerShell.Helpers;
 
     public class RavenDBSetup
     {
@@ -68,7 +68,7 @@
                     return false;
                 }
 
-                return serverBuild >= 2000;//at least raven v2
+                return serverBuild >= 2000; //at least raven v2
             }
             catch (Exception)
             {
@@ -91,9 +91,8 @@
             }
 
             var serviceName = "RavenDB";
-
-            var service = ServiceController.GetServices().FirstOrDefault(s => s.ServiceName == serviceName);
-            if(service != null)
+            var service = FindService(serviceName);
+            if (service != null)
             {
                 Console.Out.WriteLine("There is already a RavenDB service installed on this computer, the RavenDB service status is {0}.", service.Status);
 
@@ -126,9 +125,9 @@
                     }
                     else
                     {
-                        Console.Out.WriteLine("Port '{0}' isn't available, please specify a different port and rerun the command.", port);    
+                        Console.Out.WriteLine("Port '{0}' isn't available, please specify a different port and rerun the command.", port);
                     }
-                    
+
                     return;
                 }
             }
@@ -145,7 +144,7 @@
                     return;
                 }
             }
-         
+
             if (!RavenHelpers.EnsureCanListenToWhenInNonAdminContext(availablePort))
             {
                 Console.WriteLine("Failed to grant rights for listening to http on port {0}, please specify a different port and rerun the command.", availablePort);
@@ -166,7 +165,7 @@
 
             ravenConfig.Load(ravenConfigPath);
 
-            var key = (XmlElement) ravenConfig.DocumentElement.SelectSingleNode("//add[@key='Raven/Port']");
+            var key = (XmlElement)ravenConfig.DocumentElement.SelectSingleNode("//add[@key='Raven/Port']");
 
             key.SetAttribute("value", availablePort.ToString(CultureInfo.InvariantCulture));
 
@@ -174,7 +173,7 @@
             Console.Out.WriteLine("Updated Raven configuration to use port {0}.", availablePort);
 
             SavePortToBeUsedForRavenInRegistry(availablePort);
-            
+
             Console.WriteLine("Installing RavenDB as a windows service.");
 
             var startInfo = new ProcessStartInfo
@@ -200,16 +199,35 @@
                     return;
                 }
             }
-            
-            Console.WriteLine("{0} service started, listening on port: {1}",serviceName,availablePort);
+
+            Console.WriteLine("{0} service started, listening on port: {1}", serviceName, availablePort);
+        }
+
+        static ServiceController FindService(string serviceName)
+        {
+            ServiceController service = null;
+            foreach (var s in ServiceController.GetServices())
+            {
+                if (s.ServiceName == serviceName)
+                {
+                    service = s;
+                    break;
+                }
+            }
+            return service;
         }
 
         public static void ExportRavenResources(string directoryPath)
         {
-            var assembly = typeof (RavenDBSetup).Assembly;
-            var enumerable = assembly.GetManifestResourceNames().Where(x => x.Contains("RavenResources"));
-            foreach (var resourceName in enumerable)
+            var assembly = typeof(RavenDBSetup).Assembly;
+
+            foreach (var resourceName in assembly.GetManifestResourceNames())
             {
+                if (!resourceName.Contains("RavenResources"))
+                {
+                    continue;
+                }
+
                 using (var resourceStream = assembly.GetManifestResourceStream(resourceName))
                 {
                     var fileName = resourceName.Replace(assembly.GetName().Name + ".RavenResources.", "");
@@ -226,10 +244,9 @@
 
         static void SavePortToBeUsedForRavenInRegistry(int availablePort)
         {
-            if (Environment.Is64BitOperatingSystem)
+            if (EnvironmentHelper.Is64BitOperatingSystem)
             {
                 WriteRegistry(availablePort, RegistryView.Registry32);
-
                 WriteRegistry(availablePort, RegistryView.Registry64);
             }
             else
@@ -242,7 +259,7 @@
         {
             object portValue = null;
 
-            if (Environment.Is64BitOperatingSystem)
+            if (EnvironmentHelper.Is64BitOperatingSystem)
             {
                 portValue = ReadRegistry(RegistryView.Registry32) ?? ReadRegistry(RegistryView.Registry64);
             }
@@ -261,21 +278,13 @@
 
         static void WriteRegistry(int availablePort, RegistryView view)
         {
-            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view))
-            using (var key = baseKey.CreateSubKey(@"SOFTWARE\ParticularSoftware\ServiceBus"))
-            {
-                key.SetValue("RavenPort", availablePort, RegistryValueKind.DWord);
-            }
+            var baseKey = RegistryHelper.LocalMachine(view);
+            baseKey.WriteValue(@"SOFTWARE\ParticularSoftware\ServiceBus", "RavenPort", availablePort, RegistryValueKind.DWord);
         }
 
         static object ReadRegistry(RegistryView view)
         {
-            using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view))
-            using (var key = baseKey.CreateSubKey(@"SOFTWARE\ParticularSoftware\ServiceBus"))
-            {
-                return key.GetValue("RavenPort");
-            }
+            return RegistryHelper.LocalMachine(view).ReadValue(@"SOFTWARE\ParticularSoftware\ServiceBus", "RavenPort", null, true);
         }
-
     }
 }
