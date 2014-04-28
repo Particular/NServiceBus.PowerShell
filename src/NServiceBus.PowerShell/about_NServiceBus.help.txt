@@ -38,28 +38,7 @@ LONG DESCRIPTION
    												       
   Test-NServiceBusMSMQInstallation                     Validates MSMQ is correctly installed on 
                                                        the machine.
-
-  Add-NServiceBusMessageForwardingInCaseOfFaultConfig  Adds the required configuration section to
-                                                       the config file.  
-													   
-  Add-NServiceBusUnicastBusConfig                      Adds the required configuration section to
-                                                       the config file.
-
-  Add-NServiceBusTransportConfig                       Adds the required configuration section to
-                                                       the config file.
-
-  Add-NServiceBusSecondLevelRetriesConfig              Adds the required configuration section to
-                                                       the config file.
-
-  Add-NServiceBusLoggingConfig                         Adds the required configuration section to
-                                                       the config file.
-
-  Add-NServiceBusMasterNodeConfig                      Adds the required configuration section to
-                                                       the config file.
-
-  Add-NServiceBusNHibernateConfig                      Adds the NHibernate supported config settings 
-                                                       as a comment.
-
+  
   Set-NServiceBusLocalMachineSettings                  Allows to specify the default Error and Audit
                                                        queues.
 
@@ -88,23 +67,20 @@ Sample Commands
   The above command lists all messages that have a header with key "NServiceBus.RelatedToTimeoutId"
   
 SEE ALSO
-  Install-NServiceBusLicense
   Get-NServiceBusMSMQMessage
+  Get-NServiceBusLocalMachineSettings
   Get-NServiceBusVersion
   Install-NServiceBusDTC
-  Install-NServiceBusRavenDB
-  Install-NServiceBusPerformanceCounters
+  Install-NServiceBusLicense
   Install-NServiceBusMSMQ
-  Test-NServiceBusDTCInstallation
-  Test-NServiceBusRavenDBInstallation
-  Test-NServiceBusPerformanceCountersInstallation
-  Test-NServiceBusMSMQInstallation
-  Add-NServiceBusMessageForwardingInCaseOfFaultConfig
-  Add-NServiceBusUnicastBusConfig
-  Add-NServiceBusTransportConfig
-  Add-NServiceBusSecondLevelRetriesConfig
-  Add-NServiceBusLoggingConfig
-  Add-NServiceBusMasterNodeConfig
-  Add-NServiceBusNHibernateConfig
+  Install-NServiceBusPerformanceCounters
+  Install-NServiceBusRavenDB
   Set-NServiceBusLocalMachineSettings
-  Get-NServiceBusLocalMachineSettings
+  Test-NServiceBusDTCInstallation
+  Test-NServiceBusMSMQInstallation
+  Test-NServiceBusPerformanceCountersInstallation
+  Test-NServiceBusRavenDBInstallation
+  
+  
+  
+ 
