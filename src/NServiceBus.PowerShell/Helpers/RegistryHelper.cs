@@ -363,7 +363,23 @@ namespace NServiceBus.PowerShell.Helpers
 
         public bool KeyExists(string subKeyName)
         {
-            return false;
+            var regKeyHandle = IntPtr.Zero;
+            try
+            {
+                
+                if (RegOpenKeyEx(RootKey, subKeyName, 0, KEY_READ | WOWOption, out regKeyHandle) != 0)
+                    return false;
+                if (regKeyHandle == IntPtr.Zero)
+                    return false;
+                return true;
+            }
+            finally 
+            {
+                if (regKeyHandle != IntPtr.Zero)
+                {
+                    RegCloseKey(regKeyHandle);
+                }
+            }
         }
 
         public bool CreateSubkey(string subKeyName)

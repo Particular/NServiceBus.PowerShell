@@ -49,6 +49,7 @@
     <Compile Include="PerformanceCounterSetupTests.cs" />
     <Compile Include="MsmqSetupTests.cs" />
     <Compile Include="RavenDBSetupTests.cs" />
+    <Compile Include="RegistryHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ripple.dependencies.config" />
