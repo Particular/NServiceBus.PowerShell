@@ -2,7 +2,7 @@ TOPIC
   about_NServiceBus_Powershell
 
 SHORT DESCRIPTION
-  Provides information aboutcommands in the NServiceBus.Powershell module
+  Provides information about commands in the NServiceBus.Powershell module
 
 LONG DESCRIPTION
   This topic describes the NServiceBus commands. NServiceBus is a developer friendly 
