@@ -1,17 +1,22 @@
-﻿namespace NServiceBus.Setup.Windows
+﻿namespace NServiceBus.PowerShell
 {
     using System;
     using System.ComponentModel;
+    using System.Management.Automation.Host;
     using System.Security.Principal;
     using System.ServiceProcess;
-    using PowerShell;
-
+    
     /// <summary>
     /// Utility class for changing a windows service's status.
     /// </summary>
-    public static class ProcessUtil
+    public class ProcessUtil : CmdletHelperBase
     {
-        public static bool IsRunningWithElevatedPrivileges()
+        public ProcessUtil(PSHost Host) : base(Host)
+        {
+
+        }
+
+        public bool IsRunningWithElevatedPrivileges()
         {
             return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
         }
@@ -20,15 +25,15 @@
         /// Checks the status of the given controller, and if it isn't the requested state,
         /// performs the given action, and checks the state again.
         /// </summary>
-        public static void ChangeServiceStatus(ServiceController controller, ServiceControllerStatus status, Action changeStatus)
+        public  void ChangeServiceStatus(ServiceController controller, ServiceControllerStatus status, Action changeStatus)
         {
             if (controller.Status == status)
             {
-                Console.Out.WriteLine(controller.ServiceName + " status is good: " + Enum.GetName(typeof(ServiceControllerStatus), status));
+                WriteLine(controller.ServiceName + " status is good: " + Enum.GetName(typeof(ServiceControllerStatus), status));
                 return;
             }
 
-           Console.Out.WriteLine((controller.ServiceName + " status is NOT " + Enum.GetName(typeof(ServiceControllerStatus), status) + ". Changing status..."));
+            WriteLine((controller.ServiceName + " status is NOT " + Enum.GetName(typeof(ServiceControllerStatus), status) + ". Changing status..."));
 
             try
             {
@@ -46,12 +51,12 @@
             var timeout = TimeSpan.FromSeconds(10);
             controller.WaitForStatus(status, timeout);
             if (controller.Status == status)
-                Console.Out.WriteLine((controller.ServiceName + " status changed successfully."));
+                WriteLine((controller.ServiceName + " status changed successfully."));
             else
                 ThrowUnableToChangeStatus(controller.ServiceName, status);
         }
 
-        private static void ThrowUnableToChangeStatus(string serviceName, ServiceControllerStatus status)
+        private void ThrowUnableToChangeStatus(string serviceName, ServiceControllerStatus status)
         {
             ThrowUnableToChangeStatus(serviceName, status, null);
         }

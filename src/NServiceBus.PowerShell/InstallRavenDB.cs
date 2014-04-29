@@ -2,7 +2,7 @@
 {
     using System;
     using System.Management.Automation;
-    using Setup.Windows.RavenDB;
+    
 
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusRavenDB", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Medium)]
     public class InstallRavenDB : CmdletBase
@@ -17,7 +17,7 @@
         {
             if (ShouldProcess(Environment.MachineName))
             {
-                RavenDBSetup.Install(Port, Path);
+                new RavenDBSetup(Host).Install(Port, Path);
             }
         }
     }
@@ -30,7 +30,7 @@
 
         protected override void ProcessRecord()
         {
-            var isGood = RavenDBSetup.Check(Port);
+            var isGood = new RavenDBSetup(Host).Check(Port);
 
             WriteObject(isGood);
         }

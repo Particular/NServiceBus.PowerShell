@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
     using NUnit.Framework;
-    using Setup.Windows.PerformanceCounters;
+    
 
     [TestFixture]
     public class PerformanceCounterSetupTests
@@ -11,10 +11,11 @@
         [SetUp]
         public void Setup()
         {
+
             PerformanceCounter.CloseSharedResources();
             if (PerformanceCounterCategory.Exists("NServiceBus"))
             {
-                PerformanceCounterSetup.DeleteCategory();
+                new PerformanceCounterSetup().DeleteCategory();
             }
         }
 
@@ -24,7 +25,7 @@
             PerformanceCounter.CloseSharedResources();
             if (PerformanceCounterCategory.Exists("NServiceBus"))
             {
-                PerformanceCounterSetup.DeleteCategory();
+                new PerformanceCounterSetup().DeleteCategory();
             }
         }
 
@@ -33,16 +34,16 @@
         [Test]
         public void DoAllCountersExist_returns_false_when_category_missing()
         {
-            Assert.IsFalse(PerformanceCounterSetup.CheckCounters());
+            Assert.IsFalse(new PerformanceCounterSetup().CheckCounters());
         }
 
         [Explicit]
         [Test]
         public void DoAllCountersExist_returns_true_when_all_exist()
         {
-            PerformanceCounterSetup.SetupCounters();
+            new PerformanceCounterSetup().SetupCounters();
             PerformanceCounter.CloseSharedResources();
-            Assert.IsTrue(PerformanceCounterSetup.CheckCounters());
+            Assert.IsTrue(new PerformanceCounterSetup().CheckCounters());
         }
 
         [Explicit]
@@ -55,7 +56,7 @@
                            };
             PerformanceCounterCategory.Create("NServiceBus", "NServiceBus statistics", PerformanceCounterCategoryType.MultiInstance, counters);
             PerformanceCounter.CloseSharedResources();
-            Assert.IsFalse(PerformanceCounterSetup.CheckCounters());
+            Assert.IsFalse(new PerformanceCounterSetup().CheckCounters());
         }
 
         [Explicit]

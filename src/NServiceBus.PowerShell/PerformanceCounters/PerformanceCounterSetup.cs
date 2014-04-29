@@ -1,15 +1,30 @@
-﻿namespace NServiceBus.Setup.Windows.PerformanceCounters
+﻿namespace NServiceBus.PowerShell
 {
     using System.Collections.Generic;
     using System.Diagnostics;
-    
-    public class PerformanceCounterSetup
+    using System.Management.Automation.Host;
+
+    public class PerformanceCounterSetup : CmdletHelperBase
     {
+
+        public PerformanceCounterSetup()
+        {
+        }
+
+        public PerformanceCounterSetup(PSHost Host) : base(Host)
+        {
+        }
+
         const string categoryName = "NServiceBus";
 
-        public static bool CheckCounters()
+        public bool CheckCounters()
         {
-            return PerformanceCounterCategory.Exists(categoryName) && CheckCountersExist();
+            var countersAreSetup =  PerformanceCounterCategory.Exists(categoryName) && CheckCountersExist();
+            if (countersAreSetup)
+            {
+                WriteLine("Did not create counters since they already exist");
+            }
+            return countersAreSetup;
         }
 
         static bool CheckCountersExist()
@@ -22,18 +37,20 @@
             return true;
         }
 
-        public static bool DoesCategoryExist()
+        public bool DoesCategoryExist()
         {
             return PerformanceCounterCategory.Exists(categoryName);
         }
 
-        public static void DeleteCategory()
+        public void DeleteCategory()
         {
+            WriteLine("Deleting counters");
             PerformanceCounterCategory.Delete(categoryName);
         }
 
-        public static void SetupCounters()
+        public void SetupCounters()
         {
+            WriteLine("Creating counters");
             var counterCreationCollection = new CounterCreationDataCollection(Counters.ToArray());
             PerformanceCounterCategory.Create(categoryName, "NServiceBus statistics", PerformanceCounterCategoryType.MultiInstance, counterCreationCollection);
             PerformanceCounter.CloseSharedResources(); // http://blog.dezfowler.com/2007/08/net-performance-counter-problems.html

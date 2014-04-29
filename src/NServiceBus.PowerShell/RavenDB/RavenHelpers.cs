@@ -1,4 +1,4 @@
-﻿namespace NServiceBus.Persistence.Raven.Installation
+﻿namespace NServiceBus.PowerShell
 {
     using System;
     using System.Diagnostics;

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdletHelperBase.cs" />
     <Compile Include="Helpers\Action.cs" />
     <Compile Include="Dtc\DtcSetup.cs" />
     <Compile Include="GetNServiceBusLocalMachineSettings.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="SetNServiceBusLocalMachineSettings.cs" />
     <Compile Include="CmdletBase.cs" />
     <Compile Include="GetMessage.cs" />
-    <Compile Include="InstallLicense.cs" />
     <Compile Include="InstallPerformanceCounters.cs" />
     <Compile Include="InstallDtc.cs" />
     <Compile Include="InstallMsmq.cs" />

@@ -2,8 +2,7 @@
 {
     using System;
     using System.Management.Automation;
-    using Setup.Windows.Msmq;
-
+    
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusMSMQ", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     public class InstallMsmq : CmdletBase
     {
@@ -11,7 +10,7 @@
         {
             if (ShouldProcess(Environment.MachineName))
             {
-                var msmqIsGood = MsmqSetup.StartMsmqIfNecessary();
+                var msmqIsGood = new MsmqSetup(Host).StartMsmqIfNecessary();
 
                 if (!msmqIsGood)
                 {
@@ -26,7 +25,7 @@
     {
         protected override void ProcessRecord()
         {
-            var msmqIsGood = MsmqSetup.IsInstallationGood();
+            var msmqIsGood = new MsmqSetup(Host).IsInstallationGood();
 
             WriteVerbose(msmqIsGood
                              ? "MSMQ is installed and setup for use with NServiceBus."

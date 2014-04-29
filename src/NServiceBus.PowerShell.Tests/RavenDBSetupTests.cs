@@ -2,7 +2,7 @@
 {
     using System.IO;
     using NUnit.Framework;
-    using Setup.Windows.RavenDB;
+    
 
     [TestFixture]
     public class RavenDBSetupTests
@@ -11,7 +11,7 @@
         [Test]
         public void Install()
         {
-            RavenDBSetup.Install();
+            new RavenDBSetup().Install();
         }
 
         [Test]
@@ -21,7 +21,7 @@
             try
             {
                 Directory.CreateDirectory(combine);
-                RavenDBSetup.ExportRavenResources(combine);
+                new RavenDBSetup().ExportRavenResources(combine);
                 Assert.IsNotEmpty(Directory.GetFiles(combine));
             }
             finally

@@ -1,22 +1,32 @@
-﻿namespace NServiceBus.Setup.Windows.RavenDB
+﻿namespace NServiceBus.PowerShell
 {
     using System;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
+    using System.Management.Automation.Host;
     using System.Net;
     using System.ServiceProcess;
     using System.Xml;
     using Microsoft.Win32;
-    using Persistence.Raven.Installation;
-    using PowerShell;
-    using PowerShell.Helpers;
+    using Helpers;
 
-    public class RavenDBSetup
+    public class RavenDBSetup : CmdletHelperBase
     {
+
+        public RavenDBSetup()
+        {
+        }
+
+        public RavenDBSetup(PSHost Host)
+        {
+        }
+
+
+
         public const int DefaultPort = 8080;
 
-        public static bool Check(int port = 0)
+        public bool Check(int port = 0)
         {
             if (port == 0)
             {
@@ -25,14 +35,14 @@
 
             var url = String.Format("http://localhost:{0}", port);
 
-            Console.Out.WriteLine("Checking if Raven is listening on {0}.", url);
+            WriteVerbose("Checking if Raven is listening on {0}.", url);
 
             var result = IsRavenDBv2RunningOn(port);
 
             return result;
         }
 
-        public static int FindRavenDBPort()
+        public int FindRavenDBPort()
         {
             var port = ReadRavenPortFromRegistry();
 
@@ -46,7 +56,7 @@
         }
 
 
-        static bool IsRavenDBv2RunningOn(int port)
+        bool IsRavenDBv2RunningOn(int port)
         {
             var webRequest = WebRequest.Create(String.Format("http://localhost:{0}", port));
             webRequest.Timeout = 2000;
@@ -76,7 +86,7 @@
             }
         }
 
-        public static void Install(int port = 0, string installPath = null)
+        public void Install(int port = 0, string installPath = null)
         {
             const string DefaultDirectoryName = "NServiceBus.Persistence.v4";
             if (string.IsNullOrEmpty(installPath))
@@ -86,7 +96,7 @@
 
             if (Directory.Exists(installPath))
             {
-                Console.Out.WriteLine("Path '{0}' already exists please update RavenDB manually if needed.", installPath);
+                WriteWarning("Path '{0}' already exists please update RavenDB manually if needed.", installPath);
                 return;
             }
 
@@ -94,11 +104,11 @@
             var service = FindService(serviceName);
             if (service != null)
             {
-                Console.Out.WriteLine("There is already a RavenDB service installed on this computer, the RavenDB service status is {0}.", service.Status);
+                WriteWarning("There is already a RavenDB service installed on this computer, the RavenDB service status is {0}.", service.Status);
 
                 if (IsRavenDBv2RunningOn(8080)) //todo: we can improve this in the future by looking into the config file to try to figure out the port
                 {
-                    Console.Out.WriteLine("Existing Raven is v2, NServiceBus will be configured to use it");
+                    WriteWarning("Existing Raven is v2, NServiceBus will be configured to use it");
 
                     SavePortToBeUsedForRavenInRegistry(8080);
 
@@ -119,13 +129,13 @@
                 {
                     if (IsRavenDBv2RunningOn(port))
                     {
-                        Console.Out.WriteLine("A compatible(v2) version of Raven has been found on port {0} and will be used", port);
+                        WriteLine("A compatible(v2) version of Raven has been found on port {0} and will be used", port);
 
                         SavePortToBeUsedForRavenInRegistry(port);
                     }
                     else
                     {
-                        Console.Out.WriteLine("Port '{0}' isn't available, please specify a different port and rerun the command.", port);
+                        WriteLine("Port '{0}' isn't available, please specify a different port and rerun the command.", port);
                     }
 
                     return;
@@ -138,7 +148,7 @@
                 //is there already a Raven2 on the default port?
                 if (availablePort != DefaultPort && IsRavenDBv2RunningOn(DefaultPort))
                 {
-                    Console.Out.WriteLine("A compatible(v2) version of Raven has been found on port {0} and will be used", DefaultPort);
+                    WriteVerbose("A compatible(v2) version of Raven has been found on port {0} and will be used", DefaultPort);
 
                     SavePortToBeUsedForRavenInRegistry(DefaultPort);
                     return;
@@ -147,7 +157,7 @@
 
             if (!RavenHelpers.EnsureCanListenToWhenInNonAdminContext(availablePort))
             {
-                Console.WriteLine("Failed to grant rights for listening to http on port {0}, please specify a different port and rerun the command.", availablePort);
+                WriteWarning("Failed to grant rights for listening to http on port {0}, please specify a different port and rerun the command.", availablePort);
                 return;
             }
 
@@ -156,7 +166,7 @@
                 Directory.CreateDirectory(installPath);
             }
 
-            Console.WriteLine("Unpacking resources...");
+            WriteVerbose("Unpacking resources...");
 
             ExportRavenResources(installPath);
 
@@ -170,11 +180,11 @@
             key.SetAttribute("value", availablePort.ToString(CultureInfo.InvariantCulture));
 
             ravenConfig.Save(ravenConfigPath);
-            Console.Out.WriteLine("Updated Raven configuration to use port {0}.", availablePort);
+            WriteVerbose("Updated Raven configuration to use port {0}.", availablePort);
 
             SavePortToBeUsedForRavenInRegistry(availablePort);
 
-            Console.WriteLine("Installing RavenDB as a windows service.");
+            WriteVerbose("Installing RavenDB as a windows service.");
 
             var startInfo = new ProcessStartInfo
             {
@@ -191,16 +201,16 @@
                 process.WaitForExit(20000);
 
                 var line = process.StandardOutput.ReadToEnd();
-                Console.WriteLine(line);
+                WriteLine(line);
 
                 if (process.ExitCode != 0)
                 {
-                    Console.WriteLine("The RavenDB service failed to start, Raven.Server.exe exit code was {0}.", process.ExitCode);
+                    WriteError("The RavenDB service failed to start, Raven.Server.exe exit code was {0}.", process.ExitCode);
                     return;
                 }
             }
 
-            Console.WriteLine("{0} service started, listening on port: {1}", serviceName, availablePort);
+            WriteVerbose("{0} service started, listening on port: {1}", serviceName, availablePort);
         }
 
         static ServiceController FindService(string serviceName)
@@ -217,7 +227,7 @@
             return service;
         }
 
-        public static void ExportRavenResources(string directoryPath)
+        public void ExportRavenResources(string directoryPath)
         {
             var assembly = typeof(RavenDBSetup).Assembly;
 
@@ -232,7 +242,7 @@
                 {
                     var fileName = resourceName.Replace(assembly.GetName().Name + ".RavenResources.", "");
                     var destinationPath = Path.Combine(directoryPath, fileName);
-                    Console.WriteLine("Unpacking '{0}' to '{1}'...", fileName, destinationPath);
+                    WriteLine("Unpacking '{0}' to '{1}'...", fileName, destinationPath);
                     using (Stream file = File.OpenWrite(destinationPath))
                     {
                         resourceStream.CopyTo(file);

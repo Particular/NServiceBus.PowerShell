@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
     using NUnit.Framework;
-    using Setup.Windows.Msmq;
+    
 
     [TestFixture]
     public class MsmqSetupTests
@@ -11,13 +11,13 @@
         [Test]
         public void IsMsmqInstalled()
         {
-            Debug.WriteLine(MsmqSetup.IsMsmqInstalled());
+            Debug.WriteLine(new MsmqSetup().IsMsmqInstalled());
         }
         [Explicit]
         [Test]
         public void IsInstallationGood()
         {
-            Debug.WriteLine(MsmqSetup.IsInstallationGood());
+            Debug.WriteLine(new MsmqSetup().IsInstallationGood());
         }
 
     }

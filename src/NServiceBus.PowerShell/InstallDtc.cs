@@ -1,17 +1,17 @@
 ﻿namespace NServiceBus.PowerShell
 {
-    using System;
     using System.Management.Automation;
-    using Setup.Windows.Dtc;
+    using Helpers;
+
 
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusDTC", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Medium)]
     public class InstallDtc : CmdletBase
     {
         protected override void ProcessRecord()
         {
-            if (ShouldProcess(Environment.MachineName))
+            if (ShouldProcess(EnvironmentHelper.MachineName))
             {
-                DtcSetup.StartDtcIfNecessary();
+                new DtcSetup(Host).StartDtcIfNecessary();
             }
         }
     }
@@ -21,7 +21,7 @@
     {
         protected override void ProcessRecord()
         {
-            var dtcIsGood = DtcSetup.IsDtcWorking();
+            var dtcIsGood =  new DtcSetup(Host).IsDtcWorking();
             WriteVerbose(dtcIsGood
                              ? "DTC is setup and ready for use with NServiceBus."
                              : "DTC is not properly configured.");
