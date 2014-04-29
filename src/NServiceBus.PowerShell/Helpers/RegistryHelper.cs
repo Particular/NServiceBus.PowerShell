@@ -4,12 +4,8 @@ namespace NServiceBus.PowerShell.Helpers
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
-    using System.Runtime.Versioning;
-    using System.Security.Cryptography.X509Certificates;
     using System.Text;
     using Microsoft.Win32;
 

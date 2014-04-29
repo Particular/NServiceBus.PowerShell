@@ -11,7 +11,7 @@
         [Test]
         public void IsMsmqInstalled()
         {
-         Debug.WriteLine(MsmqSetup.IsMsmqInstalled());
+            Debug.WriteLine(MsmqSetup.IsMsmqInstalled());
         }
         [Explicit]
         [Test]

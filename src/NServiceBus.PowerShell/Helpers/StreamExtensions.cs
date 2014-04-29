@@ -1,7 +1,6 @@
 ﻿namespace NServiceBus.PowerShell.Helpers
 {
     using System.IO;
-    using System.Runtime.CompilerServices;
 
     internal static class StreamsExtensions
     {

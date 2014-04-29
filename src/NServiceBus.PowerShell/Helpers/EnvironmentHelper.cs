@@ -34,12 +34,12 @@ namespace NServiceBus.PowerShell.Helpers
 
         static bool DoesWin32MethodExist(String moduleName, String methodName)
         {
-            IntPtr hModule = GetModuleHandle(moduleName);
+            var hModule = GetModuleHandle(moduleName);
             if (hModule == IntPtr.Zero)
             {
                 return false;
             }
-            IntPtr functionPointer = GetProcAddress(hModule, methodName);
+            var functionPointer = GetProcAddress(hModule, methodName);
             return (functionPointer != IntPtr.Zero);
         }
 
@@ -58,8 +58,8 @@ namespace NServiceBus.PowerShell.Helpers
         {   
             get
             {   
-                StringBuilder buf = new StringBuilder(MaxMachineNameLength);
-                int len = MaxMachineNameLength;
+                var buf = new StringBuilder(MaxMachineNameLength);
+                var len = MaxMachineNameLength;
                 if (GetComputerName(buf, ref len) == 0)
                     throw new InvalidOperationException("InvalidOperation ComputerName");
                 return buf.ToString();

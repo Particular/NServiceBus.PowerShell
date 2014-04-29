@@ -2,7 +2,6 @@
 {
     using System;
     using System.Globalization;
-    using System.Runtime.InteropServices;
     using System.Text;
     using Helpers;
     using Microsoft.Win32;
@@ -19,7 +18,7 @@
             RegistryHelper.CurrentUser(RegistryView.Default).DeleteKeyTree(testkey);
         }
 
-        [Test, Explicit]
+        [Test]
         public void KeyExistsTest()
         {
             var hklm = RegistryHelper.LocalMachine(RegistryView.Default);
@@ -27,7 +26,7 @@
             Assert.IsFalse(hklm.KeyExists(@"Software\BogusRegistryEntry"), @"KeyExists should be false for Software\BogusRegistryEntry");
         }
 
-        [Test,Explicit]
+        [Test]
         public void TestSubKeyFunctions()
         {
             var hkcu = RegistryHelper.CurrentUser(RegistryView.Default);
@@ -35,7 +34,7 @@
             Assert.IsTrue(hkcu.KeyExists(testkey), "Failed to create or verify test reg key");
         }
 
-        [Test, Explicit]
+        [Test]
         public void TestReadAndWriteString()
         {
             const string valueName = "teststring";
@@ -48,7 +47,7 @@
             
         }
 
-        [Test, Explicit]
+        [Test]
         public void TestReadAndWriteBinary()
         {
             const string valueName = "testbinary";
@@ -61,7 +60,7 @@
             
         }
 
-        [Test, Explicit]
+        [Test]
         public void TestReadAndWriteDWord()
         {
             const string valueName = "testdword";
@@ -73,7 +72,7 @@
             Assert.IsTrue(hkcu.GetRegistryValueKind(testkey, valueName) == RegistryValueKind.DWord, "Failed to assert that written data was a dword");
         }
 
-        [Test, Explicit]
+        [Test]
         public void TestDeleteValue()
         {
             const string valueName = "delete-me";
