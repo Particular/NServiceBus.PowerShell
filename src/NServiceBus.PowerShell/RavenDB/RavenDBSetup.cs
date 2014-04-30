@@ -18,7 +18,7 @@
         {
         }
 
-        public RavenDBSetup(PSHost Host)
+        public RavenDBSetup(PSHost Host) : base(Host)
         {
         }
 
@@ -155,7 +155,7 @@
                 }
             }
 
-            if (!RavenHelpers.EnsureCanListenToWhenInNonAdminContext(availablePort))
+            if (! new RavenHelpers(Host).EnsureCanListenToWhenInNonAdminContext(availablePort))
             {
                 WriteWarning("Failed to grant rights for listening to http on port {0}, please specify a different port and rerun the command.", availablePort);
                 return;

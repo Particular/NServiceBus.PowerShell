@@ -2,15 +2,25 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Management.Automation.Host;
     using System.Net;
     using System.Security.Principal;
 
     /// <summary>
     /// Copied from RavenDB and modified for out needs
     /// </summary>
-    public static class RavenHelpers
+    public class RavenHelpers : CmdletHelperBase
     {
-        public static bool EnsureCanListenToWhenInNonAdminContext(int port)
+        public RavenHelpers()
+        {
+        }
+
+         public RavenHelpers(PSHost Host) : base(Host)
+        {
+        }
+
+
+        public bool EnsureCanListenToWhenInNonAdminContext(int port)
         {
             try
             {
@@ -38,8 +48,7 @@
             else
             {
                 command = "httpcfg";
-                args = string.Format(@"set urlacl /u http://+:{0}/ /a D:(A;;GX;;;""{1}"")", port,
-                                     WindowsIdentity.GetCurrent().User);
+                args = string.Format(@"set urlacl /u http://+:{0}/ /a D:(A;;GX;;;""{1}"")", port, WindowsIdentity.GetCurrent().User);
             }
         }
 
@@ -63,13 +72,13 @@
             return false;
         }
 
-        private static void TryGrantingHttpPrivileges(int port)
+        private void TryGrantingHttpPrivileges(int port)
         {
             string args;
             string command;
             GetArgsForHttpAclCommand(port, out args, out command);
 
-            Console.WriteLine("Trying to grant rights for http.sys");
+            WriteVerbose("Trying to grant rights for http.sys");
             try
             {
                 Console.WriteLine("runas {0} {1}", command, args);
