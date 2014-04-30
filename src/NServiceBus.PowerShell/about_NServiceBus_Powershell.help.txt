@@ -12,10 +12,7 @@ LONG DESCRIPTION
   
   Cmdlet                                               Description
   -------------------------------------------------------------------------------------------------
-  Install-NServiceBusLicense                           Install a NServiceBus license file.
-  												       
   Get-NServiceBusMSMQMessage                           Displays all messages in a queue.
-  												       
    												       
   Install-NServiceBusDTC                               Install DTC on the machine.
    												       
@@ -70,7 +67,6 @@ SEE ALSO
   Get-NServiceBusLocalMachineSettings
   Get-NServiceBusVersion
   Install-NServiceBusDTC
-  Install-NServiceBusLicense
   Install-NServiceBusMSMQ
   Install-NServiceBusPerformanceCounters
   Install-NServiceBusRavenDB

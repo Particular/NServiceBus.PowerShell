@@ -85,6 +85,9 @@
     <None Include="Examples\Install-Dtc.ps1" />
     <None Include="Examples\Install-Msmq.ps1" />
     <None Include="Examples\Install-RavenDB.ps1" />
+    <Content Include="NServiceBusPowershell.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
