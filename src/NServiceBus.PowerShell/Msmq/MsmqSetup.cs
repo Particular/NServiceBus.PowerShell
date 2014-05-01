@@ -319,8 +319,8 @@
         return false;
     }
 
-    /// Return Type: HMODULE->HINSTANCE->HINSTANCE__*
-    ///lpLibFileName: LPCWSTR->WCHAR*
+    // Return Type: HMODULE->HINSTANCE->HINSTANCE__*
+    // lpLibFileName: LPCWSTR->WCHAR*
     [DllImport("kernel32.dll", EntryPoint = "LoadLibraryW")]
     static extern IntPtr LoadLibraryW([In] [MarshalAs(UnmanagedType.LPWStr)] string lpLibFileName);
 

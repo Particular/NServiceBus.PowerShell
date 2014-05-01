@@ -267,7 +267,7 @@
 
         static int ReadRavenPortFromRegistry()
         {
-            object portValue = null;
+            object portValue;
 
             if (EnvironmentHelper.Is64BitOperatingSystem)
             {

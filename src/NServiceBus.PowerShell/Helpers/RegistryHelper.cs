@@ -407,9 +407,9 @@ namespace NServiceBus.PowerShell.Helpers
 
         public bool CreateSubkey(string subKeyName)
         {
-            var regKeyHandle = IntPtr.Zero;
+            IntPtr regKeyHandle;
 
-            var disposition = 0;
+            int disposition;
             var status = RegCreateKeyEx(RootKey, subKeyName, 0, null, 0, KEY_READ | KEY_WRITE | WOWOption, IntPtr.Zero, out regKeyHandle, out disposition);
 
             return !(status != 0 | regKeyHandle == IntPtr.Zero);
@@ -430,7 +430,7 @@ namespace NServiceBus.PowerShell.Helpers
             try
             {
 
-                var disposition = 0;
+                int disposition;
                 var status = RegCreateKeyEx(RootKey, subKeyName, 0, null, 0, KEY_READ | KEY_WRITE | WOWOption, IntPtr.Zero, out regKeyHandle, out disposition);
 
                 if (status != 0)
