@@ -1,5 +1,6 @@
 ﻿namespace NServiceBus.PowerShell
 {
+    using System.Collections;
     using System.Collections.Specialized;
     using System.Management.Automation;
     using Helpers;
@@ -41,11 +42,16 @@
             if (regResults.ContainsKey(audit64))
             {
                 {
-                    if (!regResults[audit64].Equals(regResults[audit32]))
+                    var a1 = regResults[audit64];
+                    var a2 = regResults[audit32];
+                    if (!string.Equals(a1, a2))
                     {
                         WriteWarning("AuditQueue value is different for 32 bit and 64 bit applications");
                     }
-                    if (!regResults[error64].Equals(regResults[error32]))
+
+                    var e1 = regResults[error64];
+                    var e2 = regResults[error32];
+                    if (!string.Equals(e1, e2))
                     {
                         WriteWarning("ErrorQueue value is different for 32 bit and 64 bit applications");
                     }

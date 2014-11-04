@@ -15,7 +15,7 @@ namespace NServiceBus.PowerShell.Helpers
 
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsWow64Process(
+        static extern bool IsWow64Process(
                    [In]
                    IntPtr hSourceProcessHandle,
                    [Out, MarshalAs(UnmanagedType.Bool)]
@@ -48,13 +48,14 @@ namespace NServiceBus.PowerShell.Helpers
         {
             get
             {
-                bool isWow64; 
-
-                var isWow64Process = IsWow64Process(GetCurrentProcess(), out isWow64);
-
-                return DoesWin32MethodExist("Kernel32.dll", "IsWow64Process")
-                       && isWow64Process
-                       && isWow64;
+#if WIN32
+            bool isWow64; 
+            return DoesWin32MethodExist("Kernel32.dll", "IsWow64Process")
+                  && IsWow64Process(Process.GetCurrentProcess().Handle, out isWow64)
+                  && isWow64;
+#else
+            return true;
+#endif
             }
         }
 
