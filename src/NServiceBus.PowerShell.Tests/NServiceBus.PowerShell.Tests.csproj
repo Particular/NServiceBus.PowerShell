@@ -53,7 +53,6 @@
     <Compile Include="PerformanceCounterSetupTests.cs" />
     <Compile Include="MsmqSetupTests.cs" />
     <Compile Include="RegistryHelperTests.cs" />
-    <Compile Include="TestBitNess.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NServiceBus.PowerShell\NServiceBus.PowerShell.csproj">
