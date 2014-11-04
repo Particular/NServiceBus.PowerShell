@@ -6,7 +6,7 @@
     
 
     [Cmdlet(VerbsCommon.Get, "NServiceBusLocalMachineSettings")]
-    public class GetNServiceBusLocalMachineSettings : PSCmdlet
+    public class GetNServiceBusLocalMachineSettings : CmdletBase
     {
         StringDictionary regResults = new StringDictionary();
 

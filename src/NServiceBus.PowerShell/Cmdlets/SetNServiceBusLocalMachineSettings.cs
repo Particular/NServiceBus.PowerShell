@@ -7,7 +7,7 @@
     using RegistryView = Helpers.RegistryView;
 
     [Cmdlet(VerbsCommon.Set, "NServiceBusLocalMachineSettings", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public class SetNServiceBusLocalMachineSettings : PSCmdlet
+    public class SetNServiceBusLocalMachineSettings : CmdletBase
     {
         // ReSharper disable  MemberCanBePrivate.Global
 
