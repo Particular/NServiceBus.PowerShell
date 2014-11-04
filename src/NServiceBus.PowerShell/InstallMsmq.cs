@@ -14,7 +14,7 @@
 
                 if (!msmqIsGood)
                 {
-                    WriteWarning("Msmq may need to be reinstalled manually. Please ensure MSMQ is running properly.");
+                    WriteWarning("MSMQ may need to be reinstalled manually. Please ensure MSMQ is running properly.");
                 }
             }
         }
