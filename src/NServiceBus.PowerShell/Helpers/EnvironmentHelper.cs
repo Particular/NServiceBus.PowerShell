@@ -2,7 +2,6 @@
 namespace NServiceBus.PowerShell.Helpers
 {
     using System;
-    using System.Diagnostics;
     using System.Runtime.InteropServices;
     using System.Text;
 
@@ -26,10 +25,7 @@ namespace NServiceBus.PowerShell.Helpers
 
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, BestFitMapping = false, SetLastError = true, ExactSpelling = true)]
         static extern IntPtr GetProcAddress(IntPtr hModule, String methodName);
-        
-        [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr GetCurrentProcess();
-
+      
         [DllImport("kernel32", CharSet = CharSet.Auto, BestFitMapping = false)]
         static extern int GetComputerName([Out]StringBuilder nameBuffer, ref int bufferSize);
 

@@ -11,8 +11,10 @@
     [Cmdlet(VerbsCommon.Remove, "NServiceBusMSMQWorker")]
     public class RemoveMSMQWorker : PSCmdlet
     {
+        // ReSharper disable  MemberCanBePrivate.Global
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "The address of the Worker that accepts the dispatched message.", ValueFromPipeline = true)]
+
         public string WorkerAddress { get; set; }
 
         [ValidateNotNullOrEmpty]
@@ -21,6 +23,8 @@
 
         [Parameter(Mandatory = true, Position = 2, HelpMessage = "The Distributor address.", ValueFromPipeline = true)]
         public bool TransactionalDistributorQueue { get; set; }
+       
+        // ReSharper enable  MemberCanBePrivate.Global
 
         protected override void ProcessRecord()
         {

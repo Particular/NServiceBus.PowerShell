@@ -9,12 +9,15 @@
     [Cmdlet(VerbsCommon.Set, "NServiceBusLocalMachineSettings", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     public class SetNServiceBusLocalMachineSettings : PSCmdlet
     {
+        // ReSharper disable  MemberCanBePrivate.Global
+
         [Parameter(Mandatory = false, HelpMessage = "Error queue to use for all endpoints in this machine.")]
         public string ErrorQueue { get; set; }
 
         [Parameter(Mandatory = false, HelpMessage = "Audit queue to use for all endpoints in this machine.")]
         public string AuditQueue { get; set; }
-
+        
+        // ReSharper enable  MemberCanBePrivate.Global
         protected override void ProcessRecord()
         {
             if (!ShouldProcess(Environment.MachineName))
