@@ -2,6 +2,7 @@
 {
     using System;
     using System.Management.Automation;
+    using System.Security;
     using Helpers;
     using Microsoft.Win32;
 
@@ -36,14 +37,6 @@
         {
             var hklm = RegistryHelper.LocalMachine(view);
             const string key = @"SOFTWARE\ParticularSoftware\ServiceBus";
-            
-         /*                if (registryKey == null)
-                {
-                    ThrowTerminatingError(
-                    ;
-                    ;               new ErrorRecord(new SecurityException(@"Could not create/open 'HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus' for writing."),"NotAuthorized", ErrorCategory.SecurityError, null));
-                }
-        */
             if (!StringExtensions.IsNullOrWhiteSpace(ErrorQueue))
             {
                 hklm.WriteValue(key,"ErrorQueue", ErrorQueue, RegistryValueKind.String);
