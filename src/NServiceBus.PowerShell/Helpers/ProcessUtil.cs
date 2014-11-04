@@ -29,11 +29,11 @@
         {
             if (controller.Status == status)
             {
-                WriteLine(controller.ServiceName + " status is good: " + Enum.GetName(typeof(ServiceControllerStatus), status));
+                WriteVerbose(controller.ServiceName + " status is good: " + Enum.GetName(typeof(ServiceControllerStatus), status));
                 return;
             }
 
-            WriteLine((controller.ServiceName + " status is NOT " + Enum.GetName(typeof(ServiceControllerStatus), status) + ". Changing status..."));
+            WriteWarning(controller.ServiceName + " status is NOT " + Enum.GetName(typeof(ServiceControllerStatus), status) + ". Changing status...");
 
             try
             {
@@ -51,7 +51,7 @@
             var timeout = TimeSpan.FromSeconds(10);
             controller.WaitForStatus(status, timeout);
             if (controller.Status == status)
-                WriteLine((controller.ServiceName + " status changed successfully."));
+                WriteVerbose((controller.ServiceName + " status changed successfully."));
             else
                 ThrowUnableToChangeStatus(controller.ServiceName, status);
         }

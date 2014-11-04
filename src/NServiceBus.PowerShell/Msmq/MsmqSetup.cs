@@ -50,7 +50,7 @@
         }
         catch (InvalidOperationException)
         {
-            WriteLine("MSMQ windows service not found! You may need to reboot after MSMQ has been installed.");
+            WriteWarning("MSMQ windows service not found! You may need to reboot after MSMQ has been installed.");
             return false;
         }
 
@@ -97,11 +97,11 @@
 
             if (IsInstallationGood())
             {
-                WriteLine("Installation is good.");
+                WriteVerbose("Installation is good.");
                 return true;
             }
 
-            WriteLine("Installation isn't good. Make sure you remove the following components: {0} and also {1}", String.Join(", ", UndesirableMsmqComponentsXp.ToArray()), String.Join(", ", UndesirableMsmqComponentsV4.ToArray()));
+            WriteWarning("Installation isn't good. Make sure you remove the following components: {0} and also {1}", String.Join(", ", UndesirableMsmqComponentsXp.ToArray()), String.Join(", ", UndesirableMsmqComponentsV4.ToArray()));
             return false;
         }
 
@@ -130,7 +130,7 @@
                 break;
 
             default:
-                WriteLine("OS not supported.");
+                WriteWarning("OS not supported.");
                 return false;
         }
 
@@ -156,7 +156,7 @@
             WorkingDirectory = Path.GetTempPath()
         };
 
-        WriteLine("Executing {0} {1}", startInfo.FileName, startInfo.Arguments);
+        WriteVerbose("Executing {0} {1}", startInfo.FileName, startInfo.Arguments);
 
         var ptr = new IntPtr();
         var fileSystemRedirectionDisabled = false;
@@ -300,13 +300,13 @@
         {
             if (UndesirableMsmqComponentsXp.Contains(i))
             {
-                WriteLine("Undesirable MSMQ component installed: " + i);
+                WriteWarning("Undesirable MSMQ component installed: " + i);
                 return false;
             }
 
             if (UndesirableMsmqComponentsV4.Contains(i))
             {
-                WriteLine("Undesirable MSMQ component installed: " + i);
+                WriteWarning("Undesirable MSMQ component installed: " + i);
                 return false;
             }
 
