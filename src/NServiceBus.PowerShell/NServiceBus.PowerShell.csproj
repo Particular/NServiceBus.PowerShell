@@ -15,6 +15,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,11 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmdletHelperBase.cs" />
+    <Compile Include="Cmdlets\CmdletHelperBase.cs" />
+    <Compile Include="Cmdlets\ValidateDtc.cs" />
+    <Compile Include="Cmdlets\ValidateMsmq.cs" />
     <Compile Include="Helpers\Action.cs" />
     <Compile Include="Dtc\DtcSetup.cs" />
-    <Compile Include="GetNServiceBusLocalMachineSettings.cs" />
-    <Compile Include="HeaderInfo.cs" />
+    <Compile Include="Cmdlets\GetNServiceBusLocalMachineSettings.cs" />
+    <Compile Include="Helpers\HeaderInfo.cs" />
     <Compile Include="Helpers\ExtensionAttribute.cs" />
     <Compile Include="Helpers\EnvironmentHelper.cs" />
     <Compile Include="Helpers\RegistryHelper.cs" />
@@ -60,37 +65,27 @@
     <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="Msmq\MsmqSetup.cs" />
     <Compile Include="PerformanceCounters\PerformanceCounterSetup.cs" />
-    <Compile Include="PortUtils.cs" />
-    <Compile Include="ProcessUtil.cs" />
-    <Compile Include="RavenDB\RavenDBSetup.cs" />
-    <Compile Include="RavenDB\RavenHelpers.cs" />
-    <Compile Include="SetNServiceBusLocalMachineSettings.cs" />
-    <Compile Include="CmdletBase.cs" />
-    <Compile Include="GetMessage.cs" />
-    <Compile Include="InstallPerformanceCounters.cs" />
-    <Compile Include="InstallDtc.cs" />
-    <Compile Include="InstallMsmq.cs" />
-    <Compile Include="InstallRavenDB.cs" />
+    <Compile Include="Helpers\ProcessUtil.cs" />
+    <Compile Include="Cmdlets\SetNServiceBusLocalMachineSettings.cs" />
+    <Compile Include="Cmdlets\CmdletBase.cs" />
+    <Compile Include="Cmdlets\InstallPerformanceCounters.cs" />
+    <Compile Include="Cmdlets\InstallDtc.cs" />
+    <Compile Include="Cmdlets\InstallMsmq.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="RemoveMSMQWorker.cs" />
-    <Compile Include="ValidatePerformanceCounters.cs" />
+    <Compile Include="Cmdlets\RemoveMSMQWorker.cs" />
+    <Compile Include="Cmdlets\ValidatePerformanceCounters.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RavenResources\*.*">
       <Visible>false</Visible>
     </EmbeddedResource>
     <None Include="Examples\Get-Message.ps1" />
-    <None Include="Examples\Get-NServiceBusVersion.ps1" />
     <None Include="Examples\Install-PerformanceCounters.ps1" />
     <None Include="Examples\Install-Dtc.ps1" />
     <None Include="Examples\Install-Msmq.ps1" />
-    <None Include="Examples\Install-RavenDB.ps1" />
     <Content Include="NServiceBus.Powershell.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="ripple.dependencies.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="about_NServiceBus_Powershell.help.txt">
@@ -102,7 +97,6 @@
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />
   <UsingTask TaskName="GitVersionTask.GetVersion" AssemblyFile="$(SolutionDir)..\buildsupport\GitVersionTask\GitVersionTask.dll" />
   <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)..\msbuild\MSBuild.Community.Tasks.dll" />
-  
   <Target Name="AfterBuild">
     <ItemGroup>
       <PSModuleFile Include="$(OutputPath)\NServiceBus.Powershell.psd1" />
@@ -112,5 +106,4 @@
     </GetVersion>
     <FileUpdate Files="@(PSModuleFile)" Regex="{{Version}}" ReplacementText="$(MajorMinorPatch)" />
   </Target>
-  
 </Project>

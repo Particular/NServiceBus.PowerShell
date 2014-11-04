@@ -2,6 +2,7 @@
 namespace NServiceBus.PowerShell.Helpers
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.InteropServices;
     using System.Text;
 
@@ -14,7 +15,7 @@ namespace NServiceBus.PowerShell.Helpers
 
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool IsWow64Process(
+        public static extern bool IsWow64Process(
                    [In]
                    IntPtr hSourceProcessHandle,
                    [Out, MarshalAs(UnmanagedType.Bool)]
@@ -27,12 +28,12 @@ namespace NServiceBus.PowerShell.Helpers
         static extern IntPtr GetProcAddress(IntPtr hModule, String methodName);
         
         [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr GetCurrentProcess();
+        public static extern IntPtr GetCurrentProcess();
 
         [DllImport("kernel32", CharSet = CharSet.Auto, BestFitMapping = false)]
         static extern int GetComputerName([Out]StringBuilder nameBuffer, ref int bufferSize);
 
-        static bool DoesWin32MethodExist(String moduleName, String methodName)
+        public static bool DoesWin32MethodExist(String moduleName, String methodName)
         {
             var hModule = GetModuleHandle(moduleName);
             if (hModule == IntPtr.Zero)
@@ -48,8 +49,11 @@ namespace NServiceBus.PowerShell.Helpers
             get
             {
                 bool isWow64; 
+
+                var isWow64Process = IsWow64Process(GetCurrentProcess(), out isWow64);
+
                 return DoesWin32MethodExist("Kernel32.dll", "IsWow64Process")
-                       && IsWow64Process(GetCurrentProcess(), out isWow64)
+                       && isWow64Process
                        && isWow64;
             }
         }

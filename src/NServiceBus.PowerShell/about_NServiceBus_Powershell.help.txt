@@ -12,21 +12,15 @@ LONG DESCRIPTION
   
   Cmdlet                                               Description
   -------------------------------------------------------------------------------------------------
-  Get-NServiceBusMSMQMessage                           Displays all messages in a queue.
-   												       
-  Install-NServiceBusDTC                               Install DTC on the machine.
-   												       
-  Install-NServiceBusRavenDB                           Install RavenDB on the machine.
-   												       
-  Install-NServiceBusPerformanceCounters               Install NServiceBus performance counters
+  Install-NServiceBusDTC                               Configures DTC on the machine.
+     												       
+  Install-NServiceBusPerformanceCounters               Adds NServiceBus performance counters
                                                        on the machine.
    												       
-  Install-NServiceBusMSMQ                              Install MSMQ on the machine.
+  Install-NServiceBusMSMQ                              Configures MSMQ on the machine.
   												       
   Test-NServiceBusDTCInstallation                      Validates if DTC is installed and running
                                                        on the machine.
-   												       
-  Test-NServiceBusRavenDBInstallation                  Ensures RavenDB is on the machine.
    												       
   Test-NServiceBusPerformanceCountersInstallation      Validates that NServiceBus performance 
                                                        counters are correctly installed on 
@@ -47,35 +41,8 @@ Sample Commands
   C:\PS> $countersAreInstalled = Test-NServiceBusPerformanceCountersInstallation
   C:\PS> "PerformanceCounters are correctly installed: " + $countersAreInstalled
   	
-  To install RavenDB onto a specific path and listening on a different port:
-   
-  C:\PS> Install-NServiceBusRavenDB -Port 8888 -Installpath "C:\MyPath\Nservicebus.Persistence"
-
   To configure all endpoints Error and Audit queues on this machine:
    
   C:\PS> Set-NServiceBusLocalMachineSettings -ErrorQueue "error@centralserver" -AuditQueue "audit@centralserver"
   
-  A slight more complex NServiceBus retrieve message commands might resemble 
-  the following command:
   
-  C:\PS> Get-NServiceBusMSMQMessage -QueueName result | select -ExpandProperty Headers | Where-Object{$_.Key -eq "NServiceBus.RelatedToTimeoutId" }
-  
-  The above command lists all messages that have a header with key "NServiceBus.RelatedToTimeoutId"
-  
-SEE ALSO
-  Get-NServiceBusMSMQMessage
-  Get-NServiceBusLocalMachineSettings
-  Get-NServiceBusVersion
-  Install-NServiceBusDTC
-  Install-NServiceBusMSMQ
-  Install-NServiceBusPerformanceCounters
-  Install-NServiceBusRavenDB
-  Set-NServiceBusLocalMachineSettings
-  Test-NServiceBusDTCInstallation
-  Test-NServiceBusMSMQInstallation
-  Test-NServiceBusPerformanceCountersInstallation
-  Test-NServiceBusRavenDBInstallation
-  
-  
-  
- 

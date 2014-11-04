@@ -19,12 +19,7 @@
 
         public bool CheckCounters()
         {
-            var countersAreSetup =  PerformanceCounterCategory.Exists(categoryName) && CheckCountersExist();
-            if (countersAreSetup)
-            {
-                WriteLine("Did not create counters since they already exist");
-            }
-            return countersAreSetup;
+            return  PerformanceCounterCategory.Exists(categoryName) && CheckCountersExist();
         }
 
         static bool CheckCountersExist()
@@ -44,13 +39,11 @@
 
         public void DeleteCategory()
         {
-            WriteLine("Deleting counters");
             PerformanceCounterCategory.Delete(categoryName);
         }
 
         public void SetupCounters()
         {
-            WriteLine("Creating counters");
             var counterCreationCollection = new CounterCreationDataCollection(Counters.ToArray());
             PerformanceCounterCategory.Create(categoryName, "NServiceBus statistics", PerformanceCounterCategoryType.MultiInstance, counterCreationCollection);
             PerformanceCounter.CloseSharedResources(); // http://blog.dezfowler.com/2007/08/net-performance-counter-problems.html

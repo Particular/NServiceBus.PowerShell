@@ -1,10 +1,11 @@
 ﻿namespace NServiceBus.PowerShell
 {
     using System;
+    using System.Diagnostics;
     using System.Management.Automation;
-    using System.Security;
     using Helpers;
     using Microsoft.Win32;
+    using RegistryView = Helpers.RegistryView;
 
     [Cmdlet(VerbsCommon.Set, "NServiceBusLocalMachineSettings", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     public class SetNServiceBusLocalMachineSettings : PSCmdlet

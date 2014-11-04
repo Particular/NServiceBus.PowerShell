@@ -19,19 +19,4 @@
             }
         }
     }
-
-    [Cmdlet(VerbsDiagnostic.Test, "NServiceBusMSMQInstallation")]
-    public class ValidateMsmq : CmdletBase
-    {
-        protected override void ProcessRecord()
-        {
-            var msmqIsGood = new MsmqSetup(Host).IsInstallationGood();
-
-            WriteVerbose(msmqIsGood
-                             ? "MSMQ is installed and setup for use with NServiceBus."
-                             : "MSMQ is not installed.");
-
-            WriteObject(msmqIsGood);
-        }
-    }
 }

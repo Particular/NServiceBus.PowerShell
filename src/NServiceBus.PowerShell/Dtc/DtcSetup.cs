@@ -6,7 +6,8 @@
     using System.ServiceProcess;
     using Microsoft.Win32;
     using Helpers;
-    
+    using RegistryView = Helpers.RegistryView;
+
 
     public class DtcSetup : CmdletHelperBase
     {
@@ -55,9 +56,6 @@
 
         bool DoesSecurityConfigurationRequireRestart(bool doChanges)
         {
-            
-            WriteVerbose("Checking if DTC is configured correctly.");
-
             var regview = EnvironmentHelper.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default;
             var hklm = RegistryHelper.LocalMachine(regview);
 
@@ -77,7 +75,7 @@
                     {
                         throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", val, 1, keyName));
                     }
-                    WriteLine("DTC configuration fixed.");
+                    WriteWarning("DTC configuration was fixed.");
                 }
                 requireRestart = true;
             }

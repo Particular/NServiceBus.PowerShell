@@ -2,7 +2,6 @@
 {
     using System.Management.Automation;
    
-
     [Cmdlet(VerbsDiagnostic.Test, "NServiceBusPerformanceCountersInstallation")]
     public class ValidatePerformanceCounters : CmdletBase
     {
@@ -10,11 +9,14 @@
         {
             var countersAreGood = new PerformanceCounterSetup(Host).CheckCounters();
 
-            WriteVerbose(countersAreGood
+            var status = countersAreGood
                 ? "NServiceBus Performance Counters are setup and ready for use with NServiceBus."
-                : "NServiceBus Performance Counters are not properly configured.");
+                : "NServiceBus Performance Counters are not properly configured.";
 
-            WriteObject(countersAreGood);
+            var p = new PSObject();
+            p.Properties.Add(new PSNoteProperty("Message", status));
+            p.Properties.Add(new PSNoteProperty("Installed", countersAreGood));
+            WriteObject(p);
         }
     }
 }

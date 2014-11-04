@@ -29,7 +29,6 @@
         void Create()
         {
             var setup = new PerformanceCounterSetup(Host);
-
             var allCountersExist = setup.CheckCounters();
             if (allCountersExist)
             {
