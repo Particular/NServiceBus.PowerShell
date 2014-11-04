@@ -1,6 +1,5 @@
 ﻿namespace NServiceBus.PowerShell
 {
-    using System.Collections;
     using System.Collections.Specialized;
     using System.Management.Automation;
     using Helpers;

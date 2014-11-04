@@ -1,7 +1,6 @@
 ﻿namespace NServiceBus.PowerShell
 {
     using System;
-    using System.Diagnostics;
     using System.Management.Automation;
     using Helpers;
     using Microsoft.Win32;
