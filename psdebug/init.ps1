@@ -1,7 +1,7 @@
 <#
     Call this via 
 
-    Powershell.exe -V 2 -NoLogo -NoExit -File Init.PS1 
+    Powershell.exe -V 2 -ExecutionPolicy Unrestricted -NoLogo -NoExit -File Init.PS1 
 
 #>
 
