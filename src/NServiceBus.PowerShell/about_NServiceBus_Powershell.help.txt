@@ -34,15 +34,4 @@ LONG DESCRIPTION
 
   Get-NServiceBusLocalMachineSettings                  Shows the default Error and Audit queues.
   
-Sample Commands
-  
-  To checks the status of the NServiceBus performance counters on this box:
-  	
-  C:\PS> $countersAreInstalled = Test-NServiceBusPerformanceCountersInstallation
-  C:\PS> "PerformanceCounters are correctly installed: " + $countersAreInstalled
-  	
-  To configure all endpoints Error and Audit queues on this machine:
-   
-  C:\PS> Set-NServiceBusLocalMachineSettings -ErrorQueue "error@centralserver" -AuditQueue "audit@centralserver"
-  
   
