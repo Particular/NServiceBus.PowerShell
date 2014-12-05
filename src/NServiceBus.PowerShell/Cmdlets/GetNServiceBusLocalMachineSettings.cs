@@ -1,6 +1,5 @@
 ﻿namespace NServiceBus.PowerShell
 {
-    using System;
     using System.Collections.Specialized;
     using System.Management.Automation;
     using Helpers;
@@ -11,10 +10,10 @@
     {
         StringDictionary regResults = new StringDictionary();
 
-        const string audit64 = "AuditQueue (64Bit Registry)";
-        const string error64 = "ErrorQueue (64Bit Registry)";
-        const string audit32 = "AuditQueue (32Bit Registry)";
-        const string error32 = "ErrorQueue (32Bit Registry)";
+        const string audit64 = "AuditQueue (64Bit)";
+        const string error64 = "ErrorQueue (64Bit)";
+        const string audit32 = "AuditQueue (32Bit)";
+        const string error32 = "ErrorQueue (32Bit)";
 
         protected override void ProcessRecord()
         {
@@ -57,19 +56,8 @@
                     }
                 }
             }
-
-            var psObj = new PSObject();
-            var keys = new string[regResults.Count];
-            regResults.Keys.CopyTo(keys, 0);
-            Array.Sort(keys);
-
-
-            foreach (var name in keys)
-            {
-                psObj.Properties.Add(new PSNoteProperty(name, regResults[name]));
-            }
-
-            WriteObject(psObj);
+            
+            WriteObject(regResults);
         }
     }
 }
