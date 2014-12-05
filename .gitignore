@@ -1,4 +1,5 @@
 nugets
+deploy
 build32
 binaries
 obj
@@ -35,4 +36,3 @@ _NCrunch_NServiceBus/*
 logs
 run-git.cmd
 src/Chocolatey/Build/*
-App_Packages
