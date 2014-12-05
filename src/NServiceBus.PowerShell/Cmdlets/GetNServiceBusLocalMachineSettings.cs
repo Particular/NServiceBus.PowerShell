@@ -64,7 +64,7 @@
             Array.Sort(keys);
 
 
-            foreach (string name in keys)
+            foreach (var name in keys)
             {
                 psObj.Properties.Add(new PSNoteProperty(name, regResults[name]));
             }
