@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\CmdletHelperBase.cs" />
+    <Compile Include="Cmdlets\UninstallPerformanceCounters.cs" />
     <Compile Include="Cmdlets\ValidateDtc.cs" />
     <Compile Include="Cmdlets\ValidateMsmq.cs" />
     <Compile Include="Helpers\Action.cs" />
@@ -78,10 +79,6 @@
     <EmbeddedResource Include="RavenResources\*.*">
       <Visible>false</Visible>
     </EmbeddedResource>
-    <None Include="Examples\Get-Message.ps1" />
-    <None Include="Examples\Install-PerformanceCounters.ps1" />
-    <None Include="Examples\Install-Dtc.ps1" />
-    <None Include="Examples\Install-Msmq.ps1" />
     <Content Include="NServiceBus.Powershell.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
