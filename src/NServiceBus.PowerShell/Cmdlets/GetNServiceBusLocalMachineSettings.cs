@@ -1,5 +1,6 @@
 ﻿namespace NServiceBus.PowerShell
 {
+    using System;
     using System.Collections.Specialized;
     using System.Management.Automation;
     using Helpers;
@@ -58,9 +59,14 @@
             }
 
             var psObj = new PSObject();
-            foreach (string s in regResults.Keys)
+            var keys = new string[regResults.Count];
+            regResults.Keys.CopyTo(keys, 0);
+            Array.Sort(keys);
+
+
+            foreach (string name in keys)
             {
-                psObj.Properties.Add(new PSNoteProperty(s, regResults[key]));
+                psObj.Properties.Add(new PSNoteProperty(name, regResults[name]));
             }
 
             WriteObject(psObj);
