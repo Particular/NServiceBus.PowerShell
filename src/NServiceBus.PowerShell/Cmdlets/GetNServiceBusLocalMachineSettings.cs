@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
     using System.Management.Automation;
-    using Helpers;
     using NServiceBus.PowerShell.Cmdlets;
-
+    using NServiceBus.PowerShell.Helpers;
 
     [Cmdlet(VerbsCommon.Get, "NServiceBusLocalMachineSettings")]
     public class GetNServiceBusLocalMachineSettings : CmdletBase
@@ -22,7 +20,7 @@
                 var key64Exists = (RegistryHelper.LocalMachine(RegistryView.Registry64).KeyExists(key));
                 var result64 = new MachineSettingsResult
                 {
-                    Registry = "64 Bit",
+                    Registry = "64 bit",
                     AuditQueue = key64Exists ? (string) RegistryHelper.LocalMachine(RegistryView.Registry64).ReadValue(key, "AuditQueue", null, false) : null,
                     ErrorQueue = key64Exists ? (string) RegistryHelper.LocalMachine(RegistryView.Registry64).ReadValue(key, "ErrorQueue", null, false) : null
                 };
@@ -32,7 +30,7 @@
             var key32Exists = (RegistryHelper.LocalMachine(RegistryView.Registry32).KeyExists(key));
             var result32 = new MachineSettingsResult
             {
-                Registry = "32 Bit",
+                Registry = "32 bit",
                 AuditQueue = key32Exists ? (string)RegistryHelper.LocalMachine(RegistryView.Registry32).ReadValue(key, "AuditQueue", null, false) : null,
                 ErrorQueue = key32Exists ? (string)RegistryHelper.LocalMachine(RegistryView.Registry32).ReadValue(key, "ErrorQueue", null, false) : null
             };
@@ -49,7 +47,6 @@
                 {
                     WriteWarning("ErrorQueue value is different for 32 bit and 64 bit applications");
                 }
-
             }
 
             foreach (var result in results)
