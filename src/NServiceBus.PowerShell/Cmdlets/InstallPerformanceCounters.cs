@@ -3,17 +3,14 @@
     using System;
     using System.Management.Automation;
     
-
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusPerformanceCounters", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Medium)]
     public class InstallPerformanceCounters : CmdletBase
     {
         // ReSharper disable  MemberCanBePrivate.Global
-
         [Parameter(Mandatory = false, HelpMessage = "Force re-creation of performance counters if they already exist.")]
         public SwitchParameter Force { get; set; }
 
         // ReSharper enable  MemberCanBePrivate.Global
-
         protected override void ProcessRecord()
         {
             if (!ShouldProcess(Environment.MachineName))
@@ -60,7 +57,6 @@
                 var errorRecord = new ErrorRecord(exception, "FailedToDeleteCategory", ErrorCategory.NotSpecified, null);
                 ThrowTerminatingError(errorRecord);
             }
-          
             setup.SetupCounters();
         }
     }
