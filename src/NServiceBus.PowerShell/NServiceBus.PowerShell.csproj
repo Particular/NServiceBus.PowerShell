@@ -78,9 +78,6 @@
     <Compile Include="Cmdlets\ValidatePerformanceCounters.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="RavenResources\*.*">
-      <Visible>false</Visible>
-    </EmbeddedResource>
     <Content Include="Formats\NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -107,7 +104,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)..\BuildSupport\GitVersionTask\Build\GitVersionTask.targets" />
   <UsingTask TaskName="GitVersionTask.GetVersion" AssemblyFile="$(SolutionDir)..\buildsupport\GitVersionTask\GitVersionTask.dll" />
-  <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)..\msbuild\MSBuild.Community.Tasks.dll" />
+  <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)..\buildsupport\MSBuild.Community.Tasks.dll" />
   <Target Name="AfterBuild">
     <ItemGroup>
       <PSModuleFile Include="$(OutputPath)\NServiceBus.Powershell.psd1" />
