@@ -165,7 +165,7 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiEnvComponent">
-    <ROW Environment="PSModulePath" Name="=-PSModulePath" Value="[~];[PowerShellModules_Dir]" Component_="NServiceBus.PowerShell.dll"/>
+    <ROW Environment="PSModulePath" Name="+*PSModulePath" Value="[~];[PowerShellModules_Dir]" Component_="NServiceBus.PowerShell.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="particular.exe" SourcePath="Icon\particular.ico" Index="0"/>
