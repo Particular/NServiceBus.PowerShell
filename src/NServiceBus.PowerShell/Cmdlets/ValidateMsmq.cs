@@ -1,6 +1,7 @@
 namespace NServiceBus.PowerShell
 {
     using System.Management.Automation;
+    using NServiceBus.PowerShell.Cmdlets;
 
     [Cmdlet(VerbsDiagnostic.Test, "NServiceBusMSMQInstallation")]
     public class ValidateMsmq : CmdletBase
@@ -13,10 +14,7 @@ namespace NServiceBus.PowerShell
                 ? "MSMQ is installed and setup for use with NServiceBus."
                 : "MSMQ is not installed.";
 
-            var p = new PSObject();
-            p.Properties.Add(new PSNoteProperty("Message", status));
-            p.Properties.Add(new PSNoteProperty("Installed", msmqIsGood));
-            WriteObject(p);
+            WriteObject(new InstallationResult { Installed = msmqIsGood, Message = status });
         }
     }
 }

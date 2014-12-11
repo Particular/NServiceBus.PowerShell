@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>installresult</Name>
+      <ViewSelectedBy>
+        <TypeName>NServiceBus.Powershell.Cmdlets.InstallationResult</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>Message</Label>
+                <PropertyName>Message</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Installed</Label>
+                <PropertyName>Installed</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

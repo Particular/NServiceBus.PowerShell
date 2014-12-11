@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmdlets\InstallationResult.cs" />
     <Compile Include="Cmdlets\CmdletHelperBase.cs" />
+    <Compile Include="Cmdlets\MachineSettingsResult.cs" />
     <Compile Include="Cmdlets\UninstallPerformanceCounters.cs" />
     <Compile Include="Cmdlets\ValidateDtc.cs" />
     <Compile Include="Cmdlets\ValidateMsmq.cs" />
@@ -79,6 +81,10 @@
     <EmbeddedResource Include="RavenResources\*.*">
       <Visible>false</Visible>
     </EmbeddedResource>
+    <Content Include="Formats\NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="NServiceBus.Powershell.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -86,6 +92,12 @@
   <ItemGroup>
     <Content Include="about_NServiceBus_Powershell.help.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Formats\NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

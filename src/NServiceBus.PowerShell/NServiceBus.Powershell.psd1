@@ -12,4 +12,9 @@
 	CmdletsToExport = '*'
 	VariablesToExport = '*'
 	AliasesToExport = '*'
+	FormatsToProcess = @(
+    '.\Formats\NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml',
+    '.\Formats\NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml'
+	)
+
 }

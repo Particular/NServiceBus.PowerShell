@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>install</Name>
+      <ViewSelectedBy>
+        <TypeName>NServiceBus.Powershell.Cmdlets.MachineSettingsResult</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>Registry</Label>
+                <PropertyName>Registry</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>AuditQueue</Label>
+                <PropertyName>AuditQueue</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>ErrorQueue</Label>
+                <PropertyName>ErrorQueue</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>
