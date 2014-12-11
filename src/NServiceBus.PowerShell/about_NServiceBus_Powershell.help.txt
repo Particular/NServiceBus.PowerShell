@@ -34,4 +34,6 @@ LONG DESCRIPTION
 
   Get-NServiceBusLocalMachineSettings                  Shows the default Error and Audit queues.
   
+  Uninstall-NServiceBusPerformanceCounters             Removes NServiceBus performance counters
+                                                       from the machine
   
