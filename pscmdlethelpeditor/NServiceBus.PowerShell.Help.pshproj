@@ -11,9 +11,9 @@
       <Name>Get-NServiceBusLocalMachineSettings</Name>
       <GeneralHelp>
         <Synopsis>Shows the default Error and Audit queues.</Synopsis>
-        <Description>Reads the registry settings for the default audit and error queues.  These settings can be found in the registry "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the setting can also be set in the 32 bit registry. This cmdlet will list both 64 bit and 32 bit settings.
+        <Description>Reads the registry settings for the default audit and error queues.  These settings can be found in the registry "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the setting can also be set in the 32 bit registry. This cmdlet will list both 64-bit and 32-bit settings.
 
-To set these properties the Set-NServiceBusLocalMachineSettings can be used.</Description>
+To add these properties use Set-NServiceBusLocalMachineSettings</Description>
         <Notes>This cmdlet requires elevated privileges.</Notes>
         <InputType />
         <InputUrl />
@@ -25,6 +25,7 @@ To set these properties the Set-NServiceBusLocalMachineSettings can be used.</De
       <ParamSets>
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
       </ParamSets>
       <Syntax>
         <string>Get-NServiceBusLocalMachineSettings</string>
@@ -34,6 +35,10 @@ To set these properties the Set-NServiceBusLocalMachineSettings can be used.</De
       <RelatedLinks>
         <RelatedLink>
           <LinkText>Set-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Clear-NServiceBusLocalMachineSettings</LinkText>
           <LinkUrl />
         </RelatedLink>
         <RelatedLink>
@@ -64,6 +69,7 @@ XaTransactions : 1 (DWORD)</Description>
         <ReturnTypeDescription />
       </GeneralHelp>
       <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
       </ParamSets>
@@ -116,7 +122,7 @@ XaTransactions : 1 (DWORD)</Description>
         <Synopsis>Configures MSMQ on the machine to work with NServiceBus</Synopsis>
         <Description>This cmdlet will configure and attempt install and configuration the MSMQ service on this machine. The cmdlet uses either OCSetup.exe or DISM.exe command to install the required Windows Feature depending on the version of Windows installed.
 
-If a Windows Feature installation is installed a a reboot to complete. 
+If a Windows Feature installation is installed a reboot may be required to complete the install.
 </Description>
         <Notes>This cmdlet requires elevated privileges.</Notes>
         <InputType />
@@ -127,6 +133,7 @@ If a Windows Feature installation is installed a a reboot to complete.
         <ReturnTypeDescription />
       </GeneralHelp>
       <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
       </ParamSets>
@@ -197,6 +204,7 @@ Use the Test-NServiceBusPerformanceCountersInstallation cmdlet to verify the cou
         <ReturnTypeDescription />
       </GeneralHelp>
       <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Force Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Force Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Force Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
       </ParamSets>
@@ -275,6 +283,7 @@ When the Distributor processes it, the Worker with the address specified in the 
       <ParamSets>
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="WorkerAddress DistributorAddress TransactionalDistributorQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="WorkerAddress DistributorAddress TransactionalDistributorQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="WorkerAddress DistributorAddress TransactionalDistributorQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
       </ParamSets>
       <Syntax>
         <string>Remove-NServiceBusMSMQWorker [-WorkerAddress] &lt;String&gt; [-DistributorAddress] &lt;String&gt; [-TransactionalDistributorQueue] &lt;Boolean&gt;</string>
@@ -293,8 +302,8 @@ When the Distributor processes it, the Worker with the address specified in the 
         <ParameterDescription type="String" varLen="false" required="true" dynamic="false" pipeRemaining="false" pipe="true" pipeProp="false" isPos="true" pos="1" globbing="false">
           <Name>DistributorAddress</Name>
           <Attributes>
-            <string>System.Management.Automation.ValidateNotNullOrEmptyAttribute</string>
             <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.ValidateNotNullOrEmptyAttribute</string>
           </Attributes>
           <Aliases />
           <Description />
@@ -328,9 +337,9 @@ When the Distributor processes it, the Worker with the address specified in the 
       <Name>Set-NServiceBusLocalMachineSettings</Name>
       <GeneralHelp>
         <Synopsis>Sets the default Error and Audit queues.</Synopsis>
-        <Description>Sets the registry settings for the default audit and error queues.  These settings can be found in the registry under "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the setting are applied to both the 32 bit and 64-bit registry. 
+        <Description>Sets the registry settings for the default audit and error queues.  These settings can be found in the registry under "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the settings are applied to both the 32-bit and 64-bit registry. 
 
-To view these properties use Get-NServiceBusLocalMachineSettings.</Description>
+</Description>
         <Notes>This cmdlet requires elevated privileges.</Notes>
         <InputType />
         <InputUrl />
@@ -340,6 +349,7 @@ To view these properties use Get-NServiceBusLocalMachineSettings.</Description>
         <ReturnTypeDescription />
       </GeneralHelp>
       <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="ErrorQueue AuditQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="ErrorQueue AuditQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="ErrorQueue AuditQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
       </ParamSets>
@@ -397,11 +407,11 @@ To view these properties use Get-NServiceBusLocalMachineSettings.</Description>
           <LinkUrl />
         </RelatedLink>
         <RelatedLink>
-          <LinkText>http://docs.particular.net</LinkText>
+          <LinkText>Clear-NServiceBusLocalMachineSettings</LinkText>
           <LinkUrl />
         </RelatedLink>
         <RelatedLink>
-          <LinkText />
+          <LinkText>http://docs.particular.net</LinkText>
           <LinkUrl />
         </RelatedLink>
       </RelatedLinks>
@@ -432,6 +442,7 @@ These settings can be set by using the Install-NServiceBusDTC cmdlet
       <ParamSets>
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
       </ParamSets>
       <Syntax>
         <string>Test-NServiceBusDTCInstallation</string>
@@ -455,8 +466,7 @@ These settings can be set by using the Install-NServiceBusDTC cmdlet
       <Name>Test-NServiceBusMSMQInstallation</Name>
       <GeneralHelp>
         <Synopsis>Validates MSMQ is correctly installed on the machine</Synopsis>
-        <Description>This cmdlet validates MSMQ is installed on the machine and the correct MSMQ sub features are installed.
-The cmdlet will also check that the service is started.
+        <Description>This cmdlet validates MSMQ is installed on the machine and the correct MSMQ sub features are installed.  The cmdlet will also check that the service is started.
 
 </Description>
         <Notes>This cmdlet requires elevated privileges.</Notes>
@@ -468,6 +478,7 @@ The cmdlet will also check that the service is started.
         <ReturnTypeDescription />
       </GeneralHelp>
       <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
       </ParamSets>
@@ -493,10 +504,7 @@ The cmdlet will also check that the service is started.
       <Name>Test-NServiceBusPerformanceCountersInstallation</Name>
       <GeneralHelp>
         <Synopsis>Validates that NServiceBus performance counters are correctly installed on the machine.</Synopsis>
-        <Description>This cmdlet validates that NServiceBus performance counters are correctly installed on the machine. 
-These performance counters can be added via the Install-NServiceBusPerformanceCounters cmdlet.
-
-For a breakdown of the performance counters see the Install-NServiceBusPerformanceCounters cmdlet.
+        <Description>This cmdlet validates that NServiceBus performance counters are correctly installed on the machine.  Refer to Install-NserviceBusPerformanceCounters for more details regarding the NServiceBus performance counters.
 </Description>
         <Notes>This cmdlet requires elevated privileges.</Notes>
         <InputType />
@@ -507,6 +515,7 @@ For a breakdown of the performance counters see the Install-NServiceBusPerforman
         <ReturnTypeDescription />
       </GeneralHelp>
       <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
       </ParamSets>
@@ -536,9 +545,7 @@ For a breakdown of the performance counters see the Install-NServiceBusPerforman
       <Name>Uninstall-NServiceBusPerformanceCounters</Name>
       <GeneralHelp>
         <Synopsis>Removes the NServiceBus performance counters from this machine.</Synopsis>
-        <Description>This cmdlet removes the NServiceBus performance if they are installed on this machine.
-
-For a breakdown of the performance counters see the Install-NServiceBusPerformanceCounters cmdlet.
+        <Description>This cmdlet removes the NServiceBus performance if they are installed on this machine. Refer to Install-NserviceBusPerformanceCounters for more details regarding the NServiceBus performance counters.
 </Description>
         <Notes>This cmdlet requires elevated privileges
 
@@ -551,6 +558,7 @@ Refer to https://docs.particular.net for more information</Notes>
         <ReturnTypeDescription />
       </GeneralHelp>
       <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
         <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
       </ParamSets>
@@ -591,6 +599,46 @@ Refer to https://docs.particular.net for more information</Notes>
         </RelatedLink>
         <RelatedLink>
           <LinkText>Test-NServiceBusPerformanceCountersInstallation</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Clear" noun="NServiceBusLocalMachineSettings">
+      <Name>Clear-NServiceBusLocalMachineSettings</Name>
+      <GeneralHelp>
+        <Synopsis>Removes the default Error and Audit queues settings.</Synopsis>
+        <Description>Removes the registry settings for the default audit and error queues.  These settings can be found in the registry "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the setting is removed in both the 32 bit registry and 64 bit registry. 
+
+</Description>
+        <Notes />
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Clear-NServiceBusLocalMachineSettings</string>
+      </Syntax>
+      <Parameters />
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Get-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Set-NServiceBusLocalMachineSettings</LinkText>
           <LinkUrl />
         </RelatedLink>
         <RelatedLink>

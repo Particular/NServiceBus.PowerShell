@@ -12,6 +12,8 @@ LONG DESCRIPTION
   
   Cmdlet                                               Description
   -------------------------------------------------------------------------------------------------
+  Clear-NServiceBusLocalMachineSettings				   Remove default Error and Audit queues settings.
+
   Install-NServiceBusDTC                               Configures DTC on the machine.
      												       
   Install-NServiceBusPerformanceCounters               Adds NServiceBus performance counters
