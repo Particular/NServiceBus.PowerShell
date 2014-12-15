@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmdlets\InstallPlatformLicense.cs" />
     <Compile Include="Cmdlets\RemoveNServiceBusLocalMachineSettings.cs" />
     <Compile Include="Cmdlets\InstallationResult.cs" />
     <Compile Include="Cmdlets\CmdletHelperBase.cs" />
