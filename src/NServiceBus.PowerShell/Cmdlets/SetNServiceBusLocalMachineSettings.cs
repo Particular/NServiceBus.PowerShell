@@ -6,7 +6,7 @@
     using Microsoft.Win32;
     using RegistryView = Helpers.RegistryView;
 
-    [Cmdlet(VerbsCommon.Set, "NServiceBusLocalMachineSettings", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsCommon.Set, "NServiceBusLocalMachineSettings")]
     public class SetNServiceBusLocalMachineSettings : CmdletBase
     {
         // ReSharper disable  MemberCanBePrivate.Global
@@ -20,11 +20,6 @@
         // ReSharper enable  MemberCanBePrivate.Global
         protected override void ProcessRecord()
         {
-            if (!ShouldProcess(Environment.MachineName))
-            {
-                return;
-            }
-
             if (EnvironmentHelper.Is64BitOperatingSystem)
             {
                 WriteRegistry(RegistryView.Registry32);

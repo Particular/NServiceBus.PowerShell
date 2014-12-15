@@ -2,7 +2,7 @@
 {
     using System.Management.Automation;
 
-    [Cmdlet(VerbsLifecycle.Uninstall, "NServiceBusPerformanceCounters", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Medium)]
+    [Cmdlet(VerbsLifecycle.Uninstall, "NServiceBusPerformanceCounters")]
     public class UninstallPerformanceCounters : CmdletBase
     {
         protected override void ProcessRecord()

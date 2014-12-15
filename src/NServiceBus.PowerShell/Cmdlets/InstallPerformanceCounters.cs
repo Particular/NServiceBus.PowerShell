@@ -3,7 +3,7 @@
     using System;
     using System.Management.Automation;
     
-    [Cmdlet(VerbsLifecycle.Install, "NServiceBusPerformanceCounters", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.Medium)]
+    [Cmdlet(VerbsLifecycle.Install, "NServiceBusPerformanceCounters")]
     public class InstallPerformanceCounters : CmdletBase
     {
         // ReSharper disable  MemberCanBePrivate.Global
@@ -13,10 +13,6 @@
         // ReSharper enable  MemberCanBePrivate.Global
         protected override void ProcessRecord()
         {
-            if (!ShouldProcess(Environment.MachineName))
-            {
-                return;
-            }
             if (Force)
             {
                 ForceCreate();
