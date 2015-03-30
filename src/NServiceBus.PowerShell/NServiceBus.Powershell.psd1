@@ -7,7 +7,7 @@
 	CLRVersion = '2.0'
 	DotNetFrameworkVersion = '2.0'
 	CompanyName = 'Particular Software'
-	Copyright = '(c) 2014 NServiceBus Ltd. All rights reserved.'
+	Copyright = '(c) 2015 NServiceBus Ltd. All rights reserved.'
 	FunctionsToExport='*'
 	CmdletsToExport = '*'
 	VariablesToExport = '*'
@@ -16,5 +16,4 @@
     '.\Formats\NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml',
     '.\Formats\NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml'
 	)
-
 }

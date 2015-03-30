@@ -10,7 +10,7 @@
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusPlatformLicense")]
     public class InstallPlatformLicense : CmdletBase
     {
-        [Parameter(Mandatory = true, HelpMessage = "Platform license file to import")]
+        [Parameter(Mandatory = true, HelpMessage = "Platform license file to import", Position = 0)]
         [ValidateNotNullOrEmpty]
         public string LicenseFile { get; set; } 
 

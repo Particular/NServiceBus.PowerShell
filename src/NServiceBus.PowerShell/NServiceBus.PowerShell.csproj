@@ -92,11 +92,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="about_NServiceBus_Powershell.help.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Formats\NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
