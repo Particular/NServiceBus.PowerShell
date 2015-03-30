@@ -1,0 +1,669 @@
+<?xml version="1.0"?>
+<ModuleObject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" fVersion="1.1" type="Manifest" mclass="Module" useSupports="false">
+  <Name>NServiceBus.PowerShell</Name>
+  <Version>5.0.0</Version>
+  <Description>NServiceBus PowerShell</Description>
+  <HasManifest>true</HasManifest>
+  <OverridePostCount>false</OverridePostCount>
+  <FetchPostCount xsi:nil="true" />
+  <Cmdlets>
+    <CmdletObject verb="Get" noun="NServiceBusLocalMachineSettings">
+      <Name>Get-NServiceBusLocalMachineSettings</Name>
+      <GeneralHelp>
+        <Synopsis>Shows the default Error and Audit queues.</Synopsis>
+        <Description>Reads the registry settings for the default audit and error queues.  These settings can be found in the registry "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the setting can also be set in the 32 bit registry. This cmdlet will list both 64-bit and 32-bit settings.
+
+To add these properties use Set-NServiceBusLocalMachineSettings</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Get-NServiceBusLocalMachineSettings</string>
+      </Syntax>
+      <Parameters />
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Set-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Clear-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Install" noun="NServiceBusDTC">
+      <Name>Install-NServiceBusDTC</Name>
+      <GeneralHelp>
+        <Synopsis>Configures DTC on the machine to work with NServiceBus</Synopsis>
+        <Description>This cmdlet will configure and attempt to start the Microsoft Distributed Transaction Co-ordinator service on this machine.  To configure MSDTC with NServiceBus the cmdlet sets the following values under the 
+"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security" registry key:
+
+NetworkDtcAccess : 1 (DWORD)
+NetworkDtcAccessOutbound : 1 (DWORD)
+NetworkDtcAccessTransactions: 1 (DWORD)
+XaTransactions : 1 (DWORD)</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable WhatIf Confirm" />
+      </ParamSets>
+      <Syntax>
+        <string>Install-NServiceBusDTC [-WhatIf] [-Confirm]</string>
+      </Syntax>
+      <Parameters>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>WhatIf</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.AliasAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>wi</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>Confirm</Name>
+          <Attributes>
+            <string>System.Management.Automation.AliasAttribute</string>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>cf</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+      </Parameters>
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Test-NServiceBusDTCInstallation</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Install" noun="NServiceBusMSMQ">
+      <Name>Install-NServiceBusMSMQ</Name>
+      <GeneralHelp>
+        <Synopsis>Configures MSMQ on the machine to work with NServiceBus</Synopsis>
+        <Description>This cmdlet will configure and attempt install and configuration the MSMQ service on this machine. The cmdlet uses either OCSetup.exe or DISM.exe command to install the required Windows Feature depending on the version of Windows installed.
+
+If a Windows Feature installation is installed a reboot may be required to complete the install.
+</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Install-NServiceBusMSMQ</string>
+      </Syntax>
+      <Parameters>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>WhatIf</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.AliasAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>wi</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>Confirm</Name>
+          <Attributes>
+            <string>System.Management.Automation.AliasAttribute</string>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>cf</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+      </Parameters>
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Test-NServiceBusMSMQInstallation</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Install" noun="NServiceBusPerformanceCounters">
+      <Name>Install-NServiceBusPerformanceCounters</Name>
+      <GeneralHelp>
+        <Synopsis>Adds NServiceBus performance counters on this machine.</Synopsis>
+        <Description>This cmdlet adds the "NServiceBus statistics" Performance Monitor category.   
+Underneath this category the following counter are added:
+
+- Critical Time
+- SLA violation countdown
+- # of msgs successfully processed / sec
+- # of msgs pulled from the input queue /sec
+- # of msgs failures / sec
+
+Use the Test-NServiceBusPerformanceCountersInstallation cmdlet to verify the counters exist.
+  </Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Force Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Install-NServiceBusPerformanceCounters [-Force]</string>
+      </Syntax>
+      <Parameters>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>Force</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases />
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>WhatIf</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.AliasAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>wi</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>Confirm</Name>
+          <Attributes>
+            <string>System.Management.Automation.AliasAttribute</string>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>cf</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+      </Parameters>
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Test-NServiceBusPerformanceCountersInstallation</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Uninstall-NServiceBusPerformanceCounters</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Remove" noun="NServiceBusMSMQWorker">
+      <Name>Remove-NServiceBusMSMQWorker</Name>
+      <GeneralHelp>
+        <Synopsis>Sends a disconnect message to the distributor to remove a worker.</Synopsis>
+        <Description>This cmdlet can be used to sent a disconnect message to the Distributor control queue.
+
+When the Distributor processes it, the Worker with the address specified in the message is set to "disconnected".
+</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="WorkerAddress DistributorAddress TransactionalDistributorQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Remove-NServiceBusMSMQWorker [-WorkerAddress] &lt;String&gt; [-DistributorAddress] &lt;String&gt; [-TransactionalDistributorQueue] &lt;Boolean&gt;</string>
+      </Syntax>
+      <Parameters>
+        <ParameterDescription type="String" varLen="false" required="true" dynamic="false" pipeRemaining="false" pipe="true" pipeProp="false" isPos="true" pos="0" globbing="false">
+          <Name>WorkerAddress</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.ValidateNotNullOrEmptyAttribute</string>
+          </Attributes>
+          <Aliases />
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="String" varLen="false" required="true" dynamic="false" pipeRemaining="false" pipe="true" pipeProp="false" isPos="true" pos="1" globbing="false">
+          <Name>DistributorAddress</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.ValidateNotNullOrEmptyAttribute</string>
+          </Attributes>
+          <Aliases />
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="Boolean" varLen="false" required="true" dynamic="false" pipeRemaining="false" pipe="true" pipeProp="false" isPos="true" pos="2" globbing="false">
+          <Name>TransactionalDistributorQueue</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases />
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+      </Parameters>
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText />
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Set" noun="NServiceBusLocalMachineSettings">
+      <Name>Set-NServiceBusLocalMachineSettings</Name>
+      <GeneralHelp>
+        <Synopsis>Sets the default Error and Audit queues.</Synopsis>
+        <Description>Sets the registry settings for the default audit and error queues.  These settings can be found in the registry under "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the settings are applied to both the 32-bit and 64-bit registry. 
+
+</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="ErrorQueue AuditQueue Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Set-NServiceBusLocalMachineSettings [-ErrorQueue &lt;String&gt;] [-AuditQueue &lt;String&gt;]</string>
+      </Syntax>
+      <Parameters>
+        <ParameterDescription type="String" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>ErrorQueue</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases />
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="String" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>AuditQueue</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases />
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>WhatIf</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.AliasAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>wi</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>Confirm</Name>
+          <Attributes>
+            <string>System.Management.Automation.AliasAttribute</string>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>cf</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+      </Parameters>
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Get-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Clear-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Test" noun="NServiceBusDTCInstallation">
+      <Name>Test-NServiceBusDTCInstallation</Name>
+      <GeneralHelp>
+        <Synopsis>Test the configuration of the DTC service to ensure it has the appropriate setting to work with NServiceBus</Synopsis>
+        <Description>This cmdlet will check the  Microsoft Distributed Transaction Co-ordinator service on this machine is setup for use with NServiceBus.  Specifically it checks the following values under the "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security" registry key are set as follows:
+
+NetworkDtcAccess : 1 (DWORD)
+NetworkDtcAccessOutbound : 1 (DWORD)
+NetworkDtcAccessTransactions: 1 (DWORD)
+XaTransactions : 1 (DWORD)
+
+These settings can be set by using the Install-NServiceBusDTC cmdlet
+</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Test-NServiceBusDTCInstallation</string>
+      </Syntax>
+      <Parameters />
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Install-NServiceBusDTC</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Test" noun="NServiceBusMSMQInstallation">
+      <Name>Test-NServiceBusMSMQInstallation</Name>
+      <GeneralHelp>
+        <Synopsis>Validates MSMQ is correctly installed on the machine</Synopsis>
+        <Description>This cmdlet validates MSMQ is installed on the machine and the correct MSMQ sub features are installed.  The cmdlet will also check that the service is started.
+
+</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Test-NServiceBusMSMQInstallation</string>
+      </Syntax>
+      <Parameters />
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Install-NServiceBusMSMQ</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Test" noun="NServiceBusPerformanceCountersInstallation">
+      <Name>Test-NServiceBusPerformanceCountersInstallation</Name>
+      <GeneralHelp>
+        <Synopsis>Validates that NServiceBus performance counters are correctly installed on the machine.</Synopsis>
+        <Description>This cmdlet validates that NServiceBus performance counters are correctly installed on the machine.  Refer to Install-NserviceBusPerformanceCounters for more details regarding the NServiceBus performance counters.
+</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Test-NServiceBusPerformanceCountersInstallation</string>
+      </Syntax>
+      <Parameters />
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Install-NServiceBusPerformanceCounters</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Uninstall-NServiceBusPerformanceCounters</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Uninstall" noun="NServiceBusPerformanceCounters">
+      <Name>Uninstall-NServiceBusPerformanceCounters</Name>
+      <GeneralHelp>
+        <Synopsis>Removes the NServiceBus performance counters from this machine.</Synopsis>
+        <Description>This cmdlet removes the NServiceBus performance if they are installed on this machine. Refer to Install-NserviceBusPerformanceCounters for more details regarding the NServiceBus performance counters.
+</Description>
+        <Notes>This cmdlet requires elevated privileges
+
+Refer to https://docs.particular.net for more information</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Uninstall-NServiceBusPerformanceCounters</string>
+      </Syntax>
+      <Parameters>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>WhatIf</Name>
+          <Attributes>
+            <string>System.Management.Automation.ParameterAttribute</string>
+            <string>System.Management.Automation.AliasAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>wi</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+        <ParameterDescription type="SwitchParameter" varLen="false" required="false" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="false" pos="named" globbing="false">
+          <Name>Confirm</Name>
+          <Attributes>
+            <string>System.Management.Automation.AliasAttribute</string>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases>
+            <string>cf</string>
+          </Aliases>
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+      </Parameters>
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Install-NServiceBusPerformanceCounters</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Test-NServiceBusPerformanceCountersInstallation</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Clear" noun="NServiceBusLocalMachineSettings">
+      <Name>Clear-NServiceBusLocalMachineSettings</Name>
+      <GeneralHelp>
+        <Synopsis>Removes the default Error and Audit queues settings.</Synopsis>
+        <Description>Removes the registry settings for the default audit and error queues.  These settings can be found in the registry "HKEY_LOCAL_MACHINE\SOFTWARE\ParticularSoftware\ServiceBus".  On 64 bit operating system the setting is removed in both the 32 bit registry and 64 bit registry. 
+
+</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Clear-NServiceBusLocalMachineSettings</string>
+      </Syntax>
+      <Parameters />
+      <Examples />
+      <RelatedLinks>
+        <RelatedLink>
+          <LinkText>Get-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>Set-NServiceBusLocalMachineSettings</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+        <RelatedLink>
+          <LinkText>http://docs.particular.net</LinkText>
+          <LinkUrl />
+        </RelatedLink>
+      </RelatedLinks>
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+    <CmdletObject verb="Install" noun="NServiceBusPlatformLicense">
+      <Name>Install-NServiceBusPlatformLicense</Name>
+      <GeneralHelp>
+        <Synopsis>Imports the Particular Platform License into the registry</Synopsis>
+        <Description>Imports the the Particular Platform License into the registry.  For 64-bit operating systems the license is written to both the 32-bit and 64-bit registry.</Description>
+        <Notes>This cmdlet requires elevated privileges.</Notes>
+        <InputType />
+        <InputUrl />
+        <InputTypeDescription />
+        <ReturnType />
+        <ReturnUrl />
+        <ReturnTypeDescription />
+      </GeneralHelp>
+      <ParamSets>
+        <CommandParameterSetInfo2 Name="__AllParameterSets" Params="LicenseFile Verbose Debug ErrorAction WarningAction ErrorVariable WarningVariable OutVariable OutBuffer PipelineVariable" />
+      </ParamSets>
+      <Syntax>
+        <string>Install-NServiceBusPlatformLicense [-LicenseFile] &lt;String&gt;</string>
+      </Syntax>
+      <Parameters>
+        <ParameterDescription type="String" varLen="false" required="true" dynamic="false" pipeRemaining="false" pipe="false" pipeProp="false" isPos="true" pos="0" globbing="false">
+          <Name>LicenseFile</Name>
+          <Attributes>
+            <string>System.Management.Automation.ValidateNotNullOrEmptyAttribute</string>
+            <string>System.Management.Automation.ParameterAttribute</string>
+          </Attributes>
+          <Aliases />
+          <Description />
+          <DefaultValue />
+        </ParameterDescription>
+      </Parameters>
+      <Examples />
+      <RelatedLinks />
+      <SupportInformation ad="false" rsat="false" ps2="false" ps3="false" ps4="false" ps5="false" wxp="false" wv="false" w7="false" w8="false" w81="false" w2k3s="false" w2k3e="false" w2k3d="false" w2k8s="false" w2k8e="false" w2k8d="false" w2k8r2s="false" w2k8r2e="false" w2k8r2d="false" w2k12s="false" w2k12d="false" w2k12r2s="false" w2k12r2d="false" />
+      <Publish>false</Publish>
+    </CmdletObject>
+  </Cmdlets>
+</ModuleObject>

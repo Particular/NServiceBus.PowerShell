@@ -1,54 +1,61 @@
-﻿namespace NServiceBus.Setup.Windows.PerformanceCounters
+﻿namespace NServiceBus.PowerShell
 {
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
+    using System.Management.Automation.Host;
 
-    public class PerformanceCounterSetup
+    public class PerformanceCounterSetup : CmdletHelperBase
     {
-        const string categoryName = "NServiceBus";
 
-        public static bool CheckCounters()
+        public PerformanceCounterSetup()
         {
-            return 
-                PerformanceCounterCategory.Exists(categoryName) && 
-                Counters.All(counter => PerformanceCounterCategory.CounterExists(counter.CounterName, categoryName));
         }
 
-        public static bool DoesCategoryExist()
+        public PerformanceCounterSetup(PSHost Host) : base(Host)
+        {
+        }
+
+        const string categoryName = "NServiceBus";
+
+        public bool CheckCounters()
+        {
+            return  PerformanceCounterCategory.Exists(categoryName) && CheckCountersExist();
+        }
+
+        static bool CheckCountersExist()
+        {
+            foreach (var counter in Counters)
+            {
+                if (!PerformanceCounterCategory.CounterExists(counter.CounterName, categoryName))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool DoesCategoryExist()
         {
             return PerformanceCounterCategory.Exists(categoryName);
         }
 
-        public static void DeleteCategory()
+        public void DeleteCategory()
         {
             PerformanceCounterCategory.Delete(categoryName);
         }
 
-        public static void SetupCounters()
+        public void SetupCounters()
         {
             var counterCreationCollection = new CounterCreationDataCollection(Counters.ToArray());
             PerformanceCounterCategory.Create(categoryName, "NServiceBus statistics", PerformanceCounterCategoryType.MultiInstance, counterCreationCollection);
             PerformanceCounter.CloseSharedResources(); // http://blog.dezfowler.com/2007/08/net-performance-counter-problems.html
         }
 
-       internal static List<CounterCreationData> Counters = new List<CounterCreationData>
+        static List<CounterCreationData> Counters = new List<CounterCreationData>
                     {
-                        new CounterCreationData("Critical Time", 
-                                                "Age of the oldest message in the queue.",
-                                                PerformanceCounterType.NumberOfItems32),
-                        new CounterCreationData("SLA violation countdown",
-                                                "Seconds until the SLA for this endpoint is breached.",
-                                                PerformanceCounterType.NumberOfItems32),
-                        new CounterCreationData("# of msgs successfully processed / sec",
-                                                "The current number of messages processed successfully by the transport per second.",
-                                                PerformanceCounterType.RateOfCountsPerSecond32),
-                        new CounterCreationData("# of msgs pulled from the input queue /sec",
-                                                "The current number of messages pulled from the input queue by the transport per second.",
-                                                PerformanceCounterType.RateOfCountsPerSecond32),
-                        new CounterCreationData("# of msgs failures / sec",
-                                                "The current number of failed processed messages by the transport per second.",
-                                                PerformanceCounterType.RateOfCountsPerSecond32)
+                        new CounterCreationData("Critical Time", "Age of the oldest message in the queue.", PerformanceCounterType.NumberOfItems32),
+                        new CounterCreationData("SLA violation countdown","Seconds until the SLA for this endpoint is breached.",PerformanceCounterType.NumberOfItems32),
+                        new CounterCreationData("# of msgs successfully processed / sec", "The current number of messages processed successfully by the transport per second.",PerformanceCounterType.RateOfCountsPerSecond32),
+                        new CounterCreationData("# of msgs pulled from the input queue /sec", "The current number of messages pulled from the input queue by the transport per second.", PerformanceCounterType.RateOfCountsPerSecond32),
+                        new CounterCreationData("# of msgs failures / sec", "The current number of failed processed messages by the transport per second.", PerformanceCounterType.RateOfCountsPerSecond32)
                     };
     }
 }

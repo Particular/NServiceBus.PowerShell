@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.PowerShell", "NServiceBus.PowerShell\NServiceBus.PowerShell.csproj", "{5E51EFBF-329F-4D3A-B86E-CC111697746F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.PowerShell.Tests", "NServiceBus.PowerShell.Tests\NServiceBus.PowerShell.Tests.csproj", "{04121C4B-EB4F-4508-8760-5818185F4403}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.PowerShell.CustomActions", "NServiceBus.PowerShell.CustomActions\NServiceBus.PowerShell.CustomActions.csproj", "{CA37BC61-5B97-456A-ABEF-86A157582A85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{04121C4B-EB4F-4508-8760-5818185F4403}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04121C4B-EB4F-4508-8760-5818185F4403}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04121C4B-EB4F-4508-8760-5818185F4403}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA37BC61-5B97-456A-ABEF-86A157582A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA37BC61-5B97-456A-ABEF-86A157582A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA37BC61-5B97-456A-ABEF-86A157582A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA37BC61-5B97-456A-ABEF-86A157582A85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
