@@ -20,5 +20,5 @@ Get-ChildItem -Path ".\*" -Include "*.nzip" | Rename-Item -NewName { $_.BaseName
 
 Write-Host "Creating release for milestone {{milestone}} ..."
 
-& "..\tools\ReleaseNotesCompiler.CLI.exe" $ghusername $ghpassword "particular" "servicecontrol" "{{milestone}}" "Particular.ServiceControl-{{milestone}}.exe"
+& "..\tools\ReleaseNotesCompiler.CLI.exe" $ghusername $ghpassword "particular" "NServiceBus.PowerShell" "{{milestone}}" "Particular.NServiceBusPowershell-{{milestone}}.exe"
 
