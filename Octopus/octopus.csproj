@@ -47,7 +47,7 @@
       <MainFiles Include="$(ProjectDir)footer.md" />
       <MainFiles Include="$(ProjectDir)ReleaseNotesCompiler.CLI.exe" />
       <MainFiles Include="$(NuGetExePath)" />
-      <MainFiles Include="$(SolutionDir)..\Output\NServiceBus.PowerShell-*.exe" />
+      <MainFiles Include="$(SolutionDir)..\Output\Particular.NServiceBusPowerShell-*.exe" />
       
     </ItemGroup>
 
