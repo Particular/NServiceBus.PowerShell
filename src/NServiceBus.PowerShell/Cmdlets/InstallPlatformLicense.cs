@@ -21,6 +21,8 @@
             ProviderInfo provider;
             PSDriveInfo drive;
             var psPath = SessionState.Path.GetUnresolvedProviderPathFromPSPath(LicenseFile, out provider, out drive);
+            
+
             if (provider.ImplementingType != typeof(FileSystemProvider))
             {
                 var ex = new ArgumentException(string.Format("{0} does not resolve to a path on the FileSystem provider.", psPath));
@@ -29,13 +31,13 @@
                 return;
             }
 
-            var content = File.ReadAllText(LicenseFile);
+            var content = File.ReadAllText(psPath);
             if (!CheckFileContentIsALicenseFile(content))
             {
-                  var ex = new InvalidDataException(string.Format("{0} is not not a valid license file", psPath));
-                  var error = new ErrorRecord(ex, "InvalidLicense", ErrorCategory.InvalidData, psPath);
-                  WriteError(error);
-                  return;
+                var ex = new InvalidDataException(string.Format("{0} is not not a valid license file", psPath));
+                var error = new ErrorRecord(ex, "InvalidLicense", ErrorCategory.InvalidData, psPath);
+                WriteError(error);
+                return;
             }
 
             if (EnvironmentHelper.Is64BitOperatingSystem)
