@@ -42,13 +42,13 @@
                     new HeaderInfo {Key = "NServiceBus.Distributor.UnregisterWorker", Value = WorkerAddress}
                 };
 
-                var headerSerializer = new XmlSerializer(typeof(List<HeaderInfo>));
+                var headerSerializer = new XmlSerializer(typeof(HeaderInfo[]));
                 using (var stream = new MemoryStream())
                 {
                     headerSerializer.Serialize(stream, headers);
                     message.Extension = stream.ToArray();
                 }
-
+                
                 if (TransactionalDistributorQueue)
                 {
                     // Create a transaction.
