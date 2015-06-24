@@ -1,7 +1,6 @@
 ﻿namespace NServiceBus.PowerShell
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Management.Automation;
     using System.Messaging;
@@ -42,13 +41,13 @@
                     new HeaderInfo {Key = "NServiceBus.Distributor.UnregisterWorker", Value = WorkerAddress}
                 };
 
-                var headerSerializer = new XmlSerializer(typeof(List<HeaderInfo>));
+                var headerSerializer = new XmlSerializer(typeof(HeaderInfo[]));
                 using (var stream = new MemoryStream())
                 {
                     headerSerializer.Serialize(stream, headers);
                     message.Extension = stream.ToArray();
                 }
-
+                
                 if (TransactionalDistributorQueue)
                 {
                     // Create a transaction.
@@ -67,8 +66,6 @@
                 }
             }
         }
-
-       
 
         static string GetFullPath(string address)
         {
