@@ -83,6 +83,6 @@
         }
 
         static readonly ServiceController Controller = new ServiceController {ServiceName = "MSDTC", MachineName = "."};
-        static readonly List<string> RegValues = new List<string>(new[] {"NetworkDtcAccess", "NetworkDtcAccessOutbound", "NetworkDtcAccessTransactions", "XaTransactions"});
+        static readonly List<string> RegValues = new List<string>(new[] { "NetworkDtcAccess", "NetworkDtcAccessClients", "NetworkDtcAccessInbound", "NetworkDtcAccessOutbound", "NetworkDtcAccessTransactions", "XaTransactions" });
     }
 }
