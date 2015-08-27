@@ -79,10 +79,60 @@
                 }
                 requireRestart = true;
             }
+
+            const string rpcKeyName = @"SOFTWARE\Microsoft\Rpc\Internet";
+
+            if (!hklm.KeyExists(rpcKeyName))
+            {
+                if (doChanges)
+                {
+                    hklm.CreateSubkey(rpcKeyName);
+                    WriteWarning("RPC Port configuration was fixed.");
+                }
+                requireRestart = true;
+            }
+            
+            foreach (var val in RpcRegValues)
+            {
+                if ((string)hklm.ReadValue(rpcKeyName, val, "N", true) == "Y")
+                {
+                    continue;
+                }
+
+                if (doChanges)
+                {
+                    WriteWarning("RPC Ports not configured correctly. Going to fix. This will require a restart of the DTC service.");
+                    if (!hklm.WriteValue(rpcKeyName, val, "Y", RegistryValueKind.String))
+                    {
+                        throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", val, "Y", rpcKeyName));
+                    }
+                    WriteWarning("RPC Port configuration was fixed.");
+                }
+                requireRestart = true;
+            }
+
+            const string RpcPortsKey = "Ports";
+            string[] RpcPortsArray =  {"5000-6000"};
+
+            if (Array.IndexOf((string[])hklm.ReadValue(rpcKeyName, RpcPortsKey, new string[] {}, true),"5000-6000") < 0)
+            {
+                if (doChanges)
+                {
+                    WriteWarning("RPC Ports not configured correctly. Going to fix. This will require a restart of the DTC service.");
+                    if (!hklm.WriteValue(rpcKeyName, RpcPortsKey, RpcPortsArray, RegistryValueKind.MultiString))
+                    {
+                        throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", RpcPortsKey, "Y", rpcKeyName));
+                    }
+                    WriteWarning("RPC Port configuration was fixed.");
+                }
+                requireRestart = true;
+            }
+
             return requireRestart;
         }
 
         static readonly ServiceController Controller = new ServiceController {ServiceName = "MSDTC", MachineName = "."};
         static readonly List<string> RegValues = new List<string>(new[] { "NetworkDtcAccess", "NetworkDtcAccessClients", "NetworkDtcAccessInbound", "NetworkDtcAccessOutbound", "NetworkDtcAccessTransactions", "XaTransactions" });
+        static readonly List<string> RpcRegValues = new List<string>(new[] { "PortsInternetAvailable", "UseInternetPorts" });
     }
 }
