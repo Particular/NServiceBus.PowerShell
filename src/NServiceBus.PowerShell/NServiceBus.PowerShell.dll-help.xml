@@ -87,12 +87,19 @@
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>This cmdlet will configure and attempt to start the Microsoft Distributed Transaction Co-ordinator service on this machine.  To configure MSDTC with NServiceBus the cmdlet sets the following values under the 
+		<maml:para>This cmdlet will configure and attempt to start the Microsoft Distributed Transaction Coordinator service on this machine.  To configure MSDTC with NServiceBus the cmdlet sets the following values under the 
 &quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security&quot; registry key:</maml:para>
 		<maml:para>NetworkDtcAccess : 1 (DWORD)
+NetworkDtcAccessInbound : 1 (DWORD)
 NetworkDtcAccessOutbound : 1 (DWORD)
 NetworkDtcAccessTransactions: 1 (DWORD)
-XaTransactions : 1 (DWORD)</maml:para>
+XaTransactions : 1 (DWORD)
+NetworkDtcAccessClients : 1 (DWORD)</maml:para>
+    <maml:para>If the optional PortRange parameter is supplied, then this value will be used for the DCOM Configuration. The format should be two numbers separated by a dash. (e.g. &quot;5000-6000&quot;). Specifically, the cmdlet will set the following values under the 
+&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Rpc\Internet&quot; registry key:</maml:para>
+    <maml:para>Ports : [Based on value of PortRange parameter] (Multi-String Value)
+PortsInternetAvailable : "Y" (String Value)    
+UseInternetPorts : "Y" (String Value)</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -113,8 +120,20 @@ XaTransactions : 1 (DWORD)</maml:para>
 			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
-	<command:parameters>
-		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+  <command:parameters>
+    <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+      <maml:name>PortRange</maml:name>
+      <maml:description>
+        <maml:para />
+      </maml:description>
+      <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+      <dev:type>
+        <maml:name>String</maml:name>
+        <maml:uri/>
+      </dev:type>
+      <dev:defaultValue></dev:defaultValue>
+    </command:parameter>
+    <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>WhatIf</maml:name>
 			<maml:description>
 				<maml:para />
