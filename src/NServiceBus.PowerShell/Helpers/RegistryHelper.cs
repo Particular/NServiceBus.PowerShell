@@ -446,6 +446,12 @@ namespace NServiceBus.PowerShell.Helpers
                         var data = value.ToString();
                         return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length * 2 + 2)) == 0;
                     }
+                    case RegistryValueKind.MultiString:
+                    {
+                        String[] stringsList = (String[]) value;
+                        var data = String.Join("\0", stringsList) + "\0\0";
+                        return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length * 2 + 2)) == 0;
+                    }
                     case RegistryValueKind.Binary:
                     {
                         var dataBytes = (byte[]) value;
