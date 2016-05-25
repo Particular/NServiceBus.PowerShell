@@ -1,7 +1,7 @@
 ﻿namespace NServiceBus.PowerShell
 {
     using System.Management.Automation;
-    using NServiceBus.PowerShell.Helpers;
+    using Helpers;
 
     [Cmdlet(VerbsCommon.Clear, "NServiceBusLocalMachineSettings")]
     public class RemoveNServiceBusLocalMachineSettings : CmdletBase

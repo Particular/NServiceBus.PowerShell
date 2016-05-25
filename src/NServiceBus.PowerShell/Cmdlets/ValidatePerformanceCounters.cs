@@ -1,7 +1,7 @@
 ﻿namespace NServiceBus.PowerShell
 {
     using System.Management.Automation;
-    using NServiceBus.PowerShell.Cmdlets;
+    using Cmdlets;
 
     [Cmdlet(VerbsDiagnostic.Test, "NServiceBusPerformanceCountersInstallation")]
     public class ValidatePerformanceCounters : CmdletBase
@@ -15,7 +15,6 @@
                 : "NServiceBus Performance Counters are not properly configured.";
 
             WriteObject(new InstallationResult { Installed = countersAreGood, Message = status });
-            
         }
     }
 }
