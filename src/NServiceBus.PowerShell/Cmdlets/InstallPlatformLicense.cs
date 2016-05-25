@@ -5,14 +5,14 @@
     using System.Management.Automation;
     using Microsoft.PowerShell.Commands;
     using Microsoft.Win32;
-    using NServiceBus.PowerShell.Helpers;
+    using Helpers;
 
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusPlatformLicense")]
     public class InstallPlatformLicense : CmdletBase
     {
         [Parameter(Mandatory = true, HelpMessage = "Platform license file to import", Position = 0)]
         [ValidateNotNullOrEmpty]
-        public string LicenseFile { get; set; } 
+        public string LicenseFile { get; set; }
 
         protected override void ProcessRecord()
         {
@@ -21,7 +21,7 @@
             ProviderInfo provider;
             PSDriveInfo drive;
             var psPath = SessionState.Path.GetUnresolvedProviderPathFromPSPath(LicenseFile, out provider, out drive);
-            
+
 
             if (provider.ImplementingType != typeof(FileSystemProvider))
             {
@@ -42,7 +42,7 @@
 
             if (EnvironmentHelper.Is64BitOperatingSystem)
             {
-                RegistryHelper.LocalMachine(RegistryView.Registry64).WriteValue(particular, "License", content, RegistryValueKind.String);    
+                RegistryHelper.LocalMachine(RegistryView.Registry64).WriteValue(particular, "License", content, RegistryValueKind.String);
             }
             RegistryHelper.LocalMachine(RegistryView.Registry32).WriteValue(particular, "License", content, RegistryValueKind.String);
         }

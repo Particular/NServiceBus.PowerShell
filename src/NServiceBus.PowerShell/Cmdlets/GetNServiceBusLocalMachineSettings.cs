@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Management.Automation;
-    using NServiceBus.PowerShell.Cmdlets;
-    using NServiceBus.PowerShell.Helpers;
+    using Cmdlets;
+    using Helpers;
 
     [Cmdlet(VerbsCommon.Get, "NServiceBusLocalMachineSettings")]
     public class GetNServiceBusLocalMachineSettings : CmdletBase

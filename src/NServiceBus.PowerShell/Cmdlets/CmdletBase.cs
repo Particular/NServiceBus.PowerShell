@@ -2,7 +2,6 @@
 {
     using System.Management.Automation;
     using System.Security;
-    
 
     public abstract class CmdletBase : PSCmdlet
     {
