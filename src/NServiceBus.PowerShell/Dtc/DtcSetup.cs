@@ -73,7 +73,7 @@
                     WriteWarning("DTC not configured correctly. Going to fix. This will require a restart of the DTC service.");
                     if (!hklm.WriteValue(keyName, val, 1, RegistryValueKind.DWord))
                     {
-                        throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", val, 1, keyName));
+                        throw new Exception($"Failed to set value '{val}' to '1' in '{keyName}'");
                     }
                     WriteWarning("DTC configuration was fixed.");
                 }
@@ -107,7 +107,7 @@
                         WriteWarning("RPC Ports not configured correctly. Going to fix. This will require a restart of the DTC service.");
                         if (!hklm.WriteValue(rpcKeyName, val, "Y", RegistryValueKind.String))
                         {
-                            throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", val, "Y", rpcKeyName));
+                            throw new Exception($"Failed to set value '{val}' to 'Y' in '{rpcKeyName}'");
                         }
                         WriteWarning("RPC Port configuration was fixed.");
                     }
@@ -130,7 +130,7 @@
                     WriteWarning("RPC Ports not configured correctly. Going to fix. This will require a restart of the DTC service.");
                     if (!hklm.WriteValue(rpcKeyName, RpcPortsKey, RpcPortsArray, RegistryValueKind.MultiString))
                     {
-                        throw new Exception(string.Format("Failed to set value '{0}' to '{1}' in '{2}'", RpcPortsKey, "Y", rpcKeyName));
+                        throw new Exception($"Failed to set value '{RpcPortsKey}' in '{rpcKeyName}'");
                     }
                     WriteWarning("RPC Port configuration was fixed.");
                 }

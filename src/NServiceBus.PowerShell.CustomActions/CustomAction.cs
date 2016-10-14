@@ -11,13 +11,11 @@
 
         [DllImport("User32.DLL")]
         static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam);
-
-
-
+        
         [CustomAction()]
         public static ActionResult AddToPSModuleEnvironmentVar(Session session)
         {
-            //Advanced Installer doesn't notify of enviroment changes on system environment varibles
+            //Advanced Installer doesn't notify of environment changes on system environment variables
 
             var appDir = session["PowerShellModules_Dir"];
 
@@ -38,7 +36,7 @@
         [CustomAction()]
         public static ActionResult RemoveFromPSModuleEnvironmentVar(Session session)
         {
-            //Advanced Installer doesn't notify of enviroment changes on system environment varible
+            //Advanced Installer doesn't notify of environment changes on system environment variables
 
             var appDir = session["PowerShellModules_Dir"];
 
