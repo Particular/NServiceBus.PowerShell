@@ -1,7 +1,7 @@
 ﻿namespace NServiceBus.PowerShell
 {
     using System.Management.Automation;
-    using NServiceBus.PowerShell.Cmdlets;
+    using Cmdlets;
 
     [Cmdlet(VerbsDiagnostic.Test, "NServiceBusDTCInstallation")]
     public class ValidateDtc : CmdletBase

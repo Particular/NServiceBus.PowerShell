@@ -10,7 +10,7 @@ namespace NServiceBus.PowerShell.Helpers
     using Microsoft.Win32;
 
     /// <summary>
-    /// Registry Implementation that supports registry views for WOW32 and WOW64 for .Net 2 
+    /// Registry Implementation that supports registry views for WOW32 and WOW64 for .Net 2
     /// </summary>
     internal class RegistryHelper
     {
@@ -389,14 +389,14 @@ namespace NServiceBus.PowerShell.Helpers
             var regKeyHandle = IntPtr.Zero;
             try
             {
-                
+
                 if (RegOpenKeyEx(RootKey, subKeyName, 0, KEY_READ | WOWOption, out regKeyHandle) != 0)
                     return false;
                 if (regKeyHandle == IntPtr.Zero)
                     return false;
                 return true;
             }
-            finally 
+            finally
             {
                 if (regKeyHandle != IntPtr.Zero)
                 {
@@ -444,6 +444,12 @@ namespace NServiceBus.PowerShell.Helpers
                     case RegistryValueKind.String:
                     {
                         var data = value.ToString();
+                        return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length * 2 + 2)) == 0;
+                    }
+                    case RegistryValueKind.MultiString:
+                    {
+                        var stringsList = (string[]) value;
+                        var data = string.Join("\0", stringsList) + "\0\0";
                         return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length * 2 + 2)) == 0;
                     }
                     case RegistryValueKind.Binary:
@@ -523,7 +529,7 @@ namespace NServiceBus.PowerShell.Helpers
             {
                 return true;
             }
-           
+
             var regKeyHandle = IntPtr.Zero;
             if (!ValueExists(subKeyName, valueName))
             {
@@ -551,7 +557,7 @@ namespace NServiceBus.PowerShell.Helpers
                 }
             }
         }
-         
+
         public RegistryValueKind GetRegistryValueKind(string subKeyName, string valueName)
         {
             var regKeyHandle = IntPtr.Zero;

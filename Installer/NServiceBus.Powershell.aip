@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="10.3" version="10.6" Modules="enterprise" RootPath="." Language="en" Id="{43BAFC8E-DCE5-4927-A572-183D5171A20D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="10.3" version="12.6.1" Modules="enterprise" RootPath="." Language="en" Id="{43BAFC8E-DCE5-4927-A572-183D5171A20D}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
@@ -12,6 +12,8 @@
     <ROW Property="ARPPRODUCTICON" Value="particular.exe" Type="8"/>
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
     <ROW Property="ARPURLUPDATEINFO" Value="http://particular.net/downloads"/>
+    <ROW Property="BannerBitmap" Value="banner" MultiBuildValue="DefaultBuild:banner.jpg" Type="1" MsiKey="BannerBitmap"/>
+    <ROW Property="DialogBitmap" Value="dialog" MultiBuildValue="DefaultBuild:dialog.jpg" Type="1" MsiKey="DialogBitmap"/>
     <ROW Property="Manufacturer" Value="Particular Software"/>
     <ROW Property="ProductCode" Value="1033:{54E6F93D-DE2E-4593-BDE3-4E7204FF504D} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
@@ -23,12 +25,13 @@
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT64Display" MultiBuildValue="DefaultBuild:Windows XP x64, Windows XP x64 Service Pack 1, Windows XP x64 Service Pack 2, Windows Server 2003 x64, Windows Server 2003 x64 Service Pack 1, Windows Server 2003 x64 Service Pack 2, Windows 8.1 x64" ValueLocId="-"/>
     <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:Windows 2000, Windows 2000 Service Pack 1, Windows 2000 Service Pack 2, Windows 2000 Service Pack 3, Windows 2000 Service Pack 4, Windows XP x86, Windows XP x86 Service Pack 1, Windows XP x86 Service Pack 2, Windows XP x86 Service Pack 3, Windows Server 2003 x86, Windows Server 2003 x86 Service Pack 1, Windows Server 2003 x86 Service Pack 2, Windows 8.1 x86" ValueLocId="-"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="Formats_Dir" Directory_Parent="NServiceBus.PowerShell_Dir" DefaultDir="Formats" DirectoryOptions="3"/>
     <ROW Directory="NServiceBus.PowerShell_Dir" Directory_Parent="PowerShellModules_Dir" DefaultDir="NServi~1.Pow|NServiceBus.PowerShell" DirectoryOptions="3"/>
     <ROW Directory="ParticularSoftware_Dir" Directory_Parent="ProgramFilesFolder" DefaultDir="Partic~1|Particular Software"/>
     <ROW Directory="PowerShellModules_Dir" Directory_Parent="ParticularSoftware_Dir" DefaultDir="PowerS~1|PowerShell Modules"/>
@@ -38,22 +41,11 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_CustomARPName" ComponentId="{86ECCFA4-1F4C-4B63-8A23-A566283C6C07}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{1BF59083-4CA9-453D-A433-0F88865172BE}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
-    <ROW Component="NServiceBus.PowerShell.dll" ComponentId="{134E2BA1-A897-48DF-B379-A5B7B1FCF6AD}" Directory_="NServiceBus.PowerShell_Dir" Attributes="0" KeyPath="NServiceBus.PowerShell.dll"/>
-    <ROW Component="NServiceBus.Powershell.Cmdlets.Installat" ComponentId="{CAE08F33-0ED3-4A47-8BF9-4D1524AC8E99}" Directory_="Formats_Dir" Attributes="0" KeyPath="NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml" Type="0"/>
-    <ROW Component="about_NServiceBus_Powershell.help.txt" ComponentId="{99E2A65C-C46C-471D-992E-7DA5134FF323}" Directory_="NServiceBus.PowerShell_Dir" Attributes="0" KeyPath="about_NServiceBus_Powershell.help.txt" Type="0"/>
+    <ROW Component="NServiceBus.PowerShell" ComponentId="{66B04533-CA9A-4FAF-BCDC-B29B0A3EE700}" Directory_="NServiceBus.PowerShell_Dir" Attributes="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName AI_ExePath NServiceBus.PowerShell.dll NServiceBus.Powershell.Cmdlets.Installat about_NServiceBus_Powershell.help.txt"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName AI_ExePath NServiceBus.PowerShell"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="NServiceBus.PowerShell.dll" Component_="NServiceBus.PowerShell.dll" FileName="NServi~1.dll|NServiceBus.PowerShell.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\binaries\NServiceBus.PowerShell.dll" SelfReg="false" NextFile="NServiceBus.PowerShell.pdb"/>
-    <ROW File="NServiceBus.PowerShell.dllhelp.xml" Component_="about_NServiceBus_Powershell.help.txt" FileName="NServi~2.xml|NServiceBus.PowerShell.dll-help.xml" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\binaries\NServiceBus.PowerShell.dll-help.xml" SelfReg="false"/>
-    <ROW File="NServiceBus.PowerShell.pdb" Component_="NServiceBus.PowerShell.dll" FileName="NServi~1.pdb|NServiceBus.PowerShell.pdb" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\binaries\NServiceBus.PowerShell.pdb" SelfReg="false" NextFile="NServiceBus.Powershell.psd1"/>
-    <ROW File="NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml" Component_="NServiceBus.Powershell.Cmdlets.Installat" FileName="NServi~1.ps1|NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\binaries\Formats\NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml" SelfReg="false" NextFile="NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml"/>
-    <ROW File="NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml" Component_="NServiceBus.Powershell.Cmdlets.Installat" FileName="NServi~2.ps1|NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\binaries\Formats\NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml" SelfReg="false" NextFile="NServiceBus.PowerShell.dllhelp.xml"/>
-    <ROW File="NServiceBus.Powershell.psd1" Component_="about_NServiceBus_Powershell.help.txt" FileName="NServi~1.psd|NServiceBus.Powershell.psd1" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\binaries\NServiceBus.Powershell.psd1" SelfReg="false" NextFile="NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml"/>
-    <ROW File="about_NServiceBus_Powershell.help.txt" Component_="about_NServiceBus_Powershell.help.txt" FileName="about_~1.txt|about_NServiceBus_Powershell.help.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\binaries\about_NServiceBus_Powershell.help.txt" SelfReg="false" NextFile="NServiceBus.PowerShell.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" EulaPath="License.rtf" EulaPathLocId="*"/>
@@ -67,7 +59,7 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.verisign.com/scripts/timstamp.dll" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" Thumbprint="acfab957ce84ba76b9cddcbc7d901ae8983b6536 Subject: NServiceBus Ltd.&#10;Issuer: VeriSign Class 3 Code Signing 2010 CA&#10;Valid from 08/27/2013 to 11/11/2015"/>
+    <ROW TimeStampUrl="http://timestamp.verisign.com/scripts/timstamp.dll" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" Thumbprint="be71091fdbc50425ddac13edd5629b0a3b240985 Subject: NServiceBus Ltd.&#10;Issuer: Symantec Class 3 SHA256 Code Signing CA&#10;Valid from 09/22/2015 to 12/22/2017"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -96,6 +88,8 @@
     <ROW Name="NServiceBus.PowerShell.CustomActions.CA.dll" SourcePath="..\CustomActions\NServiceBus.PowerShell.CustomActions.CA.dll"/>
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="banner.jpg" SourcePath="Res\banner.jpg"/>
+    <ROW Name="dialog.jpg" SourcePath="Res\dialog.jpg"/>
     <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
@@ -144,6 +138,9 @@
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="NServiceBus.PowerShell_Dir" Component_="NServiceBus.PowerShell" ManualDelete="false"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_DATA_SETTER" Type="51" Source="AI_ExtractFiles" Target="[AI_SETUPEXEPATH]"/>
@@ -164,7 +161,6 @@
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
-    <ROW Action="AI_ResolveLocalizedCredentials" Type="1" Source="aicustact.dll" Target="GetLocalizedCredentials"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AddToPSModuleEnvironmentVar" Type="1" Source="NServiceBus.PowerShell.CustomActions.CA.dll" Target="AddToPSModuleEnvironmentVar"/>
@@ -181,9 +177,7 @@
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
-    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
-    <ROW Action="AI_GetArpIconPath" Sequence="51"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99" Builds="DefaultBuild"/>
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101" Builds="DefaultBuild"/>
     <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild"/>
@@ -198,11 +192,11 @@
     <ROW Action="AI_EstimateExtractFiles" Sequence="3999" Builds="DefaultBuild"/>
     <ROW Action="RemoveFromPSModuleEnvironmentVar" Condition="( Installed AND ( REMOVE = &quot;ALL&quot; OR AI_INSTALL_MODE = &quot;Remove&quot; ) )" Sequence="6402"/>
     <ROW Action="AddToPSModuleEnvironmentVar" Condition="( NOT Installed )" Sequence="6401"/>
+    <ROW Action="AI_GetArpIconPath" Sequence="1401"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
-    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
     <ROW Action="ExecuteAction" Sequence="1298" SeqType="0" MsiKey="ExecuteAction"/>
@@ -210,7 +204,8 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT40Display]" DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
-    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
     <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
@@ -229,8 +224,8 @@
     <ROW Registry="Publisher" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Publisher" Value="[Manufacturer]" Component_="AI_CustomARPName"/>
     <ROW Registry="URLInfoAbout" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLInfoAbout" Value="[ARPURLINFOABOUT]" Component_="AI_CustomARPName"/>
     <ROW Registry="URLUpdateInfo" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLUpdateInfo" Value="[ARPURLUPDATEINFO]" Component_="AI_CustomARPName"/>
-    <ROW Registry="UninstallPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallPath" Value="[AI_UNINSTALLER] /x [ProductCode]" Component_="AI_CustomARPName"/>
-    <ROW Registry="UninstallString" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallString" Value="[AI_UNINSTALLER] /x [ProductCode]" Component_="AI_CustomARPName"/>
+    <ROW Registry="UninstallPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallPath" Value="[AI_UNINSTALLER] /i [ProductCode]" Component_="AI_CustomARPName"/>
+    <ROW Registry="UninstallString" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallString" Value="[AI_UNINSTALLER] /i [ProductCode]" Component_="AI_CustomARPName"/>
     <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#1" Component_="AI_CustomARPName"/>
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
   </COMPONENT>

@@ -81,8 +81,7 @@
             Assert.IsTrue(hkcu.ValueExists(testkey, valueName), "Failed to assert that value exists ");
             hkcu.DeleteValue(testkey, valueName);
             Assert.IsFalse(hkcu.ValueExists(testkey, valueName), "Failed to assert that value was deleted");
-            const string nonexistantValue = "I_Should_Not_Be_Present";
-            Assert.IsTrue(hkcu.DeleteValue(testkey,nonexistantValue), "Deletion of a non-existent value should return true");
+            Assert.IsTrue(hkcu.DeleteValue(testkey, "I_Should_Not_Be_Present"), "Deletion of a non-existent value should return true");
         }
 
         [TearDown]
