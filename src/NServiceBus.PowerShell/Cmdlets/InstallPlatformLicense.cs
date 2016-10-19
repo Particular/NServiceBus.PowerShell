@@ -10,32 +10,59 @@
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusPlatformLicense")]
     public class InstallPlatformLicense : CmdletBase
     {
-        [Parameter(Mandatory = true, HelpMessage = "Platform license file to import", Position = 0)]
-        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = false, HelpMessage = "Platform license file to import", Position = 0)]
         public string LicenseFile { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = "Platform license string to import", Position = 1)]
+        public string LicenseString { get; set; }
 
         protected override void ProcessRecord()
         {
             const string particular = @"Software\ParticularSoftware";
+            string content;
 
-            ProviderInfo provider;
-            PSDriveInfo drive;
-            var psPath = SessionState.Path.GetUnresolvedProviderPathFromPSPath(LicenseFile, out provider, out drive);
-
-
-            if (provider.ImplementingType != typeof(FileSystemProvider))
+            // LicenseFile primary option
+            if(!string.IsNullOrEmpty(LicenseFile))
             {
-                var ex = new ArgumentException(string.Format("{0} does not resolve to a path on the FileSystem provider.", psPath));
-                var error = new ErrorRecord(ex, "InvalidProvider", ErrorCategory.InvalidArgument, psPath);
-                WriteError(error);
-                return;
+                ProviderInfo provider;
+                PSDriveInfo drive;
+                var psPath = SessionState.Path.GetUnresolvedProviderPathFromPSPath(LicenseFile, out provider, out drive);
+                
+
+                if (provider.ImplementingType != typeof(FileSystemProvider))
+                {
+                    var ex = new ArgumentException(string.Format("{0} does not resolve to a path on the FileSystem provider.", psPath));
+                    var error = new ErrorRecord(ex, "InvalidProvider", ErrorCategory.InvalidArgument, psPath);
+                    WriteError(error);
+                    return;
+                }
+
+                content = File.ReadAllText(psPath);
+                if (!CheckFileContentIsALicenseFile(content))
+                {
+                    var ex = new InvalidDataException(string.Format("{0} is not a valid license file", psPath));
+                    var error = new ErrorRecord(ex, "InvalidLicense", ErrorCategory.InvalidData, psPath);
+                    WriteError(error);
+                    return;
+                }
             }
-
-            var content = File.ReadAllText(psPath);
-            if (!CheckFileContentIsALicenseFile(content))
+            // LicenseString secondary option
+            else if (!string.IsNullOrEmpty(LicenseString))
             {
-                var ex = new InvalidDataException(string.Format("{0} is not not a valid license file", psPath));
-                var error = new ErrorRecord(ex, "InvalidLicense", ErrorCategory.InvalidData, psPath);
+                content = LicenseString;
+                if (!CheckFileContentIsALicenseFile(content))
+                {
+                    var ex = new InvalidDataException("The supplied LicenseString is not a valid license file");
+                    var error = new ErrorRecord(ex, "InvalidLicense", ErrorCategory.InvalidData, null);
+                    WriteError(error);
+                    return;
+                }
+            }
+            // No valid parameter supplied
+            else
+            {
+                var ex = new ArgumentException("LicenseFile or LicenseString must be provided.");
+                var error = new ErrorRecord(ex, "InvalidParameter", ErrorCategory.InvalidArgument, null);
                 WriteError(error);
                 return;
             }
