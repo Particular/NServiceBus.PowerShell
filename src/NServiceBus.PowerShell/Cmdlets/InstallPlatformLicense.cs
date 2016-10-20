@@ -7,13 +7,15 @@
     using Microsoft.Win32;
     using Helpers;
 
-    [Cmdlet(VerbsLifecycle.Install, "NServiceBusPlatformLicense")]
+    [Cmdlet(VerbsLifecycle.Install, "NServiceBusPlatformLicense", DefaultParameterSetName = "ByLicenseFile")]
     public class InstallPlatformLicense : CmdletBase
     {
-        [Parameter(Mandatory = false, HelpMessage = "Platform license file to import", Position = 0)]
+        [Parameter(Mandatory = true, HelpMessage = "Platform license file to import", Position = 0, ParameterSetName = "ByLicenseFile")]
+        [ValidateNotNullOrEmpty]
         public string LicenseFile { get; set; }
 
-        [Parameter(Mandatory = false, HelpMessage = "Platform license string to import", Position = 1)]
+        [Parameter(Mandatory = true, HelpMessage = "Platform license string to import", Position = 0, ParameterSetName = "ByLicenseString")]
+        [ValidateNotNullOrEmpty]
         public string LicenseString { get; set; }
 
         protected override void ProcessRecord()
@@ -22,7 +24,7 @@
             string content;
 
             // LicenseFile primary option
-            if(!string.IsNullOrEmpty(LicenseFile))
+            if(ParameterSetName.Equals("ByLicenseFile"))
             {
                 ProviderInfo provider;
                 PSDriveInfo drive;
@@ -47,7 +49,7 @@
                 }
             }
             // LicenseString secondary option
-            else if (!string.IsNullOrEmpty(LicenseString))
+            else
             {
                 content = LicenseString;
                 if (!CheckFileContentIsALicenseFile(content))
@@ -57,14 +59,6 @@
                     WriteError(error);
                     return;
                 }
-            }
-            // No valid parameter supplied
-            else
-            {
-                var ex = new ArgumentException("LicenseFile or LicenseString must be provided.");
-                var error = new ErrorRecord(ex, "InvalidParameter", ErrorCategory.InvalidArgument, null);
-                WriteError(error);
-                return;
             }
 
             if (EnvironmentHelper.Is64BitOperatingSystem)
