@@ -988,7 +988,7 @@ XaTransactions : 1 (DWORD)</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
-		<maml:para>Imports the the Particular Platform License into the registry.  For 64-bit operating systems the license is written to both the 32-bit and 64-bit registry.</maml:para>
+		<maml:para>Imports the the Particular Platform License into the registry.  For 64-bit operating systems the license is written to both the 32-bit and 64-bit registry. Provide either LicenseFile or LicenseString.</maml:para>
 	</maml:description>
 	<command:syntax>
 		<command:syntaxItem>
@@ -1000,11 +1000,32 @@ XaTransactions : 1 (DWORD)</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
+    </command:syntaxItem>
+    <command:syntaxItem>
+      <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+				<maml:name>LicenseString</maml:name>
+				<maml:description>
+					<maml:para />
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
 			<maml:name>LicenseFile</maml:name>
+			<maml:description>
+				<maml:para />
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+    <command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
+			<maml:name>LicenseString</maml:name>
 			<maml:description>
 				<maml:para />
 			</maml:description>
