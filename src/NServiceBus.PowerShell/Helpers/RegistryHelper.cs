@@ -468,7 +468,7 @@ namespace NServiceBus.PowerShell.Helpers
                         return RegSetValueEx(regKeyHandle, valueName, 0, RegistryValueKind.QWord, ref data, 8) == 0;
                     }
                     default:
-                        throw new NotImplementedException(string.Format("RegistryKind {0} not supported", valueKind));
+                        throw new NotImplementedException($"RegistryKind {valueKind} not supported");
                 }
 
             }
@@ -517,7 +517,7 @@ namespace NServiceBus.PowerShell.Helpers
         {
             foreach (var subKeyName in GetSubKeyNames(key))
             {
-                var fullPath = string.Format(@"{0}\{1}", key, subKeyName);
+                var fullPath = $@"{key}\{subKeyName}";
                 keysList.Add(fullPath);
                 RecurseKeys(fullPath, ref keysList);
             }

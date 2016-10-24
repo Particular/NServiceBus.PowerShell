@@ -1,4 +1,5 @@
-﻿namespace NServiceBus.PowerShell
+﻿// ReSharper disable CommentTypo
+namespace NServiceBus.PowerShell
 {
     using System;
     using System.Collections.Generic;
@@ -293,7 +294,7 @@
                 return OperatingSystemEnum.XpOrServer2003;
         }
 
-        return OperatingSystemEnum.DontCare;
+        return OperatingSystemEnum.Unsupported;
     }
 
     bool HasOnlyNeededComponents(IEnumerable<string> installedComponents)
@@ -393,7 +394,7 @@
 
     internal enum OperatingSystemEnum
     {
-        DontCare,
+        Unsupported,
         XpOrServer2003,
         Vista,
         Server2008,

@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F6473A7A-01B7-4A9A-B30C-4D200BFFFE4D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Setup</RootNamespace>
+    <AssemblyName>Setup</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NServiceBus.Powershell.aip">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Res\License.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\banner.jpg" />
+    <None Include="Res\dialog.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Res\particular.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+ 
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
+    <GetVersion SolutionDirectory="$(SolutionDir)">
+      <Output TaskParameter="MajorMinorPatch" PropertyName="MajorMinorPatch" />
+    </GetVersion>
+    <ItemGroup>
+      <BuiltFiles Include="$(OutputPath)\*.*" />
+    </ItemGroup>
+    <Delete Files="@(BuiltFiles)" />
+    <PropertyGroup>
+      <AdvancedInstallerPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Caphyon\Advanced Installer@Advanced Installer Path)</AdvancedInstallerPath>
+      <AdvancedInstallerExe>"$(AdvancedInstallerPath)bin\x86\AdvancedInstaller.com"</AdvancedInstallerExe>
+      <AIPFile>NServiceBus.PowerShell.aip</AIPFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <ResourceFiles Include="res\**\*.*" />
+      <Prerequisites Include="Prerequisites\**\*.*" />
+    </ItemGroup>
+    <PropertyGroup>
+      <SetupExeOutputFolder>$(SolutionDir)..\Assets\</SetupExeOutputFolder>
+      <SetupExeName>NServiceBus.Powershell-$(MajorMinorPatch).exe</SetupExeName>
+    </PropertyGroup>
+    <MakeDir Directories="$(SetupExeOutputFolder)" />
+    <ItemGroup>
+      <ExistingExes Include="$(SetupExeOutputFolder)*.exe" />
+    </ItemGroup>
+    <Delete Files="@(ExistingExes)" />
+    <Copy SourceFiles="$(AIPFile)" DestinationFolder="$(IntermediateOutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(IntermediateOutputPath)res\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name PROJECT_PATH -value $(SolutionDir)Setup -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name POSH_PATH -value $(SolutionDir)NServiceBus.PowerShell\bin\$(Configuration) -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name CUSTOMACTIONS_PATH -value $(SolutionDir)NServiceBus.PowerShell.CustomActions\bin\$(Configuration) -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetVersion $(MajorMinorPatch)" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetPackageName $(SetupExeOutputFolder)$(SetupExeName) -buildname DefaultBuild" />
+    <Exec Command="$(AdvancedInstallerExe) /rebuild $(IntermediateOutputPath)$(AIPFile)" />
+  </Target>
+  <Import Project="..\packages\GitVersionTask.3.6.4\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.6.4\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\GitVersionTask.3.6.4\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.4\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets'))" />
+  </Target>
+</Project>
