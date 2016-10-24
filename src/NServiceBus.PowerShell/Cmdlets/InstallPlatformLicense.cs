@@ -33,7 +33,7 @@
 
                 if (provider.ImplementingType != typeof(FileSystemProvider))
                 {
-                    var ex = new ArgumentException(string.Format("{0} does not resolve to a path on the FileSystem provider.", psPath));
+                    var ex = new ArgumentException($"{psPath} does not resolve to a path on the FileSystem provider.");
                     var error = new ErrorRecord(ex, "InvalidProvider", ErrorCategory.InvalidArgument, psPath);
                     WriteError(error);
                     return;
@@ -42,7 +42,7 @@
                 content = File.ReadAllText(psPath);
                 if (!CheckFileContentIsALicenseFile(content))
                 {
-                    var ex = new InvalidDataException(string.Format("{0} is not a valid license file", psPath));
+                    var ex = new InvalidDataException($"{psPath} is not a valid license file");
                     var error = new ErrorRecord(ex, "InvalidLicense", ErrorCategory.InvalidData, psPath);
                     WriteError(error);
                     return;
