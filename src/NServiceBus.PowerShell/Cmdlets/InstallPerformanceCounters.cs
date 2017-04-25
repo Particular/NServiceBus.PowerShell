@@ -12,7 +12,7 @@
 
         protected override void BeginProcessing()
         {
-            WriteWarning("This cmdlet is obsolete.  Performance counter registration is now handled via the NServiceBus.Metrics.PerformanceMonitor nuget package.  For legacy installations this cmdlet can still be used. Please refer to the NServiceBus.Metrics.PerformanceMonitor documentation for further information");
+            WriteWarning("This cmdlet is obsolete.  Performance counter registration is now handled via the NServiceBus.Metrics.PerformanceCounters nuget package.  For legacy installations this cmdlet can still be used. Please refer to the NServiceBus.Metrics.PerformanceCounters documentation for further information");
         }
         
         // ReSharper enable  MemberCanBePrivate.Global
