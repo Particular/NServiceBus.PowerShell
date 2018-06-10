@@ -978,7 +978,8 @@ XaTransactions : 1 (DWORD)</maml:para>
 	<command:details>
 		<command:name>Install-NServiceBusPlatformLicense</command:name>
 		<maml:description>
-			<maml:para>Imports the Particular Platform License into the registry</maml:para>
+		  <maml:para>*** Reading license information from the registry has been deprecated and will be removed in version 8.0. ***</maml:para>
+			<maml:para>Imports the Particular Platform License into the registry.</maml:para>
 		</maml:description>
 		<maml:copyright>
 			<maml:para />
@@ -988,6 +989,7 @@ XaTransactions : 1 (DWORD)</maml:para>
 		<dev:version />
 	</command:details>
 	<maml:description>
+	  <maml:para>*** Reading license information from the registry has been deprecated and will be removed in version 8.0. ***</maml:para>
 		<maml:para>Imports the the Particular Platform License into the registry.  For 64-bit operating systems the license is written to both the 32-bit and 64-bit registry. Provide either LicenseFile or LicenseString.</maml:para>
 	</maml:description>
 	<command:syntax>
@@ -1010,6 +1012,15 @@ XaTransactions : 1 (DWORD)</maml:para>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
 		</command:syntaxItem>
+	  <command:syntaxItem>
+	    <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="1">
+	      <maml:name>OverrideObsolete</maml:name>
+	      <maml:description>
+	        <maml:para>Reading license information from the registry has been deprecated and will be removed in version 8.0  Add this parameter to force the command to put the license key in the registry anyway.</maml:para>
+	      </maml:description>
+	      <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+	    </command:parameter>
+	  </command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0">
@@ -1036,6 +1047,18 @@ XaTransactions : 1 (DWORD)</maml:para>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
+	  <command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0">
+	    <maml:name>OverrideObsolete</maml:name>
+	    <maml:description>
+	      <maml:para>Reading license information from the registry has been deprecated and will be removed in version 8.0.  Add this parameter to force the command to put the license key in the registry anyway.</maml:para>
+	    </maml:description>
+	    <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+	    <dev:type>
+	      <maml:name>Boolean</maml:name>
+	      <maml:uri/>
+	    </dev:type>
+	    <dev:defaultValue></dev:defaultValue>
+	  </command:parameter>
 	</command:parameters>
 	<command:inputTypes>
 		<command:inputType>
