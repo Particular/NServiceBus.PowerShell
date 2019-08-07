@@ -10,8 +10,8 @@
 *.DOT	diff=astextplain
 *.pdf	diff=astextplain
 *.PDF	diff=astextplain
-*.rtf	-text diff=astextplain eol=crlf
-*.RTF	-text diff=astextplain eol=crlf
+*.rtf	diff=astextplain
+*.RTF	diff=astextplain
 
 *.exe	-text -diff
 *.jpg  	-text -diff
@@ -64,11 +64,6 @@
 *.bat text eol=crlf
 
 # Custom for Visual Studio
-*.csproj merge=union
-*.vbproj merge=union
-*.fsproj merge=union
-*.dbproj merge=union 
-*.sln text eol=crlf merge=union
 *.suo 	-text -diff
 *.snk 	-text -diff
 *.cub 	-text -diff
