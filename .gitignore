@@ -17,6 +17,7 @@ Samples/DataBus/storage
 packages
 PrecompiledWeb
 tempstorage
+.learningtransport
 core-only
 Release
 Artifacts
@@ -42,6 +43,9 @@ installer/ServiceControl-cache
 # User-specific files
 *.suo
 *.user
+*.json.lock
+*.nuget.targets
+*.lock.json
 *.userosscache
 *.sln.docstates
 .vs/
@@ -60,7 +64,6 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
-[Aa]ssets/
 
 # Roslyn cache directories
 *.ide/
