@@ -1,5 +1,4 @@
-﻿// ReSharper disable CommentTypo
-namespace NServiceBus.PowerShell
+﻿namespace NServiceBus.PowerShell
 {
     using System;
     using System.Collections.Generic;
@@ -334,9 +333,6 @@ namespace NServiceBus.PowerShell
     static extern Boolean GetVersionEx([Out] [In] OSVersionInfo versionInformation);
 
 
-    // ReSharper disable UnusedField.Compiler
-    // ReSharper disable NotAccessedField.Local
-    // ReSharper disable UnassignedField.Compiler
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal class OSVersionInfoEx : OSVersionInfo
     {
@@ -350,7 +346,6 @@ namespace NServiceBus.PowerShell
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal class OSVersionInfo
     {
-// ReSharper disable once NotAccessedField.Global
         public UInt32 OSVersionInfoSize =
             (UInt32) Marshal.SizeOf(typeof(OSVersionInfo));
 
@@ -361,10 +356,6 @@ namespace NServiceBus.PowerShell
         // Attribute used to indicate marshalling for String field
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)] public String CSDVersion = null;
     }
-
-    // ReSharper restore UnusedField.Compiler
-    // ReSharper restore NotAccessedField.Local
-    // ReSharper restore UnassignedField.Compiler
 
     const byte VER_NT_WORKSTATION = 1;
 

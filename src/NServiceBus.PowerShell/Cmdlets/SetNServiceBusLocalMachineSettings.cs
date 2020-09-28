@@ -8,7 +8,6 @@
     [Cmdlet(VerbsCommon.Set, "NServiceBusLocalMachineSettings")]
     public class SetNServiceBusLocalMachineSettings : CmdletBase
     {
-        // ReSharper disable  MemberCanBePrivate.Global
 
         [Parameter(Mandatory = false, HelpMessage = "Error queue to use for all endpoints in this machine.")]
         public string ErrorQueue { get; set; }
@@ -16,7 +15,6 @@
         [Parameter(Mandatory = false, HelpMessage = "Audit queue to use for all endpoints in this machine.")]
         public string AuditQueue { get; set; }
         
-        // ReSharper enable  MemberCanBePrivate.Global
         protected override void ProcessRecord()
         {
             if (EnvironmentHelper.Is64BitOperatingSystem)
