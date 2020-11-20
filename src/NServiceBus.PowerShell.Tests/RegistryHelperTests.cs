@@ -41,11 +41,11 @@
             const string valueName = "teststring";
             var hkcu = RegistryHelper.CurrentUser(RegistryView.Default);
             var ticks = DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture);
-            hkcu.WriteValue(testkey, valueName , ticks, RegistryValueKind.String);
-            var val = (string) hkcu.ReadValue(testkey, valueName, null, true);
-            Assert.IsTrue(string.Equals(val, ticks),  "The written string does match what was read" );
+            hkcu.WriteValue(testkey, valueName, ticks, RegistryValueKind.String);
+            var val = (string)hkcu.ReadValue(testkey, valueName, null, true);
+            Assert.IsTrue(string.Equals(val, ticks), "The written string does match what was read");
             Assert.IsTrue(hkcu.GetRegistryValueKind(testkey, valueName) == RegistryValueKind.String, "Failed to assert that written data was a string");
-            
+
         }
 
         [Test]
@@ -55,10 +55,10 @@
             var hkcu = RegistryHelper.CurrentUser(RegistryView.Default);
             var ticks = Encoding.Unicode.GetBytes(DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture));
             hkcu.WriteValue(testkey, valueName, ticks, RegistryValueKind.Binary);
-            var val = (byte[]) hkcu.ReadValue(testkey, valueName, null, true);
+            var val = (byte[])hkcu.ReadValue(testkey, valueName, null, true);
             Assert.IsTrue(BytesMatch(ticks, val), "The written byte array does match what was read");
             Assert.IsTrue(hkcu.GetRegistryValueKind(testkey, valueName) == RegistryValueKind.Binary, "Failed to assert that written data was binary");
-            
+
         }
 
         [Test]
@@ -66,9 +66,9 @@
         {
             const string valueName = "testdword";
             var hkcu = RegistryHelper.CurrentUser(RegistryView.Default);
-            var num = 1 + DateTime.Now.Millisecond; 
+            var num = 1 + DateTime.Now.Millisecond;
             hkcu.WriteValue(testkey, valueName, num, RegistryValueKind.DWord);
-            var val = (Int32) hkcu.ReadValue(testkey, valueName, null, true);
+            var val = (int)hkcu.ReadValue(testkey, valueName, null, true);
             Assert.IsTrue(num == val, "The written dword does match what was read");
             Assert.IsTrue(hkcu.GetRegistryValueKind(testkey, valueName) == RegistryValueKind.DWord, "Failed to assert that written data was a dword");
         }
@@ -96,7 +96,7 @@
             if (x.Length != y.Length) return false;
             for (var i = 0; i < x.Length; i++)
             {
-                if (x[i] != y[i]) 
+                if (x[i] != y[i])
                     return false;
             }
             return true;

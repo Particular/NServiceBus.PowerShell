@@ -31,12 +31,12 @@
             string content;
 
             // LicenseFile primary option
-            if(ParameterSetName.Equals("ByLicenseFile"))
+            if (ParameterSetName.Equals("ByLicenseFile"))
             {
                 ProviderInfo provider;
                 PSDriveInfo drive;
                 var psPath = SessionState.Path.GetUnresolvedProviderPathFromPSPath(LicenseFile, out provider, out drive);
-                
+
 
                 if (provider.ImplementingType != typeof(FileSystemProvider))
                 {

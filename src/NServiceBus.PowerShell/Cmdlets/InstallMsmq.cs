@@ -1,7 +1,7 @@
 ﻿namespace NServiceBus.PowerShell
 {
     using System.Management.Automation;
-    
+
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusMSMQ")]
     public class InstallMsmq : CmdletBase
     {

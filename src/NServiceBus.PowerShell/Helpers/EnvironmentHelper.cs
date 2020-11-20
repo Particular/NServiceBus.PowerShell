@@ -1,5 +1,4 @@
-﻿
-namespace NServiceBus.PowerShell.Helpers
+﻿namespace NServiceBus.PowerShell.Helpers
 {
     using System;
     using System.Runtime.InteropServices;
@@ -21,15 +20,15 @@ namespace NServiceBus.PowerShell.Helpers
                    out bool isWow64);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr GetModuleHandle(String moduleName);
+        static extern IntPtr GetModuleHandle(string moduleName);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, BestFitMapping = false, SetLastError = true, ExactSpelling = true)]
-        static extern IntPtr GetProcAddress(IntPtr hModule, String methodName);
-      
-        [DllImport("kernel32", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int GetComputerName([Out]StringBuilder nameBuffer, ref int bufferSize);
+        static extern IntPtr GetProcAddress(IntPtr hModule, string methodName);
 
-        public static bool DoesWin32MethodExist(String moduleName, String methodName)
+        [DllImport("kernel32", CharSet = CharSet.Auto, BestFitMapping = false)]
+        static extern int GetComputerName([Out] StringBuilder nameBuffer, ref int bufferSize);
+
+        public static bool DoesWin32MethodExist(string moduleName, string methodName)
         {
             var hModule = GetModuleHandle(moduleName);
             if (hModule == IntPtr.Zero)
@@ -50,15 +49,15 @@ namespace NServiceBus.PowerShell.Helpers
                   && IsWow64Process(Process.GetCurrentProcess().Handle, out isWow64)
                   && isWow64;
 #else
-            return true;
+                return true;
 #endif
             }
         }
 
-        public static String MachineName
-        {   
+        public static string MachineName
+        {
             get
-            {   
+            {
                 var buf = new StringBuilder(MaxMachineNameLength);
                 var len = MaxMachineNameLength;
                 if (GetComputerName(buf, ref len) == 0)

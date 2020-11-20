@@ -5,7 +5,7 @@
     using System.Management.Automation.Host;
     using System.Security.Principal;
     using System.ServiceProcess;
-    
+
     /// <summary>
     /// Utility class for changing a windows service's status.
     /// </summary>
@@ -25,7 +25,7 @@
         /// Checks the status of the given controller, and if it isn't the requested state,
         /// performs the given action, and checks the state again.
         /// </summary>
-        public  void ChangeServiceStatus(ServiceController controller, ServiceControllerStatus status, Action changeStatus)
+        public void ChangeServiceStatus(ServiceController controller, ServiceControllerStatus status, Action changeStatus)
         {
             if (controller.Status == status)
             {

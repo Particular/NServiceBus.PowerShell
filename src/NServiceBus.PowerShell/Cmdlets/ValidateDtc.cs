@@ -8,12 +8,12 @@
     {
         protected override void ProcessRecord()
         {
-            var dtcIsGood =  new DtcSetup(Host).IsDtcWorking();
+            var dtcIsGood = new DtcSetup(Host).IsDtcWorking();
             var status = dtcIsGood
                 ? "DTC is setup and ready for use with NServiceBus."
                 : "DTC is not properly configured.";
 
-            WriteObject( new InstallationResult { Installed = dtcIsGood, Message = status});
+            WriteObject(new InstallationResult { Installed = dtcIsGood, Message = status });
         }
     }
 }

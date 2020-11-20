@@ -7,14 +7,14 @@ namespace NServiceBus.PowerShell.Helpers
         /// <summary>
         /// Mimics the IsNullOrWhiteSpace method 
         /// </summary>
-        public static bool IsNullOrWhiteSpace(String value)
+        public static bool IsNullOrWhiteSpace(string value)
         {
             if (value == null) return true;
 
             for (var i = 0; i < value.Length; i++)
             {
-                if (!Char.IsWhiteSpace(value[i])) 
-                    return false; 
+                if (!char.IsWhiteSpace(value[i]))
+                    return false;
             }
             return true;
         }
