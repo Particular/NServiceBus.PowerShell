@@ -7,7 +7,7 @@
 	CLRVersion = '4.0'
 	DotNetFrameworkVersion = '4.5.2'
 	CompanyName = 'Particular Software'
-	Copyright = '(c) 2015 NServiceBus Ltd. All rights reserved.'
+	Copyright = '(c) 2020 NServiceBus Ltd. All rights reserved.'
 	FunctionsToExport='*'
 	CmdletsToExport = '*'
 	VariablesToExport = '*'
