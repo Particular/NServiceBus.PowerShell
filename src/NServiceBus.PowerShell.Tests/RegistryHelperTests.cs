@@ -6,6 +6,7 @@
     using Helpers;
     using Microsoft.Win32;
     using NUnit.Framework;
+    using RegistryView = Helpers.RegistryView;
 
     [TestFixture]
     public class RegistryHelperTests

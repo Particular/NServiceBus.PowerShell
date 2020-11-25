@@ -1,4 +1,10 @@
 assembly-versioning-scheme: Major
 branches:
-  releases?[/-]:
+  master:
+    mode: ContinuousDeployment
+    tag: alpha
+    increment: Minor
+    tracks-release-branches: true
+  release:
+    increment: Patch
     tag: ''

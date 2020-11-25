@@ -323,6 +323,7 @@ namespace NServiceBus.PowerShell.Helpers
                             var cur = 0;
                             var len = blob.Length;
 
+                            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                             while (ret == 0 && cur < len)
                             {
                                 var nextNull = cur;
@@ -349,6 +350,7 @@ namespace NServiceBus.PowerShell.Helpers
                                 }
                                 cur = nextNull + 1;
                             }
+                            // ReSharper enable once ConditionIsAlwaysTrueOrFalse
 
                             data = new String[strings.Count];
                             strings.CopyTo((String[]) data, 0);
