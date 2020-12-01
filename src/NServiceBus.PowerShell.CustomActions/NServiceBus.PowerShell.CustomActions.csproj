@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Particular.CodeRules" Version="0.7.0" PrivateAssets="All" />
     <PackageReference Include="WiX" Version="3.7.0.1" />
     <Reference Include="Microsoft.Deployment.WindowsInstaller">
       <HintPath>..\..\lib\WiX\3.7\sdk\Microsoft.Deployment.WindowsInstaller.dll</HintPath>

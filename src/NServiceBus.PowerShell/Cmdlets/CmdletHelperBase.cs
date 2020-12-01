@@ -3,7 +3,7 @@
     using System;
     using System.Management.Automation.Host;
 
-    public abstract class CmdletHelperBase 
+    public abstract class CmdletHelperBase
     {
         internal PSHost Host { get; set; }
 

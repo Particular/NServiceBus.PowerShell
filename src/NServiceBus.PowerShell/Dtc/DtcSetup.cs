@@ -17,7 +17,7 @@
 
         public DtcSetup(PSHost Host) : base(Host)
         {
-            
+
         }
 
         /// <summary>
@@ -36,9 +36,9 @@
             processUtil.ChangeServiceStatus(Controller, ServiceControllerStatus.Running, Controller.Start);
         }
 
-        public  bool IsDtcWorking()
+        public bool IsDtcWorking()
         {
-         
+
             if (DoesSecurityConfigurationRequireRestart(false))
             {
                 return false;
@@ -96,7 +96,7 @@
 
                 foreach (var val in RpcRegValues)
                 {
-                    if ((string) hklm.ReadValue(rpcKeyName, val, "N", true) == "Y")
+                    if ((string)hklm.ReadValue(rpcKeyName, val, "N", true) == "Y")
                     {
                         continue;
                     }
@@ -119,7 +119,7 @@
                     PortRange
                 };
 
-                if (Array.IndexOf((string[]) hklm.ReadValue(rpcKeyName, RpcPortsKey, new string[]{}, true), PortRange) >= 0)
+                if (Array.IndexOf((string[])hklm.ReadValue(rpcKeyName, RpcPortsKey, new string[] { }, true), PortRange) >= 0)
                 {
                     return requireRestart;
                 }
@@ -139,7 +139,7 @@
             return requireRestart;
         }
 
-        static readonly ServiceController Controller = new ServiceController {ServiceName = "MSDTC", MachineName = "."};
+        static readonly ServiceController Controller = new ServiceController { ServiceName = "MSDTC", MachineName = "." };
         static readonly List<string> RegValues = new List<string>(new[] { "NetworkDtcAccess", "NetworkDtcAccessOutbound", "NetworkDtcAccessTransactions", "XaTransactions" });
         static readonly List<string> RpcRegValues = new List<string>(new[] { "PortsInternetAvailable", "UseInternetPorts" });
     }

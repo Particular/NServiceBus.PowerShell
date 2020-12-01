@@ -10,13 +10,12 @@
         const string PSModulePath = "PSMODULEPATH";
 
         [DllImport("User32.DLL")]
-        static extern int SendMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam);
-        
-        [CustomAction()]
+        static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+
+        [CustomAction]
         public static ActionResult AddToPSModuleEnvironmentVar(Session session)
         {
             //Advanced Installer doesn't notify of environment changes on system environment variables
-
             var appDir = session["PowerShellModules_Dir"];
 
             var environmentVariable = Environment.GetEnvironmentVariable(PSModulePath, EnvironmentVariableTarget.Machine);
@@ -33,11 +32,10 @@
             return ActionResult.Success;
         }
 
-        [CustomAction()]
+        [CustomAction]
         public static ActionResult RemoveFromPSModuleEnvironmentVar(Session session)
         {
             //Advanced Installer doesn't notify of environment changes on system environment variables
-
             var appDir = session["PowerShellModules_Dir"];
 
             var environmentVariable = Environment.GetEnvironmentVariable(PSModulePath, EnvironmentVariableTarget.Machine);

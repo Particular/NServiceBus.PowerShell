@@ -19,7 +19,7 @@
 
         public bool CheckCounters()
         {
-            return  PerformanceCounterCategory.Exists(categoryName) && CheckCountersExist();
+            return PerformanceCounterCategory.Exists(categoryName) && CheckCountersExist();
         }
 
         static bool CheckCountersExist()

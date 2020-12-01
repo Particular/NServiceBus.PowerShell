@@ -9,13 +9,12 @@
     public class SetNServiceBusLocalMachineSettings : CmdletBase
     {
         // ReSharper disable  MemberCanBePrivate.Global
-
         [Parameter(Mandatory = false, HelpMessage = "Error queue to use for all endpoints in this machine.")]
         public string ErrorQueue { get; set; }
 
         [Parameter(Mandatory = false, HelpMessage = "Audit queue to use for all endpoints in this machine.")]
         public string AuditQueue { get; set; }
-        
+
         // ReSharper enable  MemberCanBePrivate.Global
         protected override void ProcessRecord()
         {
@@ -36,11 +35,11 @@
             const string key = @"SOFTWARE\ParticularSoftware\ServiceBus";
             if (!StringExtensions.IsNullOrWhiteSpace(ErrorQueue))
             {
-                hklm.WriteValue(key,"ErrorQueue", ErrorQueue, RegistryValueKind.String);
+                hklm.WriteValue(key, "ErrorQueue", ErrorQueue, RegistryValueKind.String);
             }
             if (!StringExtensions.IsNullOrWhiteSpace(AuditQueue))
             {
-                hklm.WriteValue(key,"AuditQueue", AuditQueue, RegistryValueKind.String);
+                hklm.WriteValue(key, "AuditQueue", AuditQueue, RegistryValueKind.String);
             }
         }
     }

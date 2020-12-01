@@ -79,37 +79,37 @@ namespace NServiceBus.PowerShell.Helpers
         static extern int RegEnumValue(IntPtr hKey, int dwIndex, StringBuilder lpValueName, ref int lpcchValueName, int lpReserved, int lpType, int lpData, int lpcbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegQueryValueEx(IntPtr hKey, String lpValueName, int[] lpReserved, ref int lpType, ref int lpData, ref int lpcbData);
+        static extern int RegQueryValueEx(IntPtr hKey, string lpValueName, int[] lpReserved, ref int lpType, ref int lpData, ref int lpcbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegQueryValueEx(IntPtr hKey, String lpValueName, int[] lpReserved, ref int lpType, ref long lpData, ref int lpcbData);
+        static extern int RegQueryValueEx(IntPtr hKey, string lpValueName, int[] lpReserved, ref int lpType, ref long lpData, ref int lpcbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegQueryValueEx(IntPtr hKey, String lpValueName, int[] lpReserved, ref int lpType, [Out] byte[] lpData, ref int lpcbData);
+        static extern int RegQueryValueEx(IntPtr hKey, string lpValueName, int[] lpReserved, ref int lpType, [Out] byte[] lpData, ref int lpcbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegQueryValueEx(IntPtr hKey, String lpValueName, int[] lpReserved, ref int lpType, [Out] char[] lpData, ref int lpcbData);
+        static extern int RegQueryValueEx(IntPtr hKey, string lpValueName, int[] lpReserved, ref int lpType, [Out] char[] lpData, ref int lpcbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegSetValueEx(IntPtr hKey, String lpValueName, int reserved, RegistryValueKind dwType, byte[] lpData, int cbData);
+        static extern int RegSetValueEx(IntPtr hKey, string lpValueName, int reserved, RegistryValueKind dwType, byte[] lpData, int cbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegSetValueEx(IntPtr hKey, String lpValueName, int reserved, RegistryValueKind dwType, ref int lpData, int cbData);
+        static extern int RegSetValueEx(IntPtr hKey, string lpValueName, int reserved, RegistryValueKind dwType, ref int lpData, int cbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegSetValueEx(IntPtr hKey, String lpValueName, int reserved, RegistryValueKind dwType, ref long lpData, int cbData);
+        static extern int RegSetValueEx(IntPtr hKey, string lpValueName, int reserved, RegistryValueKind dwType, ref long lpData, int cbData);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegSetValueEx(IntPtr hKey, String lpValueName, int reserved, RegistryValueKind dwType, String lpData, int cbData);
+        static extern int RegSetValueEx(IntPtr hKey, string lpValueName, int reserved, RegistryValueKind dwType, string lpData, int cbData);
 
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegCreateKeyEx(IntPtr hKey, string lpSubKey, int reserved, String lpClass, int dwOptions, int samDesired, IntPtr lpSecurityAttributes, out IntPtr phkResult, out int lpdwDisposition);
+        static extern int RegCreateKeyEx(IntPtr hKey, string lpSubKey, int reserved, string lpClass, int dwOptions, int samDesired, IntPtr lpSecurityAttributes, out IntPtr phkResult, out int lpdwDisposition);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegDeleteKey(IntPtr hKey, String lpSubKey);
+        static extern int RegDeleteKey(IntPtr hKey, string lpSubKey);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
-        static extern int RegDeleteValue(IntPtr hKey, String lpValueName);
+        static extern int RegDeleteValue(IntPtr hKey, string lpValueName);
 
         public static RegistryHelper LocalMachine(RegistryView regView)
         {
@@ -276,11 +276,11 @@ namespace NServiceBus.PowerShell.Helpers
                             RegQueryValueEx(regKeyHandle, valueName, null, ref type, blob, ref datasize);
                             if (blob.Length > 0 && blob[blob.Length - 1] == (char) 0)
                             {
-                                data = new String(blob, 0, blob.Length - 1);
+                                data = new string(blob, 0, blob.Length - 1);
                             }
                             else
                             {
-                                data = new String(blob);
+                                data = new string(blob);
                             }
                         }
                             break;
@@ -290,14 +290,14 @@ namespace NServiceBus.PowerShell.Helpers
                             RegQueryValueEx(regKeyHandle, valueName, null, ref type, blob, ref datasize);
                             if (blob.Length > 0 && blob[blob.Length - 1] == (char) 0)
                             {
-                                data = new String(blob, 0, blob.Length - 1);
+                                data = new string(blob, 0, blob.Length - 1);
                             }
                             else
                             {
-                                data = new String(blob);
+                                data = new string(blob);
                             }
                             if (!doNotExpand)
-                                data = Environment.ExpandEnvironmentVariables((String) data);
+                                data = Environment.ExpandEnvironmentVariables((string) data);
                         }
                             break;
                         case REG_MULTI_SZ:
@@ -319,7 +319,7 @@ namespace NServiceBus.PowerShell.Helpers
                                 blob[blob.Length - 1] = (char) 0;
                             }
 
-                            IList<String> strings = new List<String>();
+                            IList<string> strings = new List<string>();
                             var cur = 0;
                             var len = blob.Length;
 
@@ -335,23 +335,23 @@ namespace NServiceBus.PowerShell.Helpers
                                 {
                                     if (nextNull - cur > 0)
                                     {
-                                        strings.Add(new String(blob, cur, nextNull - cur));
+                                        strings.Add(new string(blob, cur, nextNull - cur));
                                     }
                                     else
                                     {
                                         if (nextNull != len - 1)
-                                            strings.Add(String.Empty);
+                                            strings.Add(string.Empty);
                                     }
                                 }
                                 else
                                 {
-                                    strings.Add(new String(blob, cur, len - cur));
+                                    strings.Add(new string(blob, cur, len - cur));
                                 }
                                 cur = nextNull + 1;
                             }
 
-                            data = new String[strings.Count];
-                            strings.CopyTo((String[]) data, 0);
+                            data = new string[strings.Count];
+                            strings.CopyTo((string[]) data, 0);
                         }
                             break;
                     }
@@ -444,13 +444,13 @@ namespace NServiceBus.PowerShell.Helpers
                     case RegistryValueKind.String:
                     {
                         var data = value.ToString();
-                        return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length * 2 + 2)) == 0;
+                        return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked((data.Length * 2) + 2)) == 0;
                     }
                     case RegistryValueKind.MultiString:
                     {
                         var stringsList = (string[]) value;
                         var data = string.Join("\0", stringsList) + "\0\0";
-                        return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked(data.Length * 2 + 2)) == 0;
+                        return RegSetValueEx(regKeyHandle, valueName, 0, valueKind, data, checked((data.Length * 2) + 2)) == 0;
                     }
                     case RegistryValueKind.Binary:
                     {

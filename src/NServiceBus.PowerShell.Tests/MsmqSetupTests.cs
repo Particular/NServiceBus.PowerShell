@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
     using NUnit.Framework;
-    
+
 
     [TestFixture]
     public class MsmqSetupTests

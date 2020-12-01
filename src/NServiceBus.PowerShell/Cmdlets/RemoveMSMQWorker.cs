@@ -22,9 +22,8 @@
 
         [Parameter(Mandatory = true, Position = 2, HelpMessage = "The Distributor address.", ValueFromPipeline = true)]
         public bool TransactionalDistributorQueue { get; set; }
-       
-        // ReSharper enable  MemberCanBePrivate.Global
 
+        // ReSharper enable  MemberCanBePrivate.Global
         protected override void ProcessRecord()
         {
             var queueAddress = GetFullPath(DistributorAddress) + ".distributor.control";
@@ -36,7 +35,8 @@
                     Recoverable = true,
                 };
 
-                var headers = new [] {
+                var headers = new[]
+                {
                     new HeaderInfo {Key = "NServiceBus.ControlMessage", Value = true.ToString()},
                     new HeaderInfo {Key = "NServiceBus.Distributor.UnregisterWorker", Value = WorkerAddress}
                 };
@@ -47,7 +47,7 @@
                     headerSerializer.Serialize(stream, headers);
                     message.Extension = stream.ToArray();
                 }
-                
+
                 if (TransactionalDistributorQueue)
                 {
                     // Create a transaction.

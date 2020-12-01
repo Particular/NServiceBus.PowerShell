@@ -21,8 +21,8 @@
                 var result64 = new MachineSettingsResult
                 {
                     Registry = "64 bit",
-                    AuditQueue = key64Exists ? (string) RegistryHelper.LocalMachine(RegistryView.Registry64).ReadValue(key, "AuditQueue", null, false) : null,
-                    ErrorQueue = key64Exists ? (string) RegistryHelper.LocalMachine(RegistryView.Registry64).ReadValue(key, "ErrorQueue", null, false) : null
+                    AuditQueue = key64Exists ? (string)RegistryHelper.LocalMachine(RegistryView.Registry64).ReadValue(key, "AuditQueue", null, false) : null,
+                    ErrorQueue = key64Exists ? (string)RegistryHelper.LocalMachine(RegistryView.Registry64).ReadValue(key, "ErrorQueue", null, false) : null
                 };
                 results.Add(result64);
             }
@@ -51,7 +51,7 @@
 
             foreach (var result in results)
             {
-                WriteObject(result);    
+                WriteObject(result);
             }
         }
     }
