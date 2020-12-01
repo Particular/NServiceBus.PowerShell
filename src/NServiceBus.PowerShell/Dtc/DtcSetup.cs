@@ -8,7 +8,6 @@
     using Helpers;
     using RegistryView = Helpers.RegistryView;
 
-
     public class DtcSetup : CmdletHelperBase
     {
         public DtcSetup()

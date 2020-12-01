@@ -6,6 +6,7 @@
     using Microsoft.PowerShell.Commands;
     using Microsoft.Win32;
     using Helpers;
+    using RegistryView = Helpers.RegistryView;
 
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusPlatformLicense", DefaultParameterSetName = "ByLicenseFile")]
     public class InstallPlatformLicense : CmdletBase

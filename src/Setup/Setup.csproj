@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Setup</RootNamespace>
     <AssemblyName>Setup</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -73,6 +73,7 @@
       <AdvancedInstallerPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Caphyon\Advanced Installer@Advanced Installer Path)</AdvancedInstallerPath>
       <AdvancedInstallerExe>"$(AdvancedInstallerPath)bin\x86\AdvancedInstaller.com"</AdvancedInstallerExe>
       <AIPFile>NServiceBus.PowerShell.aip</AIPFile>
+      <TargetFramework>net452</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
       <ResourceFiles Include="res\**\*.*" />
@@ -90,17 +91,10 @@
     <Copy SourceFiles="$(AIPFile)" DestinationFolder="$(IntermediateOutputPath)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(IntermediateOutputPath)res\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name PROJECT_PATH -value $(SolutionDir)Setup -valuetype Folder" />
-    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name POSH_PATH -value $(SolutionDir)NServiceBus.PowerShell\bin\$(Configuration) -valuetype Folder" />
-    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name CUSTOMACTIONS_PATH -value $(SolutionDir)NServiceBus.PowerShell.CustomActions\bin\$(Configuration) -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name POSH_PATH -value $(SolutionDir)NServiceBus.PowerShell\bin\$(Configuration)\$(TargetFramework)\ -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name CUSTOMACTIONS_PATH -value $(SolutionDir)NServiceBus.PowerShell.CustomActions\bin\$(Configuration)\$(TargetFramework)\ -valuetype Folder" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetVersion $(MajorMinorPatch)" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetPackageName $(SetupExeOutputFolder)$(SetupExeName) -buildname DefaultBuild" />
     <Exec Command="$(AdvancedInstallerExe) /rebuild $(IntermediateOutputPath)$(AIPFile)" />
-  </Target>
-  <Import Project="..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets'))" />
   </Target>
 </Project>

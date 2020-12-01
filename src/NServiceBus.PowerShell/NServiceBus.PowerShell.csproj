@@ -1,123 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5E51EFBF-329F-4D3A-B86E-CC111697746F}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <TargetFramework>net452</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NServiceBus.PowerShell</RootNamespace>
-    <AssemblyName>NServiceBus.PowerShell</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System.Messaging" />
     <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Compile Include="Cmdlets\InstallPlatformLicense.cs" />
-    <Compile Include="Cmdlets\RemoveNServiceBusLocalMachineSettings.cs" />
-    <Compile Include="Cmdlets\InstallationResult.cs" />
-    <Compile Include="Cmdlets\CmdletHelperBase.cs" />
-    <Compile Include="Cmdlets\MachineSettingsResult.cs" />
-    <Compile Include="Cmdlets\UninstallPerformanceCounters.cs" />
-    <Compile Include="Cmdlets\ValidateDtc.cs" />
-    <Compile Include="Cmdlets\ValidateMsmq.cs" />
-    <Compile Include="Helpers\Action.cs" />
-    <Compile Include="Dtc\DtcSetup.cs" />
-    <Compile Include="Cmdlets\GetNServiceBusLocalMachineSettings.cs" />
-    <Compile Include="Helpers\HeaderInfo.cs" />
-    <Compile Include="Helpers\ExtensionAttribute.cs" />
-    <Compile Include="Helpers\EnvironmentHelper.cs" />
-    <Compile Include="Helpers\RegistryHelper.cs" />
-    <Compile Include="Helpers\RegistryView.cs" />
-    <Compile Include="Helpers\StreamExtensions.cs" />
-    <Compile Include="Helpers\StringExtensions.cs" />
-    <Compile Include="InternalsVisibleTo.cs" />
-    <Compile Include="Msmq\MsmqSetup.cs" />
-    <Compile Include="PerformanceCounters\PerformanceCounterSetup.cs" />
-    <Compile Include="Helpers\ProcessUtil.cs" />
-    <Compile Include="Cmdlets\SetNServiceBusLocalMachineSettings.cs" />
-    <Compile Include="Cmdlets\CmdletBase.cs" />
-    <Compile Include="Cmdlets\InstallPerformanceCounters.cs" />
-    <Compile Include="Cmdlets\InstallDtc.cs" />
-    <Compile Include="Cmdlets\InstallMsmq.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Cmdlets\RemoveMSMQWorker.cs" />
-    <Compile Include="Cmdlets\ValidatePerformanceCounters.cs" />
+    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.0.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Content Include="Formats\NServiceBus.Powershell.Cmdlets.MachineSettingsResult.format.ps1xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NServiceBus.PowerShell.dll-help.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="NServiceBus.Powershell.psd1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+      <Content Include="Formats\*.ps1xml" CopyToOutputDirectory="Always" />
+      <Content Include="NServiceBus.Powershell.psd1" CopyToOutputDirectory="Always" />
+      <Content Include="NServiceBus.PowerShell.dll-help.xml" CopyToOutputDirectory="Always" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Formats\NServiceBus.Powershell.Cmdlets.InstallationResult.format.ps1xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets'))" />
-  </Target>
-  <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)..\Lib\MSBuild.Community.Tasks.dll" />
-  <Target Name="AfterBuild">
-    <ItemGroup>
-      <PSModuleFile Include="$(OutputPath)\NServiceBus.Powershell.psd1" />
-    </ItemGroup>
+
+  <UsingTask TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <InputFileName ParameterType="System.String" Required="true" />
+      <OutputFileName ParameterType="System.String" Required="true" />
+      <MatchExpression ParameterType="System.String" Required="true" />
+      <ReplacementText ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          File.WriteAllText(
+            OutputFileName,
+            Regex.Replace(File.ReadAllText(InputFileName), MatchExpression, ReplacementText)
+            );
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="AfterBuildStep" AfterTargets="Build">
     <GetVersion SolutionDirectory="$(SolutionDir)">
       <Output TaskParameter="MajorMinorPatch" PropertyName="MajorMinorPatch" />
     </GetVersion>
-    <FileUpdate Files="@(PSModuleFile)" Regex="{{Version}}" ReplacementText="$(MajorMinorPatch)" />
+    <ReplaceFileText InputFileName="$(OutputPath)\NServiceBus.Powershell.psd1" OutputFileName="$(OutputPath)\NServiceBus.Powershell.psd1" MatchExpression="{{Version}}" ReplacementText="$(MajorMinorPatch)" />
   </Target>
+
 </Project>
