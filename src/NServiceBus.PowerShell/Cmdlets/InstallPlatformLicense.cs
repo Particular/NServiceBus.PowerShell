@@ -9,6 +9,7 @@
     using RegistryView = Helpers.RegistryView;
 
     [Cmdlet(VerbsLifecycle.Install, "NServiceBusPlatformLicense", DefaultParameterSetName = "ByLicenseFile")]
+    [Obsolete(@"Installing license information in the registry has been deprecated as the Particular Platform reads license info from file system. For legacy installations this cmdlet can still be used. See https://docs.particular.net/search?q=license.")]
     public class InstallPlatformLicense : CmdletBase
     {
         [Parameter(Mandatory = true, HelpMessage = "Platform license file to import", Position = 0, ParameterSetName = "ByLicenseFile")]
@@ -19,6 +20,11 @@
         [ValidateNotNullOrEmpty]
         public string LicenseString { get; set; }
 
+        protected override void BeginProcessing()
+        {
+            WriteWarning("Installing license information in the registry has been deprecated as the Particular Platform reads license info from file system. For legacy installations this cmdlet can still be used. See https://docs.particular.net/search?q=license.");
+        }
+        
         protected override void ProcessRecord()
         {
             const string particular = @"Software\ParticularSoftware";
