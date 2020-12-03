@@ -1,28 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
-    <OutputType>Library</OutputType>
+    <TargetFramework>net40</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
-    <RootNamespace>NServiceBus.PowerShell.CustomActions</RootNamespace>
-    <AssemblyName>NServiceBus.PowerShell.CustomActions</AssemblyName>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <WixToolPath>..\..\lib\WiX\3.7\</WixToolPath>
-    <WixTargetsPath>$(WixToolPath)Wix.targets</WixTargetsPath>
-    <WixCATargetsPath>$(WixToolPath)\sdk\wix.ca.targets</WixCATargetsPath>
-    <WixSdkPath>$(WixToolPath)\sdk\</WixSdkPath>
-    <WixTasksPath>$(WixToolPath)wixtasks.dll</WixTasksPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Particular.CodeRules" Version="0.7.0" PrivateAssets="All" />
-    <PackageReference Include="WiX" Version="3.7.0.1" />
-    <Reference Include="Microsoft.Deployment.WindowsInstaller">
-      <HintPath>..\..\lib\WiX\3.7\sdk\Microsoft.Deployment.WindowsInstaller.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Deployment.WindowsInstaller" HintPath="$(WixSdkPath)Microsoft.Deployment.WindowsInstaller.dll" />
   </ItemGroup>
-  <Import Project="$(WixCATargetsPath)" />
+
+  <ItemGroup>
+    <PackageReference Include="Particular.CodeRules" Version="0.7.0" PrivateAssets="All" />
+    <PackageReference Include="WiX" Version="3.11.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="CustomAction.config" />
+    <Content Include="CustomAction.config" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetCAFileName>NServiceBus.PowerShell.CustomActions.CA.dll</TargetCAFileName>
+  </PropertyGroup>
+
+  <Import Project="$(WixCATargetsPath)" Condition="Exists('$(WixCATargetsPath)')" />
+
+  <!-- Workaround needed because WiX targets don't currently work with SDK projects -->
+  <Target Name="CleanCAFile" DependsOnTargets="CleanCustomAction" BeforeTargets="CoreClean" Condition="'$(DesignTimeBuild)' != 'true'" />
+  <Target Name="CreateCAFile" DependsOnTargets="PackCustomAction" AfterTargets="CoreCompile" Condition="'$(DesignTimeBuild)' != 'true'" />
+  <!-- End workaround -->
+
 </Project>
