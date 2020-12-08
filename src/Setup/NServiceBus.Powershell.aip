@@ -7,7 +7,7 @@
     <ROW Property="AI_ThemeStyle" Value="default" MultiBuildValue="DefaultBuild:classic" MsiKey="AI_ThemeStyle"/>
     <ROW Property="AI_UNINSTALLER" Value="msiexec.exe"/>
     <ROW Property="ALLUSERS" Value="1"/>
-    <ROW Property="ARPCOMMENTS" Value="Particular Software NServiceBus PowerShell version  [|ProductVersion]" ValueLocId="*"/>
+    <ROW Property="ARPCOMMENTS" Value="Particular Software NServiceBus PowerShell version [|ProductVersion]" ValueLocId="*"/>
     <ROW Property="ARPHELPLINK" Value="http://particular.net/support"/>
     <ROW Property="ARPPRODUCTICON" Value="particular.exe" Type="8"/>
     <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
@@ -17,7 +17,7 @@
     <ROW Property="Manufacturer" Value="Particular Software"/>
     <ROW Property="ProductCode" Value="1033:{54E6F93D-DE2E-4593-BDE3-4E7204FF504D} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="NServiceBus PowerShell [|ProductVersion]"/>
+    <ROW Property="ProductName" Value="NServiceBus PowerShell"/>
     <ROW Property="ProductVersion" Value="4.4.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{010D8BBC-6568-4719-8B73-4618BC040BAF}"/>
@@ -102,7 +102,7 @@
     <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
-    <ROW Name="NServiceBus.PowerShell.CustomActions.dll" SourcePath="&lt;CUSTOMACTIONS_PATH&gt;\NServiceBus.PowerShell.CustomActions.dll"/>
+    <ROW Name="NServiceBus.PowerShell.CustomActions.CA.dll" SourcePath="&lt;CUSTOMACTIONS_PATH&gt;\NServiceBus.PowerShell.CustomActions.CA.dll"/>
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
     <ROW Name="banner.jpg" SourcePath="Res\banner.jpg"/>
@@ -194,8 +194,8 @@
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
-    <ROW Action="AddToPSModuleEnvironmentVar" Type="1" Source="NServiceBus.PowerShell.CustomActions.dll" Target="AddToPSModuleEnvironmentVar"/>
-    <ROW Action="RemoveFromPSModuleEnvironmentVar" Type="1" Source="NServiceBus.PowerShell.CustomActions.dll" Target="RemoveFromPSModuleEnvironmentVar"/>
+    <ROW Action="RemoveFromPSModuleEnvironmentVar" Type="1" Source="NServiceBus.PowerShell.CustomActions.CA.dll" Target="RemoveFromPSModuleEnvironmentVar"/>
+    <ROW Action="AddToPSModuleEnvironmentVar" Type="1" Source="NServiceBus.PowerShell.CustomActions.CA.dll" Target="AddToPSModuleEnvironmentVar"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>

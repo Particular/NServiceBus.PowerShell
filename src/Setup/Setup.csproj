@@ -1,70 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F6473A7A-01B7-4A9A-B30C-4D200BFFFE4D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Setup</RootNamespace>
-    <AssemblyName>Setup</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>6</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>6</LangVersion>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <None Include="Prerequisites\**\*.*" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="NServiceBus.Powershell.aip">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config" />
-    <None Include="Res\License.rtf" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Res\banner.jpg" />
-    <None Include="Res\dialog.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Res\particular.ico" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- 
-  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
-    <GetVersion SolutionDirectory="$(SolutionDir)">
-      <Output TaskParameter="MajorMinorPatch" PropertyName="MajorMinorPatch" />
-    </GetVersion>
+  
+  <Target Name="CreateInstaller" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
     <ItemGroup>
       <BuiltFiles Include="$(OutputPath)\*.*" />
     </ItemGroup>
@@ -73,15 +17,14 @@
       <AdvancedInstallerPath>$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Caphyon\Advanced Installer@Advanced Installer Path)</AdvancedInstallerPath>
       <AdvancedInstallerExe>"$(AdvancedInstallerPath)bin\x86\AdvancedInstaller.com"</AdvancedInstallerExe>
       <AIPFile>NServiceBus.PowerShell.aip</AIPFile>
-      <TargetFramework>net452</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-      <ResourceFiles Include="res\**\*.*" />
+      <ResourceFiles Include="Res\**\*.*" />
       <Prerequisites Include="Prerequisites\**\*.*" />
     </ItemGroup>
     <PropertyGroup>
-      <SetupExeOutputFolder>$(SolutionDir)..\Assets\</SetupExeOutputFolder>
-      <SetupExeName>NServiceBus.Powershell-$(MajorMinorPatch).exe</SetupExeName>
+      <SetupExeOutputFolder>$(SolutionDir)..\assets\</SetupExeOutputFolder>
+      <SetupExeName>NServiceBus.PowerShell-$(GitVersion_LegacySemVerPadded).exe</SetupExeName>
     </PropertyGroup>
     <MakeDir Directories="$(SetupExeOutputFolder)" />
     <ItemGroup>
@@ -89,12 +32,15 @@
     </ItemGroup>
     <Delete Files="@(ExistingExes)" />
     <Copy SourceFiles="$(AIPFile)" DestinationFolder="$(IntermediateOutputPath)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(IntermediateOutputPath)res\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(IntermediateOutputPath)Res\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(Prerequisites)" DestinationFolder="$(IntermediateOutputPath)Prerequisites\%(RecursiveDir)" SkipUnchangedFiles="true" />
+
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name PROJECT_PATH -value $(SolutionDir)Setup -valuetype Folder" />
-    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name POSH_PATH -value $(SolutionDir)NServiceBus.PowerShell\bin\$(Configuration)\$(TargetFramework)\ -valuetype Folder" />
-    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name CUSTOMACTIONS_PATH -value $(SolutionDir)NServiceBus.PowerShell.CustomActions\bin\$(Configuration)\$(TargetFramework)\ -valuetype Folder" />
-    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetVersion $(MajorMinorPatch)" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name POSH_PATH -value $(SolutionDir)NServiceBus.PowerShell\bin\$(Configuration)\net452\ -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /NewPathVariable -name CUSTOMACTIONS_PATH -value $(SolutionDir)NServiceBus.PowerShell.CustomActions\bin\$(Configuration)\net40\ -valuetype Folder" />
+    <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetVersion $(GitVersion_MajorMinorPatch)" />
     <Exec Command="$(AdvancedInstallerExe) /edit $(IntermediateOutputPath)$(AIPFile) /SetPackageName $(SetupExeOutputFolder)$(SetupExeName) -buildname DefaultBuild" />
     <Exec Command="$(AdvancedInstallerExe) /rebuild $(IntermediateOutputPath)$(AIPFile)" />
   </Target>
+
 </Project>
