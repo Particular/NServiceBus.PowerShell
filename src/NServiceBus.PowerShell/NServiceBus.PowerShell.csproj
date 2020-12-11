@@ -18,7 +18,7 @@
 
   <ItemGroup>
       <Content Include="Formats\*.ps1xml" CopyToOutputDirectory="Always" />
-      <Content Include="NServiceBus.Powershell.psd1" CopyToOutputDirectory="Always" />
+      <Content Include="NServiceBus.PowerShell.psd1" CopyToOutputDirectory="Always" />
       <Content Include="NServiceBus.PowerShell.dll-help.xml" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
@@ -48,7 +48,7 @@
     <GetVersion SolutionDirectory="$(SolutionDir)">
       <Output TaskParameter="MajorMinorPatch" PropertyName="MajorMinorPatch" />
     </GetVersion>
-    <ReplaceFileText InputFileName="$(OutputPath)\NServiceBus.Powershell.psd1" OutputFileName="$(OutputPath)\NServiceBus.Powershell.psd1" MatchExpression="{{Version}}" ReplacementText="$(MajorMinorPatch)" />
+    <ReplaceFileText InputFileName="$(OutputPath)\NServiceBus.PowerShell.psd1" OutputFileName="$(OutputPath)\NServiceBus.PowerShell.psd1" MatchExpression="{{Version}}" ReplacementText="$(MajorMinorPatch)" />
   </Target>
 
 </Project>
