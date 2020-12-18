@@ -37,6 +37,10 @@
         {
             //Advanced Installer doesn't notify of environment changes on system environment variables
             var appDir = session["PowerShellModules_Dir"];
+            if (appDir.EndsWith(@"\"))
+            {
+                appDir = appDir.Remove(appDir.Length - 1);
+            }
 
             var environmentVariable = Environment.GetEnvironmentVariable(PSModulePath, EnvironmentVariableTarget.Machine);
             if (environmentVariable != null)
