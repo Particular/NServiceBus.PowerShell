@@ -24,10 +24,27 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: 5.0.x
-      - name: Build
-        run: dotnet build src --configuration Release
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+      - name: Setup Advanced Installer
+        run: |
+          $version = 18.4
+          choco install advanced-installer --version=$version
+          & "C:\Program Files (x86)\Caphyon\Advanced Installer $version\bin\x86\AdvancedInstaller.com" /register ${{ secrets.ADVANCED_INSTALLER_LICENSE_KEY }}
       - name: Install NuGetKeyVaultSignTool
         run: dotnet tool install --global NuGetKeyVaultSignTool
+      - name: Prepare AIP file
+        run: |
+          $content = Get-Content -Raw -Path src/Setup/ServicePulse.aip
+          $content = $content -replace "replace-tenant-id", "${{ secrets.AZURE_KEY_VAULT_TENANT_ID }}" -replace "replace-app-id", "${{ secrets.AZURE_KEY_VAULT_CLIENT_ID }}" -replace "replace-cert-name", "${{ secrets.AZURE_KEY_VAULT_CERTIFICATE_NAME }}"
+          Set-Content src/Setup/ServicePulse.aip $content
+      - name: Build
+        env:
+          AZURE_KEY_VAULT_CLIENT_SECRET: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
+        run: msbuild src -p:Configuration=Release -restore -m
+      - id: save-version
+        name: Save GitVersion_SemVer version
+        run: echo "::set-output name=version::${{env.GitVersion_SemVer}}"
       - name: Sign NuGet Packages
         run: |
           NuGetKeyVaultSignTool sign nugets\*.nupkg `
@@ -39,7 +56,6 @@ jobs:
           --azure-key-vault-tenant-id ${{ secrets.AZURE_KEY_VAULT_TENANT_ID }} `
           --azure-key-vault-client-secret ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }} `
           --azure-key-vault-certificate ${{ secrets.AZURE_KEY_VAULT_CERTIFICATE_NAME }}
-        shell: pwsh
       - name: Publish artifacts
         uses: actions/upload-artifact@v2.2.2
         with:
