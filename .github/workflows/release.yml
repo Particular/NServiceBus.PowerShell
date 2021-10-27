@@ -42,25 +42,11 @@ jobs:
         env:
           AZURE_KEY_VAULT_CLIENT_SECRET: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
         run: msbuild src -p:Configuration=Release -restore -m
-      - id: save-version
-        name: Save GitVersion_SemVer version
-        run: echo "::set-output name=version::${{env.GitVersion_SemVer}}"
-      - name: Sign NuGet Packages
-        run: |
-          NuGetKeyVaultSignTool sign nugets\*.nupkg `
-          --file-digest sha256 `
-          --timestamp-rfc3161 http://timestamp.digicert.com `
-          --timestamp-digest sha256 `
-          --azure-key-vault-url https://particularcodesigning.vault.azure.net `
-          --azure-key-vault-client-id ${{ secrets.AZURE_KEY_VAULT_CLIENT_ID }} `
-          --azure-key-vault-tenant-id ${{ secrets.AZURE_KEY_VAULT_TENANT_ID }} `
-          --azure-key-vault-client-secret ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }} `
-          --azure-key-vault-certificate ${{ secrets.AZURE_KEY_VAULT_CERTIFICATE_NAME }}
       - name: Publish artifacts
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v2.2.4
         with:
-          name: nugets
-          path: nugets/*
+          name: assets
+          path: assets/*
           retention-days: 1
       - name: Install Octopus CLI
         uses: OctopusDeploy/install-octopus-cli-action@v1.1.7
@@ -70,12 +56,7 @@ jobs:
         run: |
           # Creating the expected file layout for the Octopus package, including intermediate directories
           mkdir -p packaging/content
-
-          # Octopus expects NuGet packages to have an extra .nzip extension for NuGet, .czip for Chocolatey
-          $nugets = Get-ChildItem -Path "./nugets/*.nupkg"
-          foreach ($file in $nugets) {
-            cp $file "./packaging/content/$($file.Name).nzip"
-          }
+          cp assets\* .\packaging\content
 
           # Octopus Deploy scripts need an executable file to recreate this metadata
           @"
