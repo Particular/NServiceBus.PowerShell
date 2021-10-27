@@ -27,11 +27,17 @@ jobs:
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Build
         run: msbuild src -p:Configuration=Release -restore -m
-      - name: Upload packages
+      - name: Upload assets
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: NuGet packages
-          path: nugets/
+          name: Assets
+          path: src/NServiceBus.PowerShell/bin/Release
+          retention-days: 7
+      - name: Upload custom actions/checkout@v2
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: CustomActions
+          path: src/NServiceBus.PowerShell.CustomActions/bin/Release
           retention-days: 7
       - name: Run tests
         uses: Particular/run-tests-action@v1.0.0
