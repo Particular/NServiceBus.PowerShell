@@ -33,11 +33,5 @@ jobs:
           name: Assets
           path: src/NServiceBus.PowerShell/bin/Release
           retention-days: 7
-      - name: Upload custom actions/checkout@v2
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: CustomActions
-          path: src/NServiceBus.PowerShell.CustomActions/bin/Release
-          retention-days: 7
       - name: Run tests
         uses: Particular/run-tests-action@v1.0.0
