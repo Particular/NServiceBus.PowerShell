@@ -24,7 +24,7 @@
     <TargetCAFileName>NServiceBus.PowerShell.CustomActions.CA.dll</TargetCAFileName>
   </PropertyGroup>
 
-  <Import Project="$(WixCATargetsPath)" Condition="Exists('$(WixCATargetsPath)')" />
+  <Import Project="$(WixCATargetsPath)" Condition="Exists('$(WixCATargetsPath)') And '$(MSBuildRuntimeType)' != 'Core'" />
 
   <!-- Workaround needed because WiX targets don't currently work with SDK projects -->
   <Target Name="CleanCAFile" DependsOnTargets="CleanCustomAction" BeforeTargets="CoreClean" Condition="'$(DesignTimeBuild)' != 'true'" />
