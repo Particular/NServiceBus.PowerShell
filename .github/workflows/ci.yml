@@ -3,10 +3,8 @@ on:
   push:
     branches:
       - master
-      - release-[6-9].*
+      - release-*
   pull_request:
-    branches-ignore:
-      - release-[0-5].*
   workflow_dispatch:
 env:
   DOTNET_NOLOGO: true
