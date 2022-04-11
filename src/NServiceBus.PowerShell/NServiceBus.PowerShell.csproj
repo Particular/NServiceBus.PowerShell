@@ -45,7 +45,7 @@
   </UsingTask>
 
   <Target Name="AfterBuildStep" AfterTargets="Build">
-    <ReplaceFileText InputFileName="$(OutputPath)\NServiceBus.PowerShell.psd1" OutputFileName="$(OutputPath)\NServiceBus.PowerShell.psd1" MatchExpression="{{Version}}" ReplacementText="$(GitVersion_MajorMinorPatch)" />
+    <ReplaceFileText InputFileName="$(OutputPath)\NServiceBus.PowerShell.psd1" OutputFileName="$(OutputPath)\NServiceBus.PowerShell.psd1" MatchExpression="{{Version}}" ReplacementText="$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)" />
   </Target>
 
 </Project>
