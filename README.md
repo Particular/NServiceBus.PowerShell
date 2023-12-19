@@ -1,6 +1,6 @@
 ## NServiceBus.PowerShell 
 
-NServiceBus.PowerShell sets up a computer to run NServiceBus providing a set of cmdlets.
+NServiceBus.PowerShell provides a powershell extension for NServiceBus. It sets up a computer to run NServiceBus by providing a set of cmdlets.
 
 It is tool for managing operations for users of the [Particular Service Platform](https://particular.net/service-platform), which includes [NServiceBus](https://particular.net/nservicebus) and tools to build, monitor, and debug distributed systems.
 
