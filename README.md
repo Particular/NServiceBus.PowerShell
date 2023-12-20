@@ -8,4 +8,4 @@ See the [Management using PowerShell documentation](https://docs.particular.net/
 
 ## Building
 
-To build NServiceBus.PowerShell just open `NServiceBus.Powershell.sln` in Visual Studio.
+To build NServiceBus.PowerShell just open `NServiceBus.Powershell.sln` in Visual Studio. 
