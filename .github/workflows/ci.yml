@@ -14,22 +14,25 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3.0.3
+        uses: actions/setup-dotnet@v4.0.0
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: |
+            8.0.x
+            7.0.x
+            6.0.x
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Build
         run: msbuild src -p:Configuration=Release -restore -m
       - name: Upload assets
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v4.3.1
         with:
           name: Assets
           path: src/NServiceBus.PowerShell/bin/Release
           retention-days: 7
       - name: Run tests
-        uses: Particular/run-tests-action@v1.4.0
+        uses: Particular/run-tests-action@v1.7.0
